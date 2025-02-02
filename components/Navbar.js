@@ -7,9 +7,10 @@ const Navbar = () => {
     return (
         <div>
             <header className="text-gray-600 body-font">
-                <div className="container mx-auto flex flex-wrap py-2 md:py-1 flex-col md:flex-row items-center">
+                <div className="container mx-auto flex flex-wrap py-2 md:py-1 flex-col md:flex-row items-center shadow-md">
+                    <Link href={'/'}>
                     <Image
-                        className='px-3'
+                        className='m-auto md:ml-5'
                         src="/logo-banner.png"
                         alt="logo" width={200}
                         height={20}
@@ -17,6 +18,7 @@ const Navbar = () => {
                         style={{ height: "auto" }}
                         loading="eager"
                         />
+                        </Link>
                     <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
                         <Link href={'/tshirts'} className="mr-5 text-xs md:text-base font-bold hover:text-gray-900">Tshirts</Link>
                         <Link href={'/hoodies'} className="mr-5 text-xs md:text-base font-bold hover:text-gray-900">Hoodies</Link>

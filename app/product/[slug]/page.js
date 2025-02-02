@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Product = ({ params }) => {
-    const { slug } = params;
+const Product = async ({ params }) => {
+    const { slug } = await params;
 
     return (
         <div>

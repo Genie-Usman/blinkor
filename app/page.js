@@ -7,12 +7,9 @@ export default function Home() {
      <Image
         src="/banner.png"
         alt="logo"
-        width={500} // Example width in pixels
-        height={250} // Adjust height for aspect ratio
+        width={500} 
+        height={250} 
         style={{ width: "100%", height: "auto" }}
-        // priority={true} 
-        // style={{ height: "auto" }}
-        // loading="eager"
         />
     </div>
   );

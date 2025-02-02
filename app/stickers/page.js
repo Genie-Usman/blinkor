@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const Tshirts = () => {
+const Stickers = () => {
   return (
     <div>
       <section className="text-gray-600 body-font">
@@ -12,16 +12,15 @@ const Tshirts = () => {
               <Link href={'/product/code-your-look'} className="block relative rounded overflow-hidden shadow-md ">
                 <Image 
                 className="h-[25vh] md:h-[34vh] m-auto block" 
-                src="/tshirt.jpeg" 
+                src="/sticker.webp" 
                 alt="product image"
                 width={200}
                 height={20} 
                 />
               </Link>
               <div className="mt-4 text-center md:text-left">
-                <h3 className="text-gray-500  text-xs tracking-widest title-font mb-1">T-Shirts</h3>
+                <h3 className="text-gray-500  text-xs tracking-widest title-font mb-1">Stickers</h3>
                 <h2 className="text-gray-900 title-font text-lg font-medium">Code Your Look</h2>
-                <p className='text-xs'>S, M, L, XL, XXL</p>
                 <p className="mt-1">Rs.799</p>
               </div>
             </div>
@@ -29,16 +28,15 @@ const Tshirts = () => {
               <Link href={'/product/code-your-look'} className="block relative h-50 rounded overflow-hidden shadow-md">
                 <Image 
                 className="h=[50vh] h-[25vh] md:h-[34vh] m-auto block" 
-                src="/tshirt.jpeg" 
+                src="/sticker.webp" 
                 alt="product image"
                 width={200}
                 height={20} 
                 />
               </Link>
               <div className="mt-4 text-center md:text-left">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">T-Shirts</h3>
+                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Stickers</h3>
                 <h2 className="text-gray-900 title-font text-lg font-medium">Code Your Look</h2>
-                <p className='text-xs'>S, M, L, XL, XXL</p>
                 <p className="mt-1">Rs.799</p>
               </div>
             </div>
@@ -46,16 +44,15 @@ const Tshirts = () => {
               <Link href={'/product/code-your-look'} className="block relative h-50 rounded overflow-hidden shadow-md">
                 <Image 
                 className="h=[50vh] h-[25vh] md:h-[34vh] m-auto block" 
-                src="/tshirt.jpeg" 
+                src="/sticker.webp" 
                 alt="product image"
                 width={200}
                 height={20} 
                 />
               </Link>
               <div className="mt-4 text-center md:text-left">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">T-Shirts</h3>
+                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Stickers</h3>
                 <h2 className="text-gray-900 title-font text-lg font-medium">Code Your Look</h2>
-                <p className='text-xs'>S, M, L, XL, XXL</p>
                 <p className="mt-1">Rs.799</p>
               </div>
             </div>
@@ -63,16 +60,15 @@ const Tshirts = () => {
               <Link href={'/product/code-your-look'} className="block relative h-50 rounded overflow-hidden shadow-md">
                 <Image 
                 className="h=[50vh] h-[25vh] md:h-[34vh] m-auto block" 
-                src="/tshirt.jpeg" 
+                src="/sticker.webp" 
                 alt="product image"
                 width={200}
                 height={20} 
                 />
               </Link>
               <div className="mt-4 text-center md:text-left">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">T-Shirts</h3>
+                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Stickers</h3>
                 <h2 className="text-gray-900 title-font text-lg font-medium">Code Your Look</h2>
-                <p className='text-xs'>S, M, L, XL, XXL</p>
                 <p className="mt-1">Rs.799</p>
               </div>
             </div>
@@ -80,16 +76,15 @@ const Tshirts = () => {
               <Link href={'/product/code-your-look'} className="block relative h-50 rounded overflow-hidden shadow-md">
                 <Image 
                 className="h=[50vh] h-[25vh] md:h-[34vh] m-auto block" 
-                src="/tshirt.jpeg" 
+                src="/sticker.webp" 
                 alt="product image"
                 width={200}
                 height={20} 
                 />
               </Link>
               <div className="mt-4 text-center md:text-left">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">T-Shirts</h3>
+                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Stickers</h3>
                 <h2 className="text-gray-900 title-font text-lg font-medium">Code Your Look</h2>
-                <p className='text-xs'>S, M, L, XL, XXL</p>
                 <p className="mt-1">Rs.799</p>
               </div>
             </div>
@@ -97,16 +92,15 @@ const Tshirts = () => {
               <Link href={'/product/code-your-look'} className="block relative h-50 rounded overflow-hidden shadow-md">
                 <Image 
                 className="h=[50vh] h-[25vh] md:h-[34vh] m-auto block" 
-                src="/tshirt.jpeg" 
+                src="/sticker.webp" 
                 alt="product image"
                 width={200}
                 height={20} 
                 />
               </Link>
               <div className="mt-4 text-center md:text-left">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">T-Shirts</h3>
+                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Stickers</h3>
                 <h2 className="text-gray-900 title-font text-lg font-medium">Code Your Look</h2>
-                <p className='text-xs'>S, M, L, XL, XXL</p>
                 <p className="mt-1">Rs.799</p>
               </div>
             </div>
@@ -114,16 +108,15 @@ const Tshirts = () => {
               <Link href={'/product/code-your-look'} className="block relative h-50 rounded overflow-hidden shadow-md">
                 <Image 
                 className="h=[50vh] h-[25vh] md:h-[34vh] m-auto block" 
-                src="/tshirt.jpeg" 
+                src="/sticker.webp" 
                 alt="product image"
                 width={200}
                 height={20} 
                 />
               </Link>
               <div className="mt-4 text-center md:text-left">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">T-Shirts</h3>
+                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Stickers</h3>
                 <h2 className="text-gray-900 title-font text-lg font-medium">Code Your Look</h2>
-                <p className='text-xs'>S, M, L, XL, XXL</p>
                 <p className="mt-1">Rs.799</p>
               </div>
             </div>
@@ -131,16 +124,15 @@ const Tshirts = () => {
               <Link href={'/product/code-your-look'} className="block relative h-50 rounded overflow-hidden shadow-md">
                 <Image 
                 className="h=[50vh] h-[25vh] md:h-[34vh] m-auto block" 
-                src="/tshirt.jpeg" 
+                src="/sticker.webp" 
                 alt="product image"
                 width={200}
                 height={20} 
                 />
               </Link>
               <div className="mt-4 text-center md:text-left">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">T-Shirts</h3>
+                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Stickers</h3>
                 <h2 className="text-gray-900 title-font text-lg font-medium">Code Your Look</h2>
-                <p className='text-xs'>S, M, L, XL, XXL</p>
                 <p className="mt-1">Rs.799</p>
               </div>
             </div>
@@ -148,16 +140,15 @@ const Tshirts = () => {
               <Link href={'/product/code-your-look'} className="block relative h-50 rounded overflow-hidden shadow-md">
                 <Image 
                 className="h=[50vh] h-[25vh] md:h-[34vh] m-auto block" 
-                src="/tshirt.jpeg" 
+                src="/sticker.webp" 
                 alt="product image"
                 width={200}
                 height={20} 
                 />
               </Link>
               <div className="mt-4 text-center md:text-left">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">T-Shirts</h3>
+                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Stickers</h3>
                 <h2 className="text-gray-900 title-font text-lg font-medium">Code Your Look</h2>
-                <p className='text-xs'>S, M, L, XL, XXL</p>
                 <p className="mt-1">Rs.799</p>
               </div>
             </div>
@@ -165,16 +156,15 @@ const Tshirts = () => {
               <Link href={'/product/code-your-look'} className="block relative h-50 rounded overflow-hidden shadow-md">
                 <Image 
                 className="h=[50vh] h-[25vh] md:h-[34vh] m-auto block" 
-                src="/tshirt.jpeg" 
+                src="/sticker.webp" 
                 alt="product image"
                 width={200}
                 height={20} 
                 />
               </Link>
               <div className="mt-4 text-center md:text-left">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">T-Shirts</h3>
+                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Stickers</h3>
                 <h2 className="text-gray-900 title-font text-lg font-medium">Code Your Look</h2>
-                <p className='text-xs'>S, M, L, XL, XXL</p>
                 <p className="mt-1">Rs.799</p>
               </div>
             </div>
@@ -185,4 +175,4 @@ const Tshirts = () => {
   )
 }
 
-export default Tshirts
+export default Stickers

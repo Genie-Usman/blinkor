@@ -12,7 +12,7 @@ const SideCart = ({ cartOpen, toggleCart }) => {
         >
             <h2 className='font-bold text-xl text-center '>Shopping Cart</h2>
             <span onClick={toggleCart} className='absolute top-5 right-2 cursor-pointer'>
-                <AiFillCloseCircle className='hover:text-blue-400 text-xl md:text-2xl text-devstyle' />
+                <AiFillCloseCircle className='hover:text-red-900 text-xl md:text-2xl text-devstyle' />
             </span>
             <ol className='mx-1 font-semibold list-decimal'>
                 <li>
@@ -26,7 +26,7 @@ const SideCart = ({ cartOpen, toggleCart }) => {
                     </div>
                 </li>
             </ol>
-            <button className="flex ml-2 text-white bg-devstyle border-0 py-2 px-4 focus:outline-none hover:bg-blue-400 rounded"><RiShoppingBag4Fill className='m-1' />Checkout</button>
+            <button className="flex ml-2 text-white bg-devstyle border-0 py-2 px-4 focus:outline-none hover:bg-red-900 rounded"><RiShoppingBag4Fill className='m-1' />Checkout</button>
         </div>
     );
 };

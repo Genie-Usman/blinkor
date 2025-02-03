@@ -36,7 +36,7 @@ const Navbar = () => {
                         <Link href={'/mugs'} className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Mugs</Link>
                         <FaShoppingCart 
                             onClick={toggleCart} 
-                            className='text-base text-devstyle hover:text-red-900 md:text-2xl absolute right-2 top-5 md:my-auto cursor-pointer' 
+                            className='text-base text-devstyle hover:text-red-700 md:text-2xl absolute right-2 top-5 md:my-auto cursor-pointer' 
                         />
                     </nav>
                     <SideCart cartOpen={cartOpen} toggleCart={toggleCart} />

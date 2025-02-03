@@ -7,7 +7,7 @@ import { RiShoppingBag4Fill } from "react-icons/ri";
 const SideCart = ({ cartOpen, toggleCart }) => {
     return (
         <div
-            className={`sideCart bg-pink-200 w-72 absolute top-1 right-0 h-full px-5 py-10 transform transition-transform rounded ${cartOpen ? 'translate-x-0' : 'translate-x-full '
+            className={`sideCart bg-pink-200 w-72 absolute top-1 right-0 h-full px-5 py-10 transform transition-transform rounded z-[9999] ${cartOpen ? 'translate-x-0' : 'translate-x-full '
                 }`}
         >
             <h2 className='font-bold text-xl text-center '>Shopping Cart</h2>

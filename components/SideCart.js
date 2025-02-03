@@ -14,10 +14,10 @@ const SideCart = ({ cartOpen, toggleCart }) => {
             <span onClick={toggleCart} className='absolute top-5 right-2 cursor-pointer'>
                 <AiFillCloseCircle className='hover:text-red-700 text-xl md:text-2xl text-devstyle' />
             </span>
-            <ol className='mx-1 font-semibold list-decimal'>
+            <ol className='ml-2 font-semibold list-decimal'>
                 <li>
                     <div className='item flex my-5'>
-                        <div className='w-2/3 text-base font-semibold'>T-shirt - Code Your Look</div>
+                        <div className='w-2/3 text-md font-semibold'>T-shirt - Code Your Look</div>
                         <div className='w-1/3 font-semibold flex justify-center items-center'>
                             <AiFillMinusCircle className='text-devstyle text-lg cursor-pointer' />
                             <span className='mx-2'>1</span>
@@ -27,7 +27,7 @@ const SideCart = ({ cartOpen, toggleCart }) => {
                 </li>
                 <li>
                     <div className='item flex my-5'>
-                        <div className='w-2/3 text-base font-semibold'>T-shirt - Code Your Look</div>
+                        <div className='w-2/3 text-md font-semibold'>T-shirt - Code Your Look</div>
                         <div className='w-1/3 font-semibold flex justify-center items-center'>
                             <AiFillMinusCircle className='text-devstyle text-lg cursor-pointer' />
                             <span className='mx-2'>1</span>
@@ -37,7 +37,7 @@ const SideCart = ({ cartOpen, toggleCart }) => {
                 </li>
                 <li>
                     <div className='item flex my-5'>
-                        <div className='w-2/3 text-base font-semibold'>T-shirt - Code Your Look</div>
+                        <div className='w-2/3 text-md font-semibold'>T-shirt - Code Your Look</div>
                         <div className='w-1/3 font-semibold flex justify-center items-center'>
                             <AiFillMinusCircle className='text-devstyle text-lg cursor-pointer' />
                             <span className='mx-2'>1</span>
@@ -46,7 +46,10 @@ const SideCart = ({ cartOpen, toggleCart }) => {
                     </div>
                 </li>
             </ol>
-            <button className="flex ml-2 text-white bg-devstyle border-0 py-2 px-4 focus:outline-none hover:bg-red-700 rounded"><RiShoppingBag4Fill className='m-1' />Checkout</button>
+            <div className="flex">
+                <button className="flex mr-2 text-white bg-devstyle border-0 text-xs md:text-base py-1 px-2 md:p-2 focus:outline-none hover:bg-red-700 rounded"><RiShoppingBag4Fill className='mt-0.5 md:m-1 text-xs md:text-lg' />Checkout</button>
+                <button className="flex mr-2 text-white bg-devstyle border-0 text-xs md:text-base py-1 px-2 md:p-2 focus:outline-none hover:bg-red-700 rounded">Clear Cart</button>
+            </div>
         </div>
     );
 };

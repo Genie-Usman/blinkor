@@ -1,27 +1,56 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Image from 'next/image';
 
-const Product = async ({ params }) => {
-    const { slug } = await params;
+const Product = ({ params }) => {
+    const { slug } = React.use(params);
+
+    const [pincode, setPincode] = useState('');
+    const [isValid, setIsValid] = useState(null);
+
+    const fetchPincodes = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/api/pincode'); 
+            if (!response.ok) {
+                throw new Error(`Failed to fetch data`);
+            }
+            const data = await response.json();
+            return data.pincodes;
+        } catch (error) {
+            console.error('Error fetching pincodes:', error);
+            throw new Error('Error fetching pincodes');
+        }
+    };
+
+    const handleCheckPincode = async () => {
+        try {
+            const pincodes = await fetchPincodes();
+            const isValidPincode = pincodes.includes(Number(pincode));
+            setIsValid(isValidPincode); 
+        } catch (error) {
+            console.error('Failed to check pincode:', error);
+            setIsValid(false);
+        }
+    };
 
     return (
-        <>
-            <div>
-                <section className="text-gray-600 body-font overflow-hidden">
-                    <div className="container px-5 py-12 mx-auto">
-                        <div className="lg:w-4/5 mx-auto flex flex-wrap">
-                            <Image
-                                alt="ecommerce"
-                                className="lg:w-1/2 w-full lg:h-auto px-14 md:px-0 object-cover object-top rounded" 
-                                src="/tshirt.jpeg"
-                                width={200}
-                                height={20}
-                                loading="eager"
-                                priority={true} 
-                            />
+        <div>
+            <section className="text-gray-600 body-font overflow-x-hidden">
+                <div className="container px-5 py-12 mx-auto">
+                    <div className="lg:w-4/5 mx-auto flex flex-wrap">
+                        <Image
+                            alt="ecommerce"
+                            className="lg:w-1/2 w-full lg:h-[31rem] px-14 md:px-0 object-cover object-top rounded"
+                            src="/tshirt.jpeg"
+                            width={200}
+                            height={20}
+                            loading="eager"
+                            priority={true}
+                        />
                             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                                 <h2 className="text-sm title-font text-gray-500 tracking-widest">DevStyle</h2>
-                                <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">The Catcher in the Rye</h1>
+                                <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">Code Your Look</h1>
                                 <div className="flex mb-4">
                                     <span className="flex items-center">
                                         <svg fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 text-devstyle" viewBox="0 0 24 24">
@@ -86,22 +115,45 @@ const Product = async ({ params }) => {
                                 </div>
                                 <div className="flex">
                                     <span className="title-font font-medium text-2xl text-gray-900">Rs.799</span>
-                                    <button className="flex ml-auto text-white bg-devstyle border-0 py-2 px-6 focus:outline-none hover:bg-red-700 rounded">Add to Cart</button>
+                                    <button className="flex ml-auto text-white bg-devstyle border-0 py-2.5 px-2 text-sm md:text-base md:py-2 md:px-6 focus:outline-none hover:bg-red-700 rounded">Buy Now</button>
+                                    <button className="flex ml-2 text-white bg-devstyle border-0 py-2.5 px-2 text-sm md:text-base md:py-2 md:px-6 focus:outline-none hover:bg-red-700 rounded">Add to Cart</button>
                                     <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                                         <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
                                             <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
                                         </svg>
                                     </button>
                                 </div>
+                                <div className="flex mt-4 items-center">
+                                <span className="text-sm">Postal code for service check</span>
+                                <input
+                                    className="ml-2 mr-2 border-2 border-red-200 rounded text-sm text-black p-2 w-32"
+                                    type="text"
+                                    value={pincode}
+                                    onChange={(e) => setPincode(e.target.value)}
+                                />
+                                <button
+                                    className="ml-2 text-white bg-devstyle border-0 py-1.5 px-4 text-sm focus:outline-none hover:bg-red-700 rounded"
+                                    onClick={handleCheckPincode}
+                                >
+                                    Check
+                                </button>
                             </div>
+
+                            {isValid !== null && (
+                                <div className="mt-2 text-sm">
+                                    {isValid ? (
+                                        <span className="text-green-500">Service available in your area.</span>
+                                    ) : (
+                                        <span className="text-red-500">Service not available in your area.</span>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
-                </section>
-            </div>
-        </>
-
+                </div>
+            </section>
+        </div>
     );
-}
+};
 
-
-export default Product
+export default Product;

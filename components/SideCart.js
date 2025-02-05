@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { AiFillCloseCircle, AiFillPlusCircle, AiFillMinusCircle } from 'react-icons/ai';
 import { RiShoppingBag4Fill } from 'react-icons/ri';
 import { useCart } from '../app/context/CartContext';
@@ -42,10 +43,10 @@ const SideCart = ({ cartOpen, toggleCart }) => {
       </ol>
       <div className="mt-5 text-center font-bold">Subtotal: Rs.{subTotal.toFixed(0)}</div>
       <div className="flex mt-4">
-        <button className="flex mr-2 text-white bg-devstyle border-0 text-xs md:text-base py-1 px-2 md:p-2 focus:outline-none hover:bg-red-700 rounded">
+        <Link href={'/checkout'}><button className="flex mr-2 text-white bg-devstyle border-0 text-xs md:text-base py-1 px-2 md:p-2 focus:outline-none hover:bg-red-700 rounded">
           <RiShoppingBag4Fill className="mt-0.5 md:m-1 text-xs md:text-lg" />
           Checkout
-        </button>
+        </button></Link>
         <button
           onClick={clearCart}
           className="flex text-white bg-devstyle border-0 text-xs md:text-base py-1 px-2 md:p-2 focus:outline-none hover:bg-red-700 rounded"

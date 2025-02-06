@@ -16,7 +16,7 @@ const Login = () => {
             style={{ width: "22%", height: "auto" }}
           />
         </div>
-        <h2 className="text-center text-2xl font-bold mt-4">
+        <h2 className="text-center text-2xl font-bold mt-2">
           Login to your account
         </h2>
         <p className="text-center text-gray-600">

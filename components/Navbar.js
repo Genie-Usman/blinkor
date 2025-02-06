@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaShoppingCart } from "react-icons/fa";
+import { MdAccountCircle } from "react-icons/md";
 import SideCart from './SideCart';
 
 const Navbar = () => {
@@ -34,11 +35,14 @@ const Navbar = () => {
                         <Link href={'/hoodies'} className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Hoodies</Link>
                         <Link href={'/stickers'} className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Stickers</Link>
                         <Link href={'/mugs'} className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Mugs</Link>
+                        </nav>
+                        <div className="flex">
+                        <Link href={'/login'}><MdAccountCircle className='text-base text-devstyle hover:text-red-700 md:text-2xl absolute right-11 top-5 md:my-auto cursor-pointer'/> </Link>
                         <FaShoppingCart 
                             onClick={toggleCart} 
                             className='text-base text-devstyle hover:text-red-700 md:text-2xl absolute right-2 top-5 md:my-auto cursor-pointer' 
                         />
-                    </nav>
+                        </div>
                     <SideCart cartOpen={cartOpen} toggleCart={toggleCart} />
                 </div>
             </header>

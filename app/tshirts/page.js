@@ -11,7 +11,7 @@ const Tshirts = async () => {
     <div>
       <section className="text-gray-600 body-font">
         <div className="container px-9 py-20 mx-auto">
-          <div className="flex flex-wrap -m-4">
+          <div className="flex flex-wrap -m-4 mt-16">
             {products.map((item) => (
               <div key={item._id} className="lg:w-1/4 md:w-1/2 p-4 w-full">
                 <Link href={`/product/${item.slug}`} className="block relative rounded overflow-hidden shadow-md">

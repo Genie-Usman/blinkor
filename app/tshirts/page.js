@@ -21,7 +21,7 @@ const Tshirts = async () => {
                     alt={item.title}
                     width={200}
                     height={200}
-                    priority
+                    priority={true}
                   />
                 </Link>
                 <div className="mt-4 text-center md:text-left">

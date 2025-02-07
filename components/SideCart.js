@@ -11,7 +11,7 @@ const SideCart = ({ cartOpen, toggleCart }) => {
 
   return (
     <div
-      className={`sideCart bg-pink-200 w-72 absolute top-1 right-0 h-full px-5 py-10 transform transition-transform rounded z-[9999] ${cartOpen ? 'translate-x-0' : 'translate-x-full '}`}
+      className={`fixed top-0 h-full right-0 w-72 bg-pink-200 shadow-lg rounded-lg p-6 z-50 transition-transform duration-300 ease-in-out ${cartOpen ? 'translate-x-0' : 'translate-x-full '}`}
     >
       <h2 className="font-bold text-xl text-center ">Shopping Cart</h2>
       <span onClick={toggleCart} className="absolute top-5 right-2 cursor-pointer">

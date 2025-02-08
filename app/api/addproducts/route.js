@@ -22,8 +22,8 @@ export async function POST(request) {
                 description: body[i].description,
                 image: body[i].image,
                 category: body[i].category,
-                size: body[i].size,
                 color: body[i].color,
+                size: body[i].size,
                 price: body[i].price,
                 availableQuantity: body[i].availableQuantity,
             });

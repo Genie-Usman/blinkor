@@ -17,7 +17,7 @@ const Navbar = () => {
     return (
         <div>
             <header className="text-gray-600 body-font">
-                <div className="container mx-auto flex flex-wrap py-2 md:py-1 flex-col md:flex-row items-center shadow-md md:fixed top-0 left-0 w-full z-50 bg-white">
+                <div className="container mx-auto flex flex-wrap py-2 md:py-1 flex-col md:flex-row items-center shadow-md fixed top-0 left-0 w-full z-50 bg-white">
                     <Link href={'/'}>
                         <Image
                             className='m-auto md:ml-5'

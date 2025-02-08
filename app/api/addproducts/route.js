@@ -15,19 +15,39 @@ export async function POST(request) {
             );
         }
 
-        for (let i = 0; i < body.length; i++) {
-            const product = new Products({
-                title: body[i].title,
-                slug: body[i].slug,
-                description: body[i].description,
-                image: body[i].image,
-                category: body[i].category,
-                color: body[i].color,
-                size: body[i].size,
-                price: body[i].price,
-                availableQuantity: body[i].availableQuantity,
-            });
-            await product.save();
+        for (const item of body) {
+            // Check if the product with the same slug already exists
+            let existingProduct = await Products.findOne({ slug: item.slug });
+
+            if (existingProduct) {
+                // If the product exists, update the variants
+                item.variants.forEach(variant => {
+                    const existingVariant = existingProduct.variants.find(
+                        v => v.size === variant.size && v.color === variant.color
+                    );
+
+                    if (existingVariant) {
+                        existingVariant.availableQuantity += variant.availableQuantity;
+                    } else {
+                        existingProduct.variants.push(variant);
+                    }
+                });
+
+                await existingProduct.save();
+            } else {
+                // Create a new product entry
+                const newProduct = new Products({
+                    title: item.title,
+                    slug: item.slug,
+                    description: item.description,
+                    image: item.image,
+                    category: item.category,
+                    price: item.price,
+                    variants: item.variants,  // Now storing all sizes/colors inside the variants array
+                });
+
+                await newProduct.save();
+            }
         }
 
         return NextResponse.json(

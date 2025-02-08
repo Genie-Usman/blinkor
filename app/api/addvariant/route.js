@@ -5,9 +5,9 @@ import { NextResponse } from "next/server";
 export async function PUT(request) {
     try {
         await connectDB();
-        const { productId, size, color, availableQuantity } = await request.json();
+        const { productId, size, color, image, availableQuantity } = await request.json();
 
-        if (!productId || !size || !color || availableQuantity == null) {
+        if (!productId || !size || !color || !image || availableQuantity == null) {
             return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
         }
 
@@ -17,13 +17,13 @@ export async function PUT(request) {
         }
 
         const variantExists = product.variants.some(
-            (v) => v.size === size && v.color === color
+            (v) => v.size === size && v.color === color && v.image === image
         );
 
         if (variantExists) {
             return NextResponse.json({ message: "Variant already exists" }, { status: 400 });
         }
-        product.variants.push({ size, color, availableQuantity });
+        product.variants.push({ size, color, image, availableQuantity });
         await product.save();
 
         return NextResponse.json(

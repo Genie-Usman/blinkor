@@ -36,15 +36,16 @@ const ProductPage = async ({ params }) => {
   return (
     <section className="text-gray-600 body-font overflow-x-hidden mt-16">
       <div className="container px-5 py-12 mx-auto">
-        <div className="lg:w-4/5 mx-auto flex flex-wrap">
-          <Image
-            alt={product.title}
+        <div className="lg:w-4/5 mx-auto flex justify-center flex-wrap">
+          {/* <Image
             className="lg:w-1/2 w-full lg:h-[31rem] px-14 md:px-0 object-cover object-top rounded"
+            alt={product.title}
             src={product.image || "/placeholder.jpg"}
             width={500}
             height={500}
+            style={{ width: "auto", height: "auto" }}
             priority
-          />
+          /> */}
           <ProductDetails product={serializedProduct} />
         </div>
       </div>

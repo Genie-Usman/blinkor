@@ -20,29 +20,28 @@ const Navbar = () => {
                 <div className="container mx-auto flex flex-wrap py-2 md:py-1 flex-col md:flex-row items-center shadow-md fixed top-0 left-0 w-full z-50 bg-white">
                     <Link href={'/'}>
                         <Image
-                            className='m-auto md:ml-5'
+                            className="m-auto md:ml-5"
                             src="/logo-banner.png"
-                            alt="logo" 
+                            alt="logo"
                             width={200}
-                            height={20}
-                            priority={true} 
-                            style={{ height: "auto" }}
+                            height={200}
+                            priority={true}
                             loading="eager"
                         />
                     </Link>
-                    <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+                    <nav className=" ml-7 md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
                         <Link href={'/tshirts'} className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Tshirts</Link>
                         <Link href={'/hoodies'} className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Hoodies</Link>
                         <Link href={'/stickers'} className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Stickers</Link>
                         <Link href={'/mugs'} className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Mugs</Link>
-                        </nav>
-                        <div className="flex">
-                        <Link href={'/login'}><MdAccountCircle className='text-base text-devstyle hover:text-red-700 md:text-2xl absolute right-11 top-5 md:my-auto cursor-pointer'/> </Link>
-                        <FaShoppingCart 
-                            onClick={toggleCart} 
-                            className='text-base text-devstyle hover:text-red-700 md:text-2xl absolute right-2 top-5 md:my-auto cursor-pointer' 
+                    </nav>
+                    <div className="flex">
+                        <Link href={'/login'}><MdAccountCircle className='text-base text-devstyle hover:text-red-700 md:text-2xl absolute right-11 top-5 md:my-auto cursor-pointer' /> </Link>
+                        <FaShoppingCart
+                            onClick={toggleCart}
+                            className='text-base text-devstyle hover:text-red-700 md:text-2xl absolute right-2 top-5 md:my-auto cursor-pointer'
                         />
-                        </div>
+                    </div>
                     <SideCart cartOpen={cartOpen} toggleCart={toggleCart} />
                 </div>
             </header>

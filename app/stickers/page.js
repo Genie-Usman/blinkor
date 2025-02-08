@@ -5,7 +5,7 @@ import Link from 'next/link';
 const Stickers = () => {
   return (
     <div>
-      <section className="text-gray-600 body-font">
+      <section className="text-gray-600 body-font mt-16">
         <div className="container px-9 py-20 mx-auto">
           <div className="flex flex-wrap -m-4">
             <div className="lg:w-1/4 md:w-1/2 p-4 w-full ">

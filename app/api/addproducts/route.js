@@ -16,11 +16,9 @@ export async function POST(request) {
         }
 
         for (const item of body) {
-            // Check if the product with the same slug already exists
             let existingProduct = await Products.findOne({ slug: item.slug });
 
             if (existingProduct) {
-                // If the product exists, update the variants
                 item.variants.forEach(variant => {
                     const existingVariant = existingProduct.variants.find(
                         v => v.size === variant.size && v.color === variant.color
@@ -35,7 +33,6 @@ export async function POST(request) {
 
                 await existingProduct.save();
             } else {
-                // Create a new product entry
                 const newProduct = new Products({
                     title: item.title,
                     slug: item.slug,
@@ -43,7 +40,7 @@ export async function POST(request) {
                     image: item.image,
                     category: item.category,
                     price: item.price,
-                    variants: item.variants,  // Now storing all sizes/colors inside the variants array
+                    variants: item.variants,
                 });
 
                 await newProduct.save();

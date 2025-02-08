@@ -10,7 +10,7 @@ const Tshirts = async () => {
   const tshirts = {};
 
   for (const item of products) {
-    if (!Array.isArray(item.variants)) continue; // Ensure variants is always an array
+    if (!Array.isArray(item.variants)) continue; 
 
     if (tshirts[item.title]) {
       for (const variant of item.variants) {
@@ -28,10 +28,10 @@ const Tshirts = async () => {
         _id: item._id.toString(),
         title: item.title,
         slug: item.slug,
-        image: item.image || "/placeholder.jpg", // Fallback if image is missing
+        image: item.image || "/placeholder.jpg",
         price: item.price,
-        colors: [...new Set(item.variants.filter(v => v.availableQuantity > 0).map(v => v.color))], // Unique colors
-        sizes: [...new Set(item.variants.filter(v => v.availableQuantity > 0).map(v => v.size))], // Unique sizes
+        colors: [...new Set(item.variants.filter(v => v.availableQuantity > 0).map(v => v.color))],
+        sizes: [...new Set(item.variants.filter(v => v.availableQuantity > 0).map(v => v.size))],
       };
     }
   }

@@ -5,10 +5,8 @@ import { NextResponse } from "next/server";
 export async function PUT(request) {
     try {
         await connectDB();
-
         const body = await request.json();
 
-        // Validate request body
         if (!Array.isArray(body) || body.length === 0) {
             return NextResponse.json(
                 { message: "Invalid product data. Expected a non-empty array." },
@@ -16,19 +14,17 @@ export async function PUT(request) {
             );
         }
 
-        // Process updates
         const results = await Promise.allSettled(
             body.map(async (product) => {
                 if (!product._id) throw new Error("Missing product ID");
 
                 return Products.findByIdAndUpdate(product._id, product, {
-                    new: true, // Return the updated document
-                    upsert: false, // Do not create a new document if not found
+                    new: true,
+                    upsert: false,
                 });
             })
         );
 
-        // Separate successful and failed updates
         const updatedProducts = results
             .filter(result => result.status === "fulfilled" && result.value)
             .map(result => result.value);
@@ -43,7 +39,7 @@ export async function PUT(request) {
                 updatedProducts,
                 failedUpdates,
             },
-            { status: failedUpdates.length > 0 ? 207 : 200 } // 207: Multi-Status (some failures)
+            { status: failedUpdates.length > 0 ? 207 : 200 }
         );
     } catch (error) {
         console.error("Error updating products:", error);

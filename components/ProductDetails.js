@@ -9,14 +9,11 @@ const ProductDetails = ({ product }) => {
     const [isValid, setIsValid] = useState(null);
     const [cartMessage, setCartMessage] = useState("");
 
-    // Get unique colors
     const uniqueColors = [...new Set(product.variants.map(v => v.color))];
 
-    // State for selected color and size
     const [selectedColor, setSelectedColor] = useState(uniqueColors[0] || "");
     const [availableSizes, setAvailableSizes] = useState([]);
 
-    // Update available sizes when color changes
     useEffect(() => {
         const filteredSizes = product.variants
             .filter(v => v.color === selectedColor && v.availableQuantity > 0)
@@ -24,11 +21,10 @@ const ProductDetails = ({ product }) => {
         setAvailableSizes(filteredSizes);
     }, [selectedColor, product.variants]);
 
-    // Ensure a valid size is selected when color changes
     const [selectedSize, setSelectedSize] = useState("");
     useEffect(() => {
         if (availableSizes.length > 0) {
-            setSelectedSize(availableSizes[0]); // Default to first available size
+            setSelectedSize(availableSizes[0]); 
         } else {
             setSelectedSize("");
         }
@@ -36,7 +32,7 @@ const ProductDetails = ({ product }) => {
 
     const handleCheckPincode = async () => {
         try {
-            const response = await fetch("/api/pincode");
+            const response = await fetch("http://localhost:3000/api/pincode");
             const data = await response.json();
             setIsValid(data.pincodes.includes(Number(pincode)));
         } catch {
@@ -95,28 +91,35 @@ const ProductDetails = ({ product }) => {
             </div>
 
             <div className="flex">
-                <span className="title-font font-medium text-2xl text-gray-900">Rs. {product.price}</span>
+                <span className="title-font font-medium text-s md:text-2xl text-gray-900">Rs. {product.price}</span>
+                <div className="flex ml-auto space-x-3">
                 <button
-                    className="flex ml-auto bg-red-500 text-white py-2 px-6 rounded"
+                    className="flex md:ml-2 text-xs md:text-base bg-devstyle hover:bg-red-700 text-white py-2 px-6 rounded"
+                    disabled={!selectedSize}
+                >
+                    Buy Now
+                </button>
+                <button
+                    className="flex md:ml-auto text-xs md:text-base bg-devstyle hover:bg-red-700 text-white  py-2 px-6 rounded"
                     onClick={handleAddToCart}
                     disabled={!selectedSize}
                 >
                     Add to Cart
                 </button>
+                </div>
             </div>
 
             {cartMessage && <p className="mt-2 text-green-500 text-sm">{cartMessage}</p>}
 
-            {/* Pincode Check */}
-            <div className="flex mt-4 items-center">
-                <span className="text-sm">Enter Pincode</span>
+            <div className="flex mt-5 items-center ">
+                <span className="text-sm">Enter Pincode to check Service</span>
                 <input
-                    className="ml-2 border-2 border-gray-300 rounded p-2 w-24"
+                    className="ml-2 border-2 h-8 border-gray-300 rounded p-2 w-24 mr-2"
                     type="text"
                     value={pincode}
                     onChange={(e) => setPincode(e.target.value)}
                 />
-                <button className="ml-2 bg-red-500 text-white py-1 px-3 rounded text-sm" onClick={handleCheckPincode}>
+                <button className="flex text-xs bg-devstyle hover:bg-red-700 text-white py-2 px-6 rounded" onClick={handleCheckPincode}>
                     Check
                 </button>
             </div>

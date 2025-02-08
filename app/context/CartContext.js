@@ -16,7 +16,7 @@ export const CartProvider = ({ children }) => {
       }
     } catch (e) {
       console.error('Error loading cart from localStorage:', e);
-      localStorage.removeItem('cart'); 
+      localStorage.removeItem('cart');
     }
   }, []);
 
@@ -37,29 +37,43 @@ export const CartProvider = ({ children }) => {
     setSubTotal(total);
   };
 
-  const addToCart = (id, name, quantity, price, size, color) => {
-    const newCart = { ...cart };
-    if (newCart[id]) {
-      newCart[id].quantity += quantity;
-    } else {
-      newCart[id] = { name, quantity, price, size, color };
-    }
-    setCart(newCart);
-    saveCart(newCart);
-  };
+  const generateCartKey = (id, size, color) => `${id}_${size}_${color}`;
 
-  const removeFromCart = (id) => {
-    const newCart = { ...cart };
-    if (newCart[id]) {
-      if (newCart[id].quantity > 1) {
-        newCart[id].quantity--;
+  const addToCart = (id, name, quantity, price, size, color) => {
+    const key = generateCartKey(id, size, color);
+    setCart((prevCart) => {
+      const newCart = { ...prevCart };
+  
+      if (newCart[key]) {
+        newCart[key] = { ...newCart[key], quantity: newCart[key].quantity + quantity };
       } else {
-        delete newCart[id]; 
+        newCart[key] = { id, name, quantity, price, size, color };
       }
-      setCart(newCart);
+  
       saveCart(newCart);
-    }
+      return newCart; // ✅ Ensures only one update per click
+    });
   };
+  
+  const removeFromCart = (id, size, color) => {
+    const key = generateCartKey(id, size, color);
+    setCart((prevCart) => {
+      const newCart = { ...prevCart };
+  
+      if (newCart[key]) {
+        if (newCart[key].quantity > 1) {
+          newCart[key] = { ...newCart[key], quantity: newCart[key].quantity - 1 };
+        } else {
+          delete newCart[key];
+        }
+  
+        saveCart(newCart);
+      }
+  
+      return newCart; // ✅ Prevents duplicate updates
+    });
+  };
+  
 
   const clearCart = () => {
     setCart({});
@@ -68,9 +82,7 @@ export const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider
-      value={{ cart, subTotal, addToCart, removeFromCart, clearCart }}
-    >
+    <CartContext.Provider value={{ cart, subTotal, addToCart, removeFromCart, clearCart }}>
       {children}
     </CartContext.Provider>
   );

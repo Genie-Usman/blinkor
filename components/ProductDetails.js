@@ -2,14 +2,15 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useCart } from "../app/context/CartContext";
 
 const ProductDetails = ({ product }) => {
-    const { addToCart } = useCart();
+    const { addToCart, buyNow } = useCart();
     const [pincode, setPincode] = useState("");
     const [isValid, setIsValid] = useState(null);
     const [cartMessage, setCartMessage] = useState("");
-
+    const router = useRouter();
     // Extract unique colors from variants
     const uniqueColors = [...new Set(product.variants.map(v => v.color))];
 
@@ -48,6 +49,15 @@ const ProductDetails = ({ product }) => {
         setCartMessage("Product added to cart!");
         setTimeout(() => setCartMessage(""), 2000);
     };
+
+    const handleBuyNow = () => {
+        if (!selectedSize) {
+            setCartMessage("Please select a size before buying.");
+            return;
+        }
+        buyNow(product.slug, product.title, 1, product.price, selectedSize, selectedColor);
+        router.push("/checkout");
+    }
 
     return (
         <div className="container mx-auto px-5 py-10 flex flex-col lg:flex-row gap-10">
@@ -116,6 +126,7 @@ const ProductDetails = ({ product }) => {
                     <button
                         className="flex md:ml-2 text-xs md:text-base bg-devstyle hover:bg-red-700 text-white py-2 px-6 rounded"
                         disabled={!selectedSize}
+                        onClick={handleBuyNow}
                     >
                         Buy Now
                     </button>

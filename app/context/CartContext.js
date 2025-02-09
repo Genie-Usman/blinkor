@@ -51,9 +51,21 @@ export const CartProvider = ({ children }) => {
       }
   
       saveCart(newCart);
-      return newCart; // ✅ Ensures only one update per click
+      return newCart; 
     });
   };
+
+  const buyNow = (id, name, quantity, price, size, color) =>{
+    const key = generateCartKey(id, size, color);
+    setCart(() => {
+      const newCart = {};
+        newCart[key] = { id, name, quantity, price, size, color };
+  
+      saveCart(newCart);
+      return newCart; 
+    });
+    
+  }
   
   const removeFromCart = (id, size, color) => {
     const key = generateCartKey(id, size, color);
@@ -70,7 +82,7 @@ export const CartProvider = ({ children }) => {
         saveCart(newCart);
       }
   
-      return newCart; // ✅ Prevents duplicate updates
+      return newCart;
     });
   };
   
@@ -82,7 +94,7 @@ export const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cart, subTotal, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider value={{ cart, subTotal, addToCart, removeFromCart, clearCart, buyNow }}>
       {children}
     </CartContext.Provider>
   );

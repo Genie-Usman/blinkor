@@ -51,7 +51,8 @@ export const CartProvider = ({ children }) => {
       }
   
       saveCart(newCart);
-      return newCart; 
+      return newCart;
+      
     });
   };
 

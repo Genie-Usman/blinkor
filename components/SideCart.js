@@ -13,9 +13,8 @@ const SideCart = ({ cartOpen, toggleCart }) => {
 
   return (
     <div
-      className={`fixed top-0 h-full right-0 w-72 bg-pink-200 shadow-lg rounded-lg p-6 z-50 transition-transform duration-300 ease-in-out ${
-        cartOpen ? 'translate-x-0' : 'translate-x-full'
-      }`}
+      className={`fixed top-0 h-full right-0 w-72 bg-pink-200 overflow-y-auto max-h-screen custom-scrollbar shadow-lg rounded-lg p-6 z-50 transition-transform duration-300 ease-in-out ${cartOpen ? 'translate-x-0' : 'translate-x-full '
+        }`}
     >
       <h2 className="font-bold text-xl text-center">Shopping Cart</h2>
       <button onClick={toggleCart} className="absolute top-5 right-2 cursor-pointer">
@@ -33,12 +32,12 @@ const SideCart = ({ cartOpen, toggleCart }) => {
               </div>
               <div className="w-1/3 flex items-center justify-end space-x-2">
                 <AiFillMinusCircle
-                  className="text-devstyle text-lg cursor-pointer hover:text-red-600"
+                  className="text-devstyle text-lg cursor-pointer hover:text-red-700"
                   onClick={() => removeFromCart(item.id, item.size, item.color)}
                 />
                 <span className="text-md font-semibold">{item.quantity}</span>
                 <AiFillPlusCircle
-                  className="text-devstyle text-lg cursor-pointer hover:text-green-600"
+                  className="text-devstyle text-lg cursor-pointer hover:text-red-700"
                   onClick={() => addToCart(item.id, item.name, 1, item.price, item.size, item.color)}
                 />
               </div>
@@ -52,17 +51,18 @@ const SideCart = ({ cartOpen, toggleCart }) => {
           <div className="mt-5 text-center font-bold">Subtotal: Rs. {subTotal.toFixed(0)}</div>
           <div className="flex justify-between mt-4">
             <Link href="/checkout">
-              <button className="flex items-center bg-devstyle text-white px-4 py-2 rounded hover:bg-red-700">
-                <RiShoppingBag4Fill className="mr-2 text-lg" /> Checkout
+              <button onClick={toggleCart} className="flex items-center bg-devstyle text-white px-3 py-2 text-sm rounded-md hover:bg-red-700 transition-all duration-200">
+                <RiShoppingBag4Fill className="mr-1 text-base" /> Checkout
               </button>
             </Link>
             <button
               onClick={clearCart}
-              className="bg-devstyle flex items-center text-white px-2 py-2 rounded hover:bg-red-700"
+              className="bg-devstyle flex items-center text-white px-3 py-2 text-sm rounded-md hover:bg-red-700 transition-all duration-200"
             >
-              <IoTrashBinSharp className="mr-2 text-lg" /> Clear Cart
+              <IoTrashBinSharp className="mr-1 text-base" /> Clear Cart
             </button>
           </div>
+
         </>
       )}
     </div>

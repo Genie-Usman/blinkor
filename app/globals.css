@@ -5,3 +5,26 @@
 body{
     overflow-x: hidden;
 }
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px; 
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f8d7da;
+    border-radius: 10px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #ff3130;
+    border-radius: 10px;
+    transition: background 0.3s;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #f34747; 
+  }
+  

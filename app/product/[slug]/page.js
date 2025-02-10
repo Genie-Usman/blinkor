@@ -19,7 +19,7 @@ const ProductPage = async ({ params }) => {
   const serializedProduct = {
     ...product,
     _id: product._id.toString(),
-    image: product.image || "", // Ensure image is included
+    image: product.image || "",
     createdAt: product.createdAt?.toISOString(),
     updatedAt: product.updatedAt?.toISOString(),
     variants: product.variants.map(v => ({
@@ -27,7 +27,7 @@ const ProductPage = async ({ params }) => {
       size: v.size,
       color: v.color,
       availableQuantity: v.availableQuantity,
-      image: v.image || "", // Ensure variant image is included
+      image: v.image || "",
     })),
   };
 

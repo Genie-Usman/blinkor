@@ -28,11 +28,12 @@ const Tshirts = async () => {
         _id: item._id.toString(),
         title: item.title,
         slug: item.slug,
-        image: item.image || "/placeholder.jpg",
+        // Use first available variant's image if it exists, otherwise use product image
+        image: item.variants.find(v => v.availableQuantity > 0)?.image || item.image || "/placeholder.jpg",
         price: item.price,
         colors: [...new Set(item.variants.filter(v => v.availableQuantity > 0).map(v => v.color))],
         sizes: [...new Set(item.variants.filter(v => v.availableQuantity > 0).map(v => v.size))],
-      };
+    };
     }
   }
 
@@ -53,7 +54,7 @@ const Tshirts = async () => {
                 />
               </Link>
               <div className="mt-4 text-center md:text-left">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">T-Shirts</h3>
+                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">tshirts</h3>
                 <h2 className="text-gray-900 text-lg font-medium truncate w-full">{item.title}</h2>
 
                 {/* Render sizes */}

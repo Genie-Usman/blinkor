@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCart } from "../app/context/CartContext";
-import {toast, Zoom } from 'react-toastify';
+import { toast, Zoom } from "react-toastify";
 
 const ProductDetails = ({ product }) => {
     const { addToCart, buyNow } = useCart();
@@ -21,10 +21,23 @@ const ProductDetails = ({ product }) => {
     const [productImage, setProductImage] = useState(product.image);
 
     useEffect(() => {
-        const filteredVariants = product.variants.filter(v => v.color === selectedColor && v.availableQuantity > 0);
-        setAvailableSizes(filteredVariants.map(v => v.size));
-        setProductImage(filteredVariants.length > 0 ? filteredVariants[0].image || product.image : product.image);
-        setSelectedSize(filteredVariants.length > 0 ? filteredVariants[0].size : "");
+        const filteredVariants = product.variants.filter(
+            v => v.color === selectedColor && v.availableQuantity > 0
+        );
+
+        if (filteredVariants.length > 0) {
+            setAvailableSizes(filteredVariants.map(v => v.size));
+            setSelectedSize(filteredVariants[0].size);
+
+            // Update product image dynamically
+            setProductImage(filteredVariants[0].image && filteredVariants[0].image !== "" 
+                ? filteredVariants[0].image 
+                : product.image);
+        } else {
+            setAvailableSizes([]);
+            setSelectedSize("");
+            setProductImage(product.image);
+        }
     }, [selectedColor, product.variants]);
 
     const handleCheckPincode = async () => {
@@ -32,7 +45,6 @@ const ProductDetails = ({ product }) => {
             const response = await fetch("http://localhost:3000/api/pincode");
             const data = await response.json();
             setIsValid(data.pincodes.includes(Number(pincode)));
-            
         } catch {
             setIsValid(false);
         }
@@ -40,21 +52,21 @@ const ProductDetails = ({ product }) => {
 
     useEffect(() => {
         if (isValid === null) return;
-    
+
         if (isValid) {
-          toast.success("Service available!", {
-            position: "bottom-center",
-            autoClose: 2000,
-            transition: Zoom,
-          });
+            toast.success("Service available!", {
+                position: "bottom-center",
+                autoClose: 2000,
+                transition: Zoom,
+            });
         } else {
-          toast.error("Sorry, Service is not available yet!", {
-            position: "bottom-center",
-            autoClose: 2000,
-            transition: Zoom,
-          });
+            toast.error("Sorry, service is not available yet!", {
+                position: "bottom-center",
+                autoClose: 2000,
+                transition: Zoom,
+            });
         }
-      }, [isValid]);
+    }, [isValid]);
 
     const handleAddToCart = () => {
         if (!selectedSize) {
@@ -66,7 +78,7 @@ const ProductDetails = ({ product }) => {
             position: "bottom-center",
             autoClose: 1000,
             transition: Zoom,
-        })
+        });
     };
 
     const handleBuyNow = () => {
@@ -76,7 +88,7 @@ const ProductDetails = ({ product }) => {
         }
         buyNow(product.slug, product.title, 1, product.price, selectedSize, selectedColor);
         router.push("/checkout");
-    }
+    };
 
     return (
         <div className="container mx-auto px-5 py-10 flex flex-col lg:flex-row gap-10">
@@ -91,8 +103,11 @@ const ProductDetails = ({ product }) => {
                     priority
                 />
             </div>
+
             <div className="w-full lg:w-1/2">
-                <h2 className="text-sm title-font text-gray-500 tracking-widest">{product.brand || "DevStyle"}</h2>
+                <h2 className="text-sm title-font text-gray-500 tracking-widest">
+                    {product.brand || "DevStyle"}
+                </h2>
                 <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                     {product.title}
                 </h1>
@@ -109,8 +124,9 @@ const ProductDetails = ({ product }) => {
                             <button
                                 key={index}
                                 onClick={() => setSelectedColor(color)}
-                                className={`border-2 rounded-full w-7 h-7 mx-1 transition ${selectedColor === color ? "border-black" : "border-gray-300"
-                                    }`}
+                                className={`border-2 rounded-full w-7 h-7 mx-1 transition ${
+                                    selectedColor === color ? "border-black" : "border-gray-300"
+                                }`}
                                 style={{ backgroundColor: color }}
                             ></button>
                         ))}
@@ -139,7 +155,9 @@ const ProductDetails = ({ product }) => {
                 </div>
 
                 <div className="flex">
-                    <span className="title-font font-medium text-s md:text-2xl text-gray-900">Rs. {product.price}</span>
+                    <span className="title-font font-medium text-s md:text-2xl text-gray-900">
+                        Rs. {product.price}
+                    </span>
                     <div className="flex ml-auto space-x-3">
                         <button
                             className="flex md:ml-2 text-xs md:text-base bg-devstyle hover:bg-red-700 text-white py-2 px-6 rounded"
@@ -176,14 +194,7 @@ const ProductDetails = ({ product }) => {
                         Check
                     </button>
                 </div>
-
-                {/* {isValid !== null && (
-                    <p className={`mt-2 text-sm ${isValid ? "text-green-500" : "text-red-500"}`}>
-                        {isValid ? "Service available" : "Service not available"}
-                    </p>
-                )} */}
             </div>
-            
         </div>
     );
 };

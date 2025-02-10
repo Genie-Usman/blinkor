@@ -16,13 +16,10 @@ const ProductPage = async ({ params }) => {
     return <div className="text-center text-red-500">Product not found</div>;
   }
 
-  if (!product) {
-    return <div className="text-center text-red-500">Product not found</div>;
-  }
-
   const serializedProduct = {
     ...product,
     _id: product._id.toString(),
+    image: product.image || "", // Ensure image is included
     createdAt: product.createdAt?.toISOString(),
     updatedAt: product.updatedAt?.toISOString(),
     variants: product.variants.map(v => ({
@@ -30,6 +27,7 @@ const ProductPage = async ({ params }) => {
       size: v.size,
       color: v.color,
       availableQuantity: v.availableQuantity,
+      image: v.image || "", // Ensure variant image is included
     })),
   };
 

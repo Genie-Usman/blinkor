@@ -21,7 +21,7 @@ export async function POST(request) {
             if (existingProduct) {
                 item.variants.forEach(variant => {
                     const existingVariant = existingProduct.variants.find(
-                        v => v.size === variant.size && v.color === variant.color
+                        v => v.size === variant.size && v.color === variant.color && v.image === variant.image
                     );
 
                     if (existingVariant) {

@@ -32,7 +32,7 @@ const Navbar = () => {
                     <nav className=" ml-7 md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
                         <Link href={'/tshirts'} className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Tshirts</Link>
                         <Link href={'/hoodies'} className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Hoodies</Link>
-                        <Link href={'/stickers'} className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Stickers</Link>
+                        <Link href={'/caps'} className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Caps</Link>
                         <Link href={'/mugs'} className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Mugs</Link>
                     </nav>
                     <div className="flex">

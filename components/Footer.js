@@ -27,7 +27,7 @@ const Footer = () => {
             <nav className="list-none space-y-2">
               <li><Link href="/tshirts" className="hover:text-devstyle">T-Shirts</Link></li>
               <li><Link href="/hoodies" className="hover:text-devstyle">Hoodies</Link></li>
-              <li><Link href="/stickers" className="hover:text-devstyle">Stickers</Link></li>
+              <li><Link href="/caps" className="hover:text-devstyle">Caps</Link></li>
               <li><Link href="/mugs" className="hover:text-devstyle">Mugs</Link></li>
             </nav>
           </div>

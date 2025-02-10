@@ -28,7 +28,6 @@ const Caps = async () => {
         _id: item._id.toString(),
         title: item.title,
         slug: item.slug,
-        // Use first available variant's image if it exists, otherwise use product image
         image: item.variants.find(v => v.availableQuantity > 0)?.image || item.image || "/placeholder.jpg",
         price: item.price,
         colors: [...new Set(item.variants.filter(v => v.availableQuantity > 0).map(v => v.color))],

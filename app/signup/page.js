@@ -1,11 +1,57 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+"use client";
+
+import React, { useState } from "react";
+import { toast, Zoom } from "react-toastify";
+import Image from "next/image";
+import Link from "next/link";
 
 const Signup = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("http://localhost:3000/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        toast.success("Your account has been created!", {
+          position: "top-left",
+          autoClose: 2000,
+          transition: Zoom,
+        });
+
+        setFormData({ name: "", email: "", password: "" });
+      } else {
+        toast.error(data.message || "Signup failed!");
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.");
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg md:mt-16">
         <div className="flex justify-center">
           <Image
             className="m-auto"
@@ -20,29 +66,46 @@ const Signup = () => {
           Sign up for your account
         </h2>
         <p className="text-center text-gray-600">
-            Or 
-            <Link href={"/login"} className="ml-2 text-devstyle font-bold text-sm hover:text-red-700">Login</Link>
+          Or
+          <Link
+            href="/login"
+            className="ml-2 text-devstyle font-bold text-sm hover:text-red-700"
+          >
+            Login
+          </Link>
         </p>
-        <form className="mt-6">
+        <form onSubmit={handleSubmit} className="mt-6">
           <div>
             <input
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
               type="text"
               className="w-full px-4 py-2 mt-2 border-0 rounded-md focus:ring-1 focus:outline-none focus:ring-devstyle"
-              placeholder="Full name"
+              placeholder="Full Name"
+              required
             />
           </div>
           <div className="mt-4">
             <input
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               type="email"
               className="w-full px-4 py-2 mt-2 border rounded-md focus:ring-1 focus:outline-none focus:ring-devstyle"
-              placeholder="Email address"
+              placeholder="Email Address"
+              required
             />
           </div>
           <div className="mt-4">
             <input
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               type="password"
               className="w-full px-4 py-2 mt-2 border rounded-md focus:ring-1 focus:outline-none focus:ring-devstyle"
               placeholder="Password"
+              required
             />
           </div>
           <button
@@ -54,7 +117,7 @@ const Signup = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;

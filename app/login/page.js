@@ -5,8 +5,10 @@ import { toast, Zoom } from "react-toastify";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation"; 
+import { useCart } from "../context/CartContext";
 
 const Login = () => {
+  const {login} = useCart();
   const router = useRouter();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
@@ -36,6 +38,7 @@ const Login = () => {
 
       if (res.ok) {
         localStorage.setItem('token', data.token);
+        login(data.token);
         toast.success("Login successful!", { position: "top-left", autoClose: 500, transition: Zoom });
         setFormData({ email: "", password: "" });
         setTimeout(() => router.push("/"), 1000);

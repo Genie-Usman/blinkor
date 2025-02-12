@@ -1,10 +1,15 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState({});
   const [subTotal, setSubTotal] = useState(0);
+  const [user, setUser] = useState({ value: null });
+  const [key, setKey] = useState();
+
+  const router = useRouter();
 
   useEffect(() => {
     try {
@@ -18,7 +23,26 @@ export const CartProvider = ({ children }) => {
       console.error('Error loading cart from localStorage:', e);
       localStorage.removeItem('cart');
     }
-  }, []);
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setUser({ value: storedToken });
+      setKey((prev) => prev + 1); 
+    }
+  },[]);
+
+  const login = (token) => {
+    localStorage.setItem("token", token); 
+    setUser({ value: token }); 
+    setKey((prev) => prev + 1); 
+    router.push("/");
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUser({ value: null });
+    setKey((prev) => prev + 1);
+    router.push("/");
+  };
 
   const saveCart = (newCart) => {
     try {
@@ -43,50 +67,50 @@ export const CartProvider = ({ children }) => {
     const key = generateCartKey(id, size, color);
     setCart((prevCart) => {
       const newCart = { ...prevCart };
-  
+
       if (newCart[key]) {
         newCart[key] = { ...newCart[key], quantity: newCart[key].quantity + quantity };
       } else {
         newCart[key] = { id, name, quantity, price, size, color };
       }
-  
+
       saveCart(newCart);
       return newCart;
-      
+
     });
   };
 
-  const buyNow = (id, name, quantity, price, size, color) =>{
+  const buyNow = (id, name, quantity, price, size, color) => {
     const key = generateCartKey(id, size, color);
     setCart(() => {
       const newCart = {};
-        newCart[key] = { id, name, quantity, price, size, color };
-  
+      newCart[key] = { id, name, quantity, price, size, color };
+
       saveCart(newCart);
-      return newCart; 
+      return newCart;
     });
-    
+
   }
-  
+
   const removeFromCart = (id, size, color) => {
     const key = generateCartKey(id, size, color);
     setCart((prevCart) => {
       const newCart = { ...prevCart };
-  
+
       if (newCart[key]) {
         if (newCart[key].quantity > 1) {
           newCart[key] = { ...newCart[key], quantity: newCart[key].quantity - 1 };
         } else {
           delete newCart[key];
         }
-  
+
         saveCart(newCart);
       }
-  
+
       return newCart;
     });
   };
-  
+
 
   const clearCart = () => {
     setCart({});
@@ -95,7 +119,7 @@ export const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cart, subTotal, addToCart, removeFromCart, clearCart, buyNow }}>
+    <CartContext.Provider value={{ user, key, cart, subTotal, addToCart, removeFromCart, clearCart, buyNow, login, logout }}>
       {children}
     </CartContext.Provider>
   );

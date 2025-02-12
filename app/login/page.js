@@ -35,6 +35,7 @@ const Login = () => {
       const data = await res.json();
 
       if (res.ok) {
+        localStorage.setItem('token', data.token);
         toast.success("Login successful!", { position: "top-left", autoClose: 500, transition: Zoom });
         setFormData({ email: "", password: "" });
         setTimeout(() => router.push("/"), 1000);

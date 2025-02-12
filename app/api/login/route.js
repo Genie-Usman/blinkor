@@ -2,6 +2,7 @@ import { connectDB } from "../../lib/mongodb";
 import User from "@/models/User";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import jwt from 'jsonwebtoken';
 
 export async function POST(request) {
   try {
@@ -21,8 +22,8 @@ export async function POST(request) {
     if (!passwordValid) {
       return NextResponse.json({ message: "Invalid credentials!" }, { status: 401 });
     }
-
-    return NextResponse.json({ message: "Login successful!" }, { status: 200 });
+    const token = jwt.sign({id: user._id, email: user.email, name: user.name }, 'ItsDone', { expiresIn: '2d' })
+    return NextResponse.json({ message: "Login successful!", token }, { status: 200 }, token);
   } catch (error) {
     console.error("Login Error:", error);
     return NextResponse.json({ message: "Something went wrong. Try again later." }, { status: 500 });

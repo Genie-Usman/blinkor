@@ -61,7 +61,7 @@ const Navbar = () => {
                                 <div className="absolute right-8 font-bold top-6 py-4 px-3 bg-pink-200 text-sm rounded shadow-lg w-32">
                                     <ul className="flex flex-col text-left">
                                         <li className="p-2 hover:bg-pink-300 cursor-pointer">
-                                            <CustomLink href="/account">Account</CustomLink>
+                                            <CustomLink href="/myaccount">Account</CustomLink>
                                         </li>
                                         <li className="p-2 hover:bg-pink-300 cursor-pointer">
                                             <CustomLink href="/orders">Orders</CustomLink>

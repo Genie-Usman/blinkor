@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import CustomLink from "../../components/CustomLink";
 import { connectDB } from "../lib/mongodb";
 import Products from "../../models/Products";
 
@@ -42,7 +42,7 @@ const Caps = async () => {
         <div className="flex flex-wrap -m-4 mt-16">
           {Object.values(caps).map((item) => (
             <div key={item._id} className="lg:w-1/4 md:w-1/2 p-4 w-full">
-              <Link href={`/product/${item.slug}`} className="block relative rounded overflow-hidden shadow-md">
+              <CustomLink href={`/product/${item.slug}`} className="block relative rounded overflow-hidden shadow-md">
                 <Image
                   className="h-[25vh] md:h-[34vh] m-auto block"
                   src={item.image}
@@ -51,7 +51,7 @@ const Caps = async () => {
                   height={200}
                   priority
                 />
-              </Link>
+              </CustomLink>
               <div className="mt-4 text-center md:text-left">
                 <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Caps</h3>
                 <h2 className="text-gray-900 text-lg font-medium truncate w-full">{item.title}</h2>

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import CustomLink from '../../components/CustomLink';
 import React from 'react'
 
 const Order = ({ params }) => {
@@ -92,11 +92,11 @@ const Order = ({ params }) => {
 
         {/* Continue Shopping Button */}
         <div className="flex justify-center md:justify-end">
-          <Link href="/">
+          <CustomLink href="/">
             <button className="m-2 text-white bg-devstyle border-0 text-xs md:text-base py-1 px-2 md:p-3 focus:outline-none hover:bg-red-700 rounded">
               Continue Shopping
             </button>
-          </Link>
+          </CustomLink>
         </div>
       </div>
     </div>

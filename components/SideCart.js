@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
+import CustomLink from './CustomLink';
 import { AiFillCloseCircle, AiFillPlusCircle, AiFillMinusCircle } from 'react-icons/ai';
 import { RiShoppingBag4Fill } from 'react-icons/ri';
 import { IoTrashBinSharp } from "react-icons/io5";
@@ -50,11 +50,11 @@ const SideCart = ({ cartOpen, toggleCart }) => {
         <>
           <div className="mt-5 text-center font-bold">Subtotal: Rs. {subTotal.toFixed(0)}</div>
           <div className="flex justify-between mt-4">
-            <Link href="/checkout">
+            <CustomLink href="/checkout">
               <button onClick={toggleCart} className="flex items-center bg-devstyle text-white px-3 py-2 text-sm rounded-md hover:bg-red-700 transition-all duration-200">
                 <RiShoppingBag4Fill className="mr-1 text-base" /> Checkout
               </button>
-            </Link>
+            </CustomLink>
             <button
               onClick={clearCart}
               className="bg-devstyle flex items-center text-white px-3 py-2 text-sm rounded-md hover:bg-red-700 transition-all duration-200"

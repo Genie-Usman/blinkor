@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import CustomLink from '../../components/CustomLink';
 
 const ForgotPassword = () => {
   return (
@@ -21,7 +21,7 @@ const ForgotPassword = () => {
         </h2>
         <p className="text-center text-gray-600">
             Or 
-            <Link href={"/login"} className="ml-2 text-devstyle font-bold text-sm hover:text-red-700">Login</Link>
+            <CustomLink href={"/login"} className="ml-2 text-devstyle font-bold text-sm hover:text-red-700">Login</CustomLink>
         </p>
         <form className="mt-6">
           <div>

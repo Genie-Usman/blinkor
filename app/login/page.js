@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { toast, Zoom } from "react-toastify";
 import Image from "next/image";
-import Link from "next/link";
+import CustomLink from "../../components/CustomLink";
 import { useRouter } from "next/navigation"; 
 import { useCart } from "../context/CartContext";
 
@@ -61,7 +61,7 @@ const Login = () => {
         <h2 className="text-center text-2xl font-bold mt-2">Login to your account</h2>
         <p className="text-center text-gray-600">
           Or
-          <Link href="/signup" className="ml-2 text-devstyle font-bold text-sm hover:text-red-700">Sign up</Link>
+          <CustomLink href="/signup" className="ml-2 text-devstyle font-bold text-sm hover:text-red-700">Sign up</CustomLink>
         </p>
         <form onSubmit={handleSubmit} className="mt-6">
           <div>
@@ -86,12 +86,8 @@ const Login = () => {
               required
             />
           </div>
-          <div className="flex justify-between items-center mt-4">
-            <label className="flex items-center">
-              <input type="checkbox" className="form-checkbox" />
-              <span className="ml-2 font-semibold text-gray-600">Remember me</span>
-            </label>
-            <Link href="/forgotpassword" className="text-devstyle font-bold text-sm hover:text-red-700">Forgot password?</Link>
+          <div className="flex justify-end items-center mt-4">
+            <CustomLink href="/forgotpassword" className="text-devstyle font-bold text-sm hover:text-red-700">Forgot password?</CustomLink>
           </div>
           <button
             type="submit"

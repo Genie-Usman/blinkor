@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import CustomLink from "./CustomLink";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdAccountCircle, MdLogin } from "react-icons/md";
 import SideCart from "./SideCart";
@@ -19,8 +19,8 @@ const Navbar = () => {
 
     return (
         <header className="text-gray-600 body-font">
-            <div className="container mx-auto flex flex-wrap py-2 md:py-1  md:flex-row items-center shadow-md fixed top-0 left-0 w-full z-50 bg-white">
-                <Link href="/" className="m-auto md:ml-5">
+            <div className="container mx-auto flex flex-wrap py-2 md:py-1 md:flex-row items-center shadow-md fixed top-0 left-0 w-full z-50 bg-white">
+                <CustomLink href="/" className="m-auto md:ml-5">
                     <Image
                         src="/logo-banner.png"
                         alt="logo"
@@ -29,12 +29,12 @@ const Navbar = () => {
                         priority={true}
                         loading="eager"
                     />
-                </Link>
+                </CustomLink>
                 <nav className="ml-7 md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-                    <Link href="/tshirts" className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Tshirts</Link>
-                    <Link href="/hoodies" className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Hoodies</Link>
-                    <Link href="/caps" className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Caps</Link>
-                    <Link href="/mugs" className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Mugs</Link>
+                    <CustomLink href="/tshirts" className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Tshirts</CustomLink>
+                    <CustomLink href="/hoodies" className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Hoodies</CustomLink>
+                    <CustomLink href="/caps" className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Caps</CustomLink>
+                    <CustomLink href="/mugs" className="mr-5 text-xs md:text-base font-bold hover:text-devstyle">Mugs</CustomLink>
                 </nav>
                 <div className="flex flex-end items-center space-x-5">
                     {user.value ? (
@@ -48,10 +48,10 @@ const Navbar = () => {
                                 <div className="absolute right-0 top-6 py-4 px-2 bg-pink-200 text-sm rounded shadow-lg w-32">
                                     <ul className="flex flex-col text-left">
                                         <li className="p-2 hover:bg-pink-300 cursor-pointer">
-                                            <Link href="/account">Account</Link>
+                                            <CustomLink href="/account">Account</CustomLink>
                                         </li>
                                         <li className="p-2 hover:bg-pink-300 cursor-pointer">
-                                            <Link href="/orders">Orders</Link>
+                                            <CustomLink href="/orders">Orders</CustomLink>
                                         </li>
                                         <li className="p-2 hover:bg-red-300 cursor-pointer text-red-700" onClick={logout}>
                                             Logout
@@ -61,9 +61,9 @@ const Navbar = () => {
                             )}
                         </div>
                     ) : (
-                        <Link href="/login">
+                        <CustomLink href="/login">
                             <MdLogin className="text-base text-devstyle hover:text-red-700 md:text-2xl cursor-pointer" />
-                        </Link>
+                        </CustomLink>
                     )}
                     <FaShoppingCart
                         onClick={toggleCart}

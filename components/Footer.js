@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import CustomLink from "./CustomLink";
 import Image from "next/image";
 
 const Footer = () => {
@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="bg-gray-100 text-gray-700 body-font">
       <div className="container px-5 py-12 mx-auto flex flex-wrap md:flex-nowrap flex-col md:flex-row">
         <div className="w-full md:w-1/4 flex-shrink-0 text-center md:text-left mb-8 md:mb-0">
-          <Link href="/" className="flex flex-col items-center md:items-start">
+          <CustomLink href="/" className="flex flex-col items-center md:items-start">
             <Image
               src="/logo-banner.png"
               alt="logo"
@@ -16,7 +16,7 @@ const Footer = () => {
               priority={true}
               loading="eager"
             />
-          </Link>
+          </CustomLink>
           <p className="mt-2 text-sm italic text-gray-600">&lt;Code/&gt; Your Look</p>
           <p className="text-sm italic text-gray-600">Premium Coding T-Shirts & Apparel</p>
         </div>
@@ -25,28 +25,28 @@ const Footer = () => {
           <div className="w-1/2 md:w-1/4 mb-6 md:mb-0">
             <h2 className="text-devstyle font-semibold text-sm mb-3">SHOP</h2>
             <nav className="list-none space-y-2">
-              <li><Link href="/tshirts" className="hover:text-devstyle">T-Shirts</Link></li>
-              <li><Link href="/hoodies" className="hover:text-devstyle">Hoodies</Link></li>
-              <li><Link href="/caps" className="hover:text-devstyle">Caps</Link></li>
-              <li><Link href="/mugs" className="hover:text-devstyle">Mugs</Link></li>
+              <li><CustomLink href="/tshirts" className="hover:text-devstyle">T-Shirts</CustomLink></li>
+              <li><CustomLink href="/hoodies" className="hover:text-devstyle">Hoodies</CustomLink></li>
+              <li><CustomLink href="/caps" className="hover:text-devstyle">Caps</CustomLink></li>
+              <li><CustomLink href="/mugs" className="hover:text-devstyle">Mugs</CustomLink></li>
             </nav>
           </div>
 
           <div className="w-1/2 md:w-1/4 mb-6 md:mb-0">
             <h2 className="text-devstyle font-semibold text-sm mb-3">CUSTOMER SERVICE</h2>
             <nav className="list-none space-y-2">
-              <li><Link href="/contact" className="hover:text-devstyle">Contact Us</Link></li>
-              <li><Link href="/about" className="hover:text-devstyle">About Us</Link></li>
-              <li><Link href="/" className="hover:text-devstyle">Return Policy</Link></li>
-              <li><Link href="/" className="hover:text-devstyle">Shipping Policy</Link></li>
+              <li><CustomLink href="/contact" className="hover:text-devstyle">Contact Us</CustomLink></li>
+              <li><CustomLink href="/about" className="hover:text-devstyle">About Us</CustomLink></li>
+              <li><CustomLink href="/" className="hover:text-devstyle">Return Policy</CustomLink></li>
+              <li><CustomLink href="/" className="hover:text-devstyle">Shipping Policy</CustomLink></li>
             </nav>
           </div>
 
           <div className="w-1/2 md:w-1/4">
             <h2 className="text-devstyle font-semibold text-sm mb-3">POLICY</h2>
             <nav className="list-none space-y-2">
-              <li><Link href="/" className="hover:text-devstyle">Privacy Policy</Link></li>
-              <li><Link href="/" className="hover:text-devstyle">Terms & Conditions</Link></li>
+              <li><CustomLink href="/" className="hover:text-devstyle">Privacy Policy</CustomLink></li>
+              <li><CustomLink href="/" className="hover:text-devstyle">Terms & Conditions</CustomLink></li>
             </nav>
           </div>
         </div>

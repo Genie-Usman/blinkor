@@ -18,7 +18,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
-    "react-toastify": "^11.0.3"
+    "react-toastify": "^11.0.3",
+    "react-top-loading-bar": "^3.0.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

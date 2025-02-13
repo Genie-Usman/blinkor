@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { connectDB } from "../../lib/mongodb";
 import Products from "../../../models/Products";
 import ProductDetails from "../../../components/ProductDetails";

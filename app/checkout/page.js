@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react'
-import Link from 'next/link';
+import CustomLink from '../../components/CustomLink';
 import { AiFillPlusCircle, AiFillMinusCircle } from 'react-icons/ai';
 import { useCart } from '../context/CartContext';
 
@@ -103,11 +103,11 @@ const Checkout = () => {
 
         {/* Place Order Button */}
         <div className='flex justify-end'>
-          <Link href={'/order'}>
+          <CustomLink href={'/order'}>
             <button className=" m-2 w-32 text-white bg-devstyle border-0 text-xs md:text-base py-1 px-2 md:p-2 focus:outline-none hover:bg-red-700 rounded">
               Place Order
             </button>
-          </Link>
+          </CustomLink>
         </div>
       </div>
     </div>

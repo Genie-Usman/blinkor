@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { toast, Zoom } from "react-toastify";
 import Image from "next/image";
 import CustomLink from "../../components/CustomLink";
-import { useRouter } from "next/navigation"; 
 import { useCart } from "../context/CartContext";
 
 const Login = () => {
@@ -12,6 +12,12 @@ const Login = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if(localStorage.getItem('token')){
+        router.push('/')
+    }
+}, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -59,10 +65,10 @@ const Login = () => {
           <Image src="/logo.png" alt="logo" width={500} height={250} style={{ width: "22%", height: "auto" }} />
         </div>
         <h2 className="text-center text-2xl font-bold mt-2">Login to your account</h2>
-        <p className="text-center text-gray-600">
+        <div className="text-center text-gray-600">
           Or
           <CustomLink href="/signup" className="ml-2 text-devstyle font-bold text-sm hover:text-red-700">Sign up</CustomLink>
-        </p>
+        </div>
         <form onSubmit={handleSubmit} className="mt-6">
           <div>
             <input

@@ -1,8 +1,18 @@
-import React from 'react';
+"use client";
+
+import React, { useEffect } from 'react';
+import { useRouter } from "next/navigation";
 import Image from 'next/image';
 import CustomLink from '../../components/CustomLink';
 
 const ForgotPassword = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      router.push('/')
+    }
+  }, []);
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
@@ -19,10 +29,10 @@ const ForgotPassword = () => {
         <h2 className="text-center text-2xl font-bold mt-2">
           Forgot Password
         </h2>
-        <p className="text-center text-gray-600">
-            Or 
-            <CustomLink href={"/login"} className="ml-2 text-devstyle font-bold text-sm hover:text-red-700">Login</CustomLink>
-        </p>
+        <div className="text-center text-gray-600">
+          Or
+          <CustomLink href={"/login"} className="ml-2 text-devstyle font-bold text-sm hover:text-red-700">Login</CustomLink>
+        </div>
         <form className="mt-6">
           <div>
             <input

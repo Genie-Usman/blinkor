@@ -1,11 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { toast, Zoom } from "react-toastify";
 import Image from "next/image";
 import CustomLink from "../../components/CustomLink";
 
 const Signup = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      router.push('/')
+    }
+  }, []);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -65,7 +74,7 @@ const Signup = () => {
         <h2 className="text-center text-2xl font-bold mt-2">
           Sign up for your account
         </h2>
-        <p className="text-center text-gray-600">
+        <div className="text-center text-gray-600">
           Or
           <CustomLink
             href="/login"
@@ -73,7 +82,7 @@ const Signup = () => {
           >
             Login
           </CustomLink>
-        </p>
+        </div>
         <form onSubmit={handleSubmit} className="mt-6">
           <div>
             <input

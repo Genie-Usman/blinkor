@@ -42,7 +42,7 @@ const ProductDetails = ({ product }) => {
 
     const handleCheckPincode = async () => {
         try {
-            const response = await fetch("http://localhost:3000/api/pincode");
+            const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
             const data = await response.json();
             setIsValid(data.pincodes.includes(Number(pincode)));
         } catch {

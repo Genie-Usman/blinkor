@@ -119,7 +119,7 @@ const Checkout = () => {
               </li>
             ))}
           </ol>
-          <div className="mt-5 ml-2 font-bold">Subtotal: Rs.{subTotal.toFixed(0)}</div>
+          <div className="mt-5 ml-2 font-bold">Subtotal: ${subTotal.toFixed(2)}</div>
         </div>
 
         {/* Place Order Button */}

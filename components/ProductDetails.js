@@ -29,7 +29,6 @@ const ProductDetails = ({ product }) => {
             setAvailableSizes(filteredVariants.map(v => v.size));
             setSelectedSize(filteredVariants[0].size);
 
-            // Update product image dynamically
             setProductImage(filteredVariants[0].image && filteredVariants[0].image !== "" 
                 ? filteredVariants[0].image 
                 : product.image);

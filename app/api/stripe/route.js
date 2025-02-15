@@ -28,12 +28,13 @@ export async function POST(req) {
         quantity: item.quantity,
       })),
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_HOST}/order`,
+      success_url: `${process.env.NEXT_PUBLIC_HOST}/order/`,
       cancel_url: `${process.env.NEXT_PUBLIC_HOST}/cancel`,
     });
 
     const newOrder = new Order({
       stripeSessionId: session.id,
+      orderId: Date.now() + Math.floor(Math.random() * 1000),
       customerName,
       customerPhone,
       customerEmail,

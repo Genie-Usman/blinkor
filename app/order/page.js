@@ -1,26 +1,26 @@
 import CustomLink from '../../components/CustomLink';
-import React from 'react'
+import React from 'react';
+import { connectDB } from '../lib/mongodb';
+import Order from '../../models/Order';
 
-const Order = ({ params }) => {
-  // Mock order data 
-  const order = {
-    id: params.orderId,
-    date: "October 10, 2023",
-    status: "Confirmed",
-    items: [
-      { id: 1, name: "Code Your Look - Tshirt", price: 799, quantity: 1 },
-      { id: 2, name: "Code Your Look - Mug", price: 399, quantity: 2 },
-    ],
-    total: 1198,
-    shippingAddress: {
-      name: "John Doe",
-      address: "123 Main St",
-      city: "Islamabad",
-      state: "Punjab",
-      zip: "10001",
-    },
-    paymentMethod: "Credit Card (**** 4242)",
+const OrderPage = async ({ params }) => {
+  await connectDB()
+  const order = await Order.findOne(params.stripeSessionId).lean();
+
+  const plainOrder = {
+    ...order,
+    createdAt: new Date(order.createdAt).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
+    updatedAt: new Date(order.updatedAt).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
   };
+
   return (
 
     <div className="min-h-screen bg-gray-100 py-8 mt-16">
@@ -37,15 +37,15 @@ const Order = ({ params }) => {
           <div className="space-y-4">
             <div className="flex justify-between">
               <span>Order ID</span>
-              <span className="font-semibold">#{order.id}</span>
+              <span className="font-semibold">#{order.orderId}</span>
             </div>
             <div className="flex justify-between">
               <span>Order Date</span>
-              <span className="font-semibold">{order.date}</span>
+              <span className="font-semibold">{plainOrder.createdAt}</span>
             </div>
             <div className="flex justify-between">
               <span>Order Status</span>
-              <span className="font-semibold text-green-600">{order.status}</span>
+              <span className="font-semibold text-green-600 capitalize">{order.status}</span>
             </div>
           </div>
         </div>
@@ -53,41 +53,62 @@ const Order = ({ params }) => {
         {/* Order Items */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4 text-center">Order Items</h2>
-          <div className="space-y-4">
-            {order.items.map((item) => (
-              <div key={item.id} className="flex justify-between">
-                <span>
-                  {item.name} (x{item.quantity})
-                </span>
-                <span>Rs.{item.price.toFixed(0)}</span>
-              </div>
-            ))}
-            <div className="border-t pt-4">
-              <div className="flex justify-between font-semibold">
-                <span>Total</span>
-                <span>Rs.{order.total.toFixed(0)}</span>
-              </div>
-            </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border border-gray-200 shadow-lg rounded-lg">
+              <thead>
+                <tr className="bg-gray-100 text-gray-700 uppercase text-sm leading-normal">
+                  <th className="py-3 px-6 text-left">#</th>
+                  <th className="py-3 px-6 text-left">Item</th>
+                  <th className="py-3 px-6 text-left">Size/Color</th>
+                  <th className="py-3 px-6 text-center">Quantity</th>
+                  <th className="py-3 px-6 text-center">Price</th>
+                  <th className="py-3 px-6 text-center">Total</th>
+                </tr>
+              </thead>
+              <tbody className="text-gray-600 text-sm">
+                {order.items?.map((item, index) => (
+                  <tr key={index} className="border-b border-gray-200 hover:bg-gray-50">
+                    <td className="py-3 px-6">{index + 1}</td>
+                    <td className="py-3 px-6">{item.name}</td>
+                    <td className="py-3 px-6">{item.size} / {item.color}</td>
+                    <td className="py-3 px-6 text-center">{item.quantity}</td>
+                    <td className="py-3 px-6 text-center">${item.price.toFixed(2)}</td>
+                    <td className="py-3 px-6 text-center font-semibold">
+                      ${(item.price * item.quantity).toFixed(0)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="bg-gray-100 font-semibold text-gray-700">
+                  <td colSpan="5" className="py-3 px-6 text-right">Total Amount:</td>
+                  <td className="py-3 px-6 text-center">${order.totalAmount.toFixed(2)}</td>
+                </tr>
+              </tfoot>
+            </table>
           </div>
         </div>
+
+
 
         {/* Shipping Address */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4 text-center">Shipping Address</h2>
           <div className="space-y-2">
-            <p>{order.shippingAddress.name}</p>
-            <p>{order.shippingAddress.address}</p>
+            <p><span className="font-semibold">Name:</span> {order.customerName}</p>
+            <p><span className="font-semibold">Address:</span> {order.customerAddress}</p>
             <p>
-              {order.shippingAddress.city}, {order.shippingAddress.state}{" "}
-              {order.shippingAddress.zip}
+              {/* <strong>City & State:</strong> {order.customerCity}, {order.customerState} */}
             </p>
+            <p><span className="font-semibold">Zip Code:</span> {order.customerZipCode}</p>
           </div>
         </div>
+
 
         {/* Payment Method */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4 text-center">Payment Method</h2>
-          <p>{order.paymentMethod}</p>
+          <p>Card</p>
         </div>
 
         {/* Continue Shopping Button */}
@@ -103,4 +124,4 @@ const Order = ({ params }) => {
   )
 }
 
-export default Order
+export default OrderPage

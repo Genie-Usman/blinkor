@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import CustomLink from '../../components/CustomLink';
 import { AiFillPlusCircle, AiFillMinusCircle } from 'react-icons/ai';
 import { useCart } from '../context/CartContext';
@@ -11,23 +11,44 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 const Checkout = () => {
   const { cart, subTotal, addToCart, removeFromCart } = useCart();
   const [Loading, setLoading] = useState(false);
+  // const [customerEmail, setCustomerEmail] = useState("");
+  const [formData, setFormData] = useState({
+      customerName: "",
+      customerPhone: "",
+      customerEmail: "",
+      customerZipCode: "",
+      customerAddress: "",
+    });
+    
+    const handleChange = (e) => {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+      });
+    };
+  
 
   const handleStripePayment = async () => {
     setLoading(true);
     const stripe = await stripePromise;
-  
+
     const response = await fetch("/api/stripe", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        items: Object.values(cart), 
+        items: Object.values(cart),
+        customerName: formData.customerName,
+        customerPhone: formData.customerPhone,
+        customerEmail: formData.customerEmail,
+        customerZipCode: formData.customerZipCode,
+        customerAddress: formData.customerAddress,
       }),
     });
-  
+
     const session = await response.json();
-  
+
     if (session.id) {
       await stripe.redirectToCheckout({ sessionId: session.id });
     } else {
@@ -35,7 +56,7 @@ const Checkout = () => {
     }
     setLoading(false);
   };
-  
+
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
@@ -49,16 +70,36 @@ const Checkout = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">Full Name</label>
-                <input type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="John Doe" />
+                <input name="customerName" value={formData.customerName} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="John Doe" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Phone Number</label>
-                <input type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="xxxx-xxxxxxx" />
+                <input name="customerPhone" value={formData.customerPhone} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="xxxx-xxxxxxx" />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+              <label className="block text-sm font-medium text-gray-700">Email</label>
+                <input name="customerEmail" value={formData.customerEmail} onChange={handleChange} type="email" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="johndoe@example.com"/>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Zip Code</label>
+                <input name="customerZipCode" value={formData.customerZipCode} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="12345" />
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Address</label>
-              <input type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="123 Main St" />
+              <input name="customerAddress" value={formData.customerAddress} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="123 Main St." />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">State</label>
+                <input type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="New York" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">City</label>
+                <input type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="New York City" />
+              </div>
             </div>
           </form>
         </div>

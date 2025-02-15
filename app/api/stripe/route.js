@@ -1,23 +1,29 @@
 import Stripe from 'stripe';
+import { connectDB } from '../../lib/mongodb';
+import Order from '../../../models/Order';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req) {
   try {
-    const { items } = await req.json();
+    await connectDB();
+
+    const { items, customerName, customerPhone, customerZipCode, customerAddress, customerEmail } = await req.json();
 
     if (!items || items.length === 0) {
       return Response.json({ error: 'Cart is empty' }, { status: 400 });
     }
 
+    const totalAmount = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      customer_email: 'test@example.com',
+      customer_email: customerEmail,
       line_items: items.map((item) => ({
         price_data: {
-          currency: 'inr',  
+          currency: 'usd',
           product_data: { name: item.name },
-          unit_amount: item.price * 100,
+          unit_amount: ((item.price * 100) / 277).toFixed(0),
         },
         quantity: item.quantity,
       })),
@@ -26,9 +32,22 @@ export async function POST(req) {
       cancel_url: `${process.env.NEXT_PUBLIC_HOST}/cancel`,
     });
 
+    const newOrder = new Order({
+      stripeSessionId: session.id,
+      customerName,
+      customerPhone,
+      customerEmail,
+      customerZipCode,
+      customerAddress,
+      items,
+      totalAmount,
+      status: 'pending',
+    });
+
+    await newOrder.save();
+
     return Response.json({ id: session.id });
   } catch (error) {
-    console.error('Stripe Error:', error.message); 
     return Response.json({ error: error.message }, { status: 500 });
   }
 }

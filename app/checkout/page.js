@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import CustomLink from '../../components/CustomLink';
+import { toast, Zoom } from "react-toastify";
 import { AiFillPlusCircle, AiFillMinusCircle } from 'react-icons/ai';
 import { useCart } from '../context/CartContext';
 import { loadStripe } from '@stripe/stripe-js';
@@ -95,7 +95,11 @@ const Checkout = () => {
     if (session.id) {
       await stripe.redirectToCheckout({ sessionId: session.id });
     } else {
-      console.error("Payment failed:", session.error);
+      toast.error(session.error, {
+        position: "top-left",
+        autoClose: 2000,
+        transition: Zoom,
+    });
     }
     setLoading(false);
   };

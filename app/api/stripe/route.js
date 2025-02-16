@@ -1,6 +1,7 @@
-import Stripe from 'stripe';
-import { connectDB } from '../../lib/mongodb';
-import Order from '../../../models/Order';
+import Stripe from "stripe";
+import { connectDB } from "../../lib/mongodb";
+import Order from "../../../models/Order";
+import Product from "../../../models/Products";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -8,26 +9,95 @@ export async function POST(req) {
   try {
     await connectDB();
 
-    const { items, customerName, customerPhone, customerZipCode, customerAddress, customerEmail, customerCity, customerDistrict } = await req.json();
-
-    if (!items || items.length === 0) {
-      return Response.json({ error: 'Cart is empty' }, { status: 400 });
+    const body = await req.json();
+    const {
+      items,
+      customerName,
+      customerPhone,
+      customerZipCode,
+      customerAddress,
+      customerEmail,
+      customerCity,
+      customerDistrict,
+      subTotal,
+    } = body;
+    
+    if (!items || Object.keys(items).length === 0) {
+      return new Response(JSON.stringify({ error: "Cart is empty" }), { status: 400 });
     }
 
-    const totalAmount = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const orderId = Date.now() + Math.floor(Math.random() * 1000);
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      customer_email: customerEmail,
-      line_items: items.map((item) => ({
+    let sumTotal = 0;
+    let formattedItems = [];
+
+    for (const key in items) {
+      const item = items[key];
+
+      // Fetching product from database
+      const product = await Product.findOne({ title: item.name });
+
+      if (!product) {
+        return new Response(
+          JSON.stringify({ error: `Product "${item.name}" not found` }),
+          { status: 400 }
+        );
+      }
+
+      // Finding the correct variant
+      const variant = product.variants.find(
+        (v) => v.size === item.size && v.color === item.color
+      );
+
+      if (!variant) {
+        return new Response(
+          JSON.stringify({ error: `Variant not found for "${item.name}" (${item.size}, ${item.color})` }),
+          { status: 400 }
+        );
+      }
+
+      // Checking stock availability
+      if (variant.availableQuantity < item.quantity) {
+        return new Response(
+          JSON.stringify({ error: `Not enough stock for "${item.name}"` }),
+          { status: 400 }
+        );
+      }
+
+      // Validating price (to ensure no frontend price manipulation)
+      if (product.price !== item.price) {
+        console.error(`Price mismatch for "${item.name}": Expected ${product.price}, Got ${item.price}`);
+        return new Response(JSON.stringify({ error: "Cart is tampered! Try adding products again!" }), { status: 400 });
+      }
+
+      sumTotal += item.price * item.quantity;
+
+      // Formating items for Stripe
+      formattedItems.push({
         price_data: {
-          currency: 'usd',
+          currency: "usd",
           product_data: { name: item.name },
           unit_amount: item.price * 100,
         },
         quantity: item.quantity,
-      })),
-      mode: 'payment',
+      });
+    }
+
+    // Fixing floating-point precision issues before validation
+    sumTotal = parseFloat(sumTotal.toFixed(2));
+
+    // Debugging: Log subtotal mismatches
+    console.log("Received subTotal from frontend:", subTotal);
+    console.log("Calculated sumTotal from database:", sumTotal);
+
+    if (Math.abs(sumTotal - subTotal) > 0.01) {
+      return new Response(JSON.stringify({ error: "Cart is tampered! Try adding products again!" }), { status: 400 });
+    }
+
+    const orderId = Date.now() + Math.floor(Math.random() * 1000);
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      customer_email: customerEmail,
+      line_items: formattedItems,
+      mode: "payment",
       success_url: `${process.env.NEXT_PUBLIC_HOST}/order?id=${orderId}`,
       cancel_url: `${process.env.NEXT_PUBLIC_HOST}/cancel`,
     });
@@ -43,14 +113,15 @@ export async function POST(req) {
       customerCity,
       customerDistrict,
       items,
-      totalAmount,
-      status: 'pending',
+      totalAmount: sumTotal,
+      status: "pending",
     });
 
     await newOrder.save();
 
-    return Response.json({ id: session.id });
+    return new Response(JSON.stringify({ id: session.id }), { status: 200 });
   } catch (error) {
-    return Response.json({ error: error.message }, { status: 500 });
+    console.error("Error processing order:", error);
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
   }
 }

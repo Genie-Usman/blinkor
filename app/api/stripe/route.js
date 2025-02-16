@@ -15,7 +15,7 @@ export async function POST(req) {
     }
 
     const totalAmount = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
+    const orderId = Date.now() + Math.floor(Math.random() * 1000);
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       customer_email: customerEmail,
@@ -28,13 +28,13 @@ export async function POST(req) {
         quantity: item.quantity,
       })),
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_HOST}/order/`,
+      success_url: `${process.env.NEXT_PUBLIC_HOST}/order?id=${orderId}`,
       cancel_url: `${process.env.NEXT_PUBLIC_HOST}/cancel`,
     });
 
     const newOrder = new Order({
       stripeSessionId: session.id,
-      orderId: Date.now() + Math.floor(Math.random() * 1000),
+      orderId,
       customerName,
       customerPhone,
       customerEmail,

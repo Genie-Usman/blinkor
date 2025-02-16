@@ -1,3 +1,5 @@
+// stripe listen --forward-to localhost:3000/api/webhooks/stripe
+
 import Stripe from "stripe";
 import { connectDB } from "../../../lib/mongodb";
 import Order from "../../../../models/Order";

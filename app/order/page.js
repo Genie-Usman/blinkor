@@ -3,9 +3,14 @@ import React from 'react';
 import { connectDB } from '../lib/mongodb';
 import Order from '../../models/Order';
 
-const OrderPage = async ({ params }) => {
+const OrderPage = async ({ searchParams }) => {
   await connectDB()
-  const order = await Order.findOne(params.stripeSessionId).lean();
+  console.log("Params:", searchParams); // Debugging params
+
+const id = searchParams.id;
+console.log("Extracted ID:", id); 
+  const order = await Order.findOne({ orderId: id }).lean();
+  console.log(order);
 
   const plainOrder = {
     ...order,

@@ -43,7 +43,7 @@ const Orders = () => {
   return (
     <div className="container mx-auto px-10 py-8 mt-16 min-h-screen">
       <h1 className="text-3xl text-center font-bold mb-6">Your Orders</h1>
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
+      <div className="bg-white shadow-md rounded-lg overflow-x-auto">
         <table className="min-w-full">
           <thead className="bg-gray-100">
             <tr>

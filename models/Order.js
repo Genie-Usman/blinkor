@@ -8,6 +8,8 @@ const OrderSchema = new mongoose.Schema({
   customerEmail: { type: String, required: true },
   customerZipCode: { type: String, required: true },
   customerAddress: { type: String, required: true },
+  customerCity: { type: String, required: true },
+  customerDistrict: { type: String, required: true },
   items: [
     {
       name: { type: String, required: true },

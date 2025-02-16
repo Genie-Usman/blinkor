@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CustomLink from '../../components/CustomLink';
 import { AiFillPlusCircle, AiFillMinusCircle } from 'react-icons/ai';
 import { useCart } from '../context/CartContext';
@@ -10,23 +10,70 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
 const Checkout = () => {
   const { cart, subTotal, addToCart, removeFromCart } = useCart();
-  const [Loading, setLoading] = useState(false);
-  // const [customerEmail, setCustomerEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [zipcode, setZipcode] = useState("");
+  const [disablePay, setDisablePay] = useState(true);
   const [formData, setFormData] = useState({
-      customerName: "",
-      customerPhone: "",
-      customerEmail: "",
-      customerZipCode: "",
-      customerAddress: "",
-    });
-    
-    const handleChange = (e) => {
-      setFormData({
-        ...formData,
-        [e.target.name]: e.target.value,
-      });
-    };
+    customerName: "",
+    customerPhone: "",
+    customerEmail: "",
+    customerZipCode: "",
+    customerAddress: "",
+    customerCity: "",
+    customerDistrict: "",
+  });
+
+  useEffect(() => {
+    const isFormValid = Object.values(formData).every(value => value.trim() !== '');
+    setDisablePay(!isFormValid);
+  }, [formData]);
+
   
+  
+  const handleCheckZipcode = async (zipcode) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/zipcodes`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch zipcodes: ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      console.log("Fetched Zipcode Data:", data);
+  
+      const matchedEntry = data.zipcodes.find(zip => zip.postal_code === zipcode);
+      console.log("Matched Entry:", matchedEntry);
+  
+      setFormData(prev => {
+        const updatedForm = {
+          ...prev,
+          customerCity: matchedEntry ? matchedEntry.city : '',
+          customerDistrict: matchedEntry ? matchedEntry.district : '',
+        };
+        console.log("Updated Form Data:", updatedForm);
+        return updatedForm;
+      });
+      
+    } catch (error) {
+      console.error("Error checking zipcode:", error);
+    }
+  };
+
+  const handleChange = async (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+
+    if (name === "customerZipCode") {
+      if (value.length === 5) {
+        await handleCheckZipcode(value);
+      } else {
+        setFormData(prev => ({
+          ...prev,
+          customerCity: "",
+          customerDistrict: "",
+        }));
+      }
+    } 
+  };
 
   const handleStripePayment = async () => {
     setLoading(true);
@@ -39,11 +86,7 @@ const Checkout = () => {
       },
       body: JSON.stringify({
         items: Object.values(cart),
-        customerName: formData.customerName,
-        customerPhone: formData.customerPhone,
-        customerEmail: formData.customerEmail,
-        customerZipCode: formData.customerZipCode,
-        customerAddress: formData.customerAddress,
+        ...formData,
       }),
     });
 
@@ -57,7 +100,6 @@ const Checkout = () => {
     setLoading(false);
   };
 
-
   return (
     <div className="min-h-screen bg-gray-100 py-8">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-16">
@@ -70,35 +112,35 @@ const Checkout = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">Full Name</label>
-                <input name="customerName" value={formData.customerName} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="John Doe" />
+                <input name="customerName" value={formData.customerName} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="John Doe" required />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Phone Number</label>
-                <input name="customerPhone" value={formData.customerPhone} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="xxxx-xxxxxxx" />
+                <input name="customerPhone" value={formData.customerPhone} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="xxxx-xxxxxxx" required />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-              <label className="block text-sm font-medium text-gray-700">Email</label>
-                <input name="customerEmail" value={formData.customerEmail} onChange={handleChange} type="email" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="johndoe@example.com"/>
+                <label className="block text-sm font-medium text-gray-700">Email</label>
+                <input name="customerEmail" value={formData.customerEmail} onChange={handleChange} type="email" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="johndoe@example.com" required />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Zip Code</label>
-                <input name="customerZipCode" value={formData.customerZipCode} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="12345" />
+                <input name="customerZipCode" value={formData.customerZipCode} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="12345" required />
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Address</label>
-              <input name="customerAddress" value={formData.customerAddress} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="123 Main St." />
+              <input name="customerAddress" value={formData.customerAddress} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="123 Main St." required />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">State</label>
-                <input type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="New York" />
+                <label className="block text-sm font-medium text-gray-700">City</label>
+                <input type="text" name="customerCity" value={formData.customerCity} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="New York City" readOnly required />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">City</label>
-                <input type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="New York City" />
+                <label className="block text-sm font-medium text-gray-700">District</label>
+                <input type="text" name="customerDistrict" value={formData.customerDistrict} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="New York" readOnly required />
               </div>
             </div>
           </form>
@@ -123,9 +165,9 @@ const Checkout = () => {
         </div>
 
         {/* Place Order Button */}
-        <div className='flex justify-end'>
-          <button onClick={handleStripePayment} className="m-1 w-28 text-white bg-[#635BFF] border-0 text-sm py-3 px-2 rounded-md shadow-sm transition duration-200 ease-in-out hover:bg-[#4B46D1] focus:outline-none focus:ring-2 focus:ring-blue-300">
-            Pay with Stripe
+        <div className="flex justify-end">
+          <button onClick={handleStripePayment} disabled={disablePay} className={`m-1 w-28 text-white bg-[#635BFF] border-0 text-sm py-3 px-2 rounded-md shadow-sm transition duration-200 ease-in-out ${disablePay ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#4B46D1] focus:ring-2 focus:ring-blue-300'}`}>
+            {loading ? 'Processing...' : 'Pay with Stripe'}
           </button>
         </div>
       </div>

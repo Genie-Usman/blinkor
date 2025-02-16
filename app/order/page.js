@@ -98,10 +98,9 @@ const OrderPage = async ({ searchParams }) => {
           <div className="space-y-2">
             <p><span className="font-semibold">Name:</span> {order.customerName}</p>
             <p><span className="font-semibold">Address:</span> {order.customerAddress}</p>
-            <p>
-              {/* <strong>City & State:</strong> {order.customerCity}, {order.customerState} */}
-            </p>
             <p><span className="font-semibold">Zip Code:</span> {order.customerZipCode}</p>
+            <p><span className="font-semibold">City:</span> {order.customerCity}</p>
+            <p><span className="font-semibold">District:</span> {order.customerDistrict}</p>
           </div>
         </div>
 

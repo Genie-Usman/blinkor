@@ -8,7 +8,7 @@ export async function POST(req) {
   try {
     await connectDB();
 
-    const { items, customerName, customerPhone, customerZipCode, customerAddress, customerEmail } = await req.json();
+    const { items, customerName, customerPhone, customerZipCode, customerAddress, customerEmail, customerCity, customerDistrict } = await req.json();
 
     if (!items || items.length === 0) {
       return Response.json({ error: 'Cart is empty' }, { status: 400 });
@@ -40,6 +40,8 @@ export async function POST(req) {
       customerEmail,
       customerZipCode,
       customerAddress,
+      customerCity,
+      customerDistrict,
       items,
       totalAmount,
       status: 'pending',

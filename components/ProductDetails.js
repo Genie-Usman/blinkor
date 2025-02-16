@@ -8,9 +8,10 @@ import { toast, Zoom } from "react-toastify";
 
 const ProductDetails = ({ product }) => {
     const { addToCart, buyNow } = useCart();
-    const [pincode, setPincode] = useState("");
+    const [zipcode, setZipcode] = useState("");
     const [isValid, setIsValid] = useState(null);
     const [cartMessage, setCartMessage] = useState("");
+    const [disable, setDisable] = useState(true);
     const router = useRouter();
 
     const uniqueColors = [...new Set(product.variants.map(v => v.color))];
@@ -29,8 +30,8 @@ const ProductDetails = ({ product }) => {
             setAvailableSizes(filteredVariants.map(v => v.size));
             setSelectedSize(filteredVariants[0].size);
 
-            setProductImage(filteredVariants[0].image && filteredVariants[0].image !== "" 
-                ? filteredVariants[0].image 
+            setProductImage(filteredVariants[0].image && filteredVariants[0].image !== ""
+                ? filteredVariants[0].image
                 : product.image);
         } else {
             setAvailableSizes([]);
@@ -39,33 +40,42 @@ const ProductDetails = ({ product }) => {
         }
     }, [selectedColor, product.variants]);
 
-    const handleCheckPincode = async () => {
+    const handleCheckZipcode = async () => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/zipcodes`);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch zipcodes: ${response.statusText}`);
+            }
+
             const data = await response.json();
-            setIsValid(data.pincodes.includes(Number(pincode)));
-        } catch {
+            const enteredZipcode = zipcode.trim();
+            const matchedEntry = data.zipcodes.find(zip => zip.postal_code === enteredZipcode);
+
+            if (matchedEntry) {
+                setIsValid(true);
+                toast.success(`Service available in ${matchedEntry.city}, ${matchedEntry.district}!`, {
+                    position: "bottom-center",
+                    autoClose: 2000,
+                    transition: Zoom,
+                });
+            } else {
+                setIsValid(false);
+                toast.error("Sorry, service is not available for this zipcode!", {
+                    position: "bottom-center",
+                    autoClose: 2000,
+                    transition: Zoom,
+                });
+            }
+        } catch (error) {
+            console.error("Error checking zipcode:", error);
             setIsValid(false);
+            toast.error("Error fetching zipcode data!", {
+                position: "bottom-center",
+                autoClose: 2000,
+                transition: Zoom,
+            });
         }
     };
-
-    useEffect(() => {
-        if (isValid === null) return;
-
-        if (isValid) {
-            toast.success("Service available!", {
-                position: "bottom-center",
-                autoClose: 2000,
-                transition: Zoom,
-            });
-        } else {
-            toast.error("Sorry, service is not available yet!", {
-                position: "bottom-center",
-                autoClose: 2000,
-                transition: Zoom,
-            });
-        }
-    }, [isValid]);
 
     const handleAddToCart = () => {
         if (!selectedSize) {
@@ -88,7 +98,14 @@ const ProductDetails = ({ product }) => {
         buyNow(product.slug, product.title, 1, product.price, selectedSize, selectedColor);
         router.push("/checkout");
     };
-
+    const handleZipcodeButton = (e) => {
+        setZipcode(e.target.value)
+        if (e.target.value.length >= 5) {
+            setDisable(false);
+        } else {
+            setDisable(true);
+        }
+    };
     return (
         <div className="container mx-auto px-5 py-10 flex flex-col lg:flex-row gap-10">
             {/* Product Image */}
@@ -123,9 +140,8 @@ const ProductDetails = ({ product }) => {
                             <button
                                 key={index}
                                 onClick={() => setSelectedColor(color)}
-                                className={`border-2 rounded-full w-7 h-7 mx-1 transition ${
-                                    selectedColor === color ? "border-black" : "border-gray-300"
-                                }`}
+                                className={`border-2 rounded-full w-7 h-7 mx-1 transition ${selectedColor === color ? "border-black" : "border-gray-300"
+                                    }`}
                                 style={{ backgroundColor: color }}
                             ></button>
                         ))}
@@ -177,18 +193,19 @@ const ProductDetails = ({ product }) => {
 
                 {cartMessage && <p className="mt-2 text-green-500 text-sm">{cartMessage}</p>}
 
-                {/* Pincode Checker */}
+                {/* Zipcode Checker */}
                 <div className="flex mt-5 items-center">
-                    <span className="text-sm">Enter Pincode to check Service</span>
+                    <span className="text-sm">Enter Zip-code to check Service</span>
                     <input
                         className="ml-2 border-2 h-8 border-gray-300 rounded p-2 w-24 mr-2"
                         type="text"
-                        value={pincode}
-                        onChange={(e) => setPincode(e.target.value)}
+                        value={zipcode}
+                        onChange={handleZipcodeButton}
+                        placeholder="44000"
                     />
                     <button
-                        className="flex text-xs bg-devstyle hover:bg-red-700 text-white py-2 px-6 rounded"
-                        onClick={handleCheckPincode}
+                        disabled={disable} onChange={handleZipcodeButton} className="flex text-xs bg-devstyle disabled:bg-red-400 hover:bg-red-700 text-white py-2 px-6 rounded"
+                        onClick={handleCheckZipcode}
                     >
                         Check
                     </button>

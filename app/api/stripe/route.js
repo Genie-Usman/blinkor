@@ -23,7 +23,7 @@ export async function POST(req) {
         price_data: {
           currency: 'usd',
           product_data: { name: item.name },
-          unit_amount: ((item.price * 100) / 277).toFixed(0),
+          unit_amount: item.price * 100,
         },
         quantity: item.quantity,
       })),

@@ -80,7 +80,7 @@ const Mugs = async () => {
                   </div>
                 )}
 
-                <p className="mt-1">Rs.{item.price}</p>
+                <p className="mt-1">${item.price.toFixed(2)}</p>
               </div>
             </div>
           ))}

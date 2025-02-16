@@ -155,7 +155,7 @@ const ProductDetails = ({ product }) => {
 
                 <div className="flex">
                     <span className="title-font font-medium text-s md:text-2xl text-gray-900">
-                        Rs. {product.price}
+                        ${product.price.toFixed(2)}
                     </span>
                     <div className="flex ml-auto space-x-3">
                         <button

@@ -1,15 +1,47 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import CustomLink from "../../components/CustomLink";
 
-// Mock data for orders
-const orders = [
-  { id: 1, date: '2023-10-01', total: 120.0, status: 'Delivered' },
-  { id: 2, date: '2023-09-25', total: 80.0, status: 'Shipped' },
-  { id: 3, date: '2023-09-20', total: 200.0, status: 'Processing' },
-];
+const Orders = () => {
+  const router = useRouter();
+  const [orders, setOrders] = useState([]);
 
-export default function OrdersPage() {
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        router.push("/");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/myorders`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token })
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch orders");
+        }
+
+        const data = await res.json();
+        setOrders(data.orders);
+      } catch (error) {
+        console.error("Something went wrong. Please try again.", error);
+      }
+    };
+
+    fetchOrders();
+  }, [router]);
+
   return (
-    <div className="container mx-auto px-4 py-8 mt-16">
+    <div className="container mx-auto px-10 py-8 mt-16 min-h-screen">
       <h1 className="text-3xl text-center font-bold mb-6">Your Orders</h1>
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         <table className="min-w-full">
@@ -34,33 +66,30 @@ export default function OrdersPage() {
           </thead>
           <tbody className="divide-y divide-gray-200">
             {orders.map((order) => (
-              <tr key={order.id}>
+              <tr key={order.orderId}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {order.id}
+                  {order.orderId}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {order.date}
+                {new Date(order.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  Rs.{order.total}
+                ${order.totalAmount.toFixed(2)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm capitalize text-gray-500">
                   <span
-                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      order.status === 'Delivered'
-                        ? 'bg-green-100 text-green-800'
-                        : order.status === 'Shipped'
-                        ? 'bg-blue-100 text-blue-800'
-                        : 'bg-yellow-100 text-yellow-800'
-                    }`}
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${order.status === 'pending'
+                        ? 'bg-yellow-100 text-yellow-800'
+                        : 'bg-green-100 text-green-800'
+                      }`}
                   >
                     {order.status}
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <CustomLink
-                    href={`/orders/${order.id}`}
-                    className="text-indigo-600 hover:text-indigo-900"
+                    href={`/order?id=${order.orderId}`}
+                    className="text-devstyle hover:text-red-700"
                   >
                     View Details
                   </CustomLink>
@@ -73,3 +102,5 @@ export default function OrdersPage() {
     </div>
   );
 }
+
+export default Orders

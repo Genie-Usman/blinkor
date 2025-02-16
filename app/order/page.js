@@ -5,12 +5,8 @@ import Order from '../../models/Order';
 
 const OrderPage = async ({ searchParams }) => {
   await connectDB()
-  console.log("Params:", searchParams); // Debugging params
-
-const id = searchParams.id;
-console.log("Extracted ID:", id); 
+  const {id} = await searchParams;
   const order = await Order.findOne({ orderId: id }).lean();
-  console.log(order);
 
   const plainOrder = {
     ...order,

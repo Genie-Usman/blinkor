@@ -48,7 +48,7 @@ const SideCart = ({ cartOpen, toggleCart }) => {
 
       {!isEmpty && (
         <>
-          <div className="mt-5 text-center font-bold">Subtotal: Rs. {subTotal.toFixed(0)}</div>
+          <div className="mt-5 text-center font-bold">Subtotal: ${subTotal.toFixed(2)}</div>
           <div className="flex justify-between mt-4">
             <CustomLink href="/checkout">
               <button onClick={toggleCart} className="flex items-center bg-devstyle text-white px-3 py-2 text-sm rounded-md hover:bg-red-700 transition-all duration-200">

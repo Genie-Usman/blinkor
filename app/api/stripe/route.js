@@ -84,10 +84,6 @@ export async function POST(req) {
     // Fixing floating-point precision issues before validation
     sumTotal = parseFloat(sumTotal.toFixed(2));
 
-    // Debugging: Log subtotal mismatches
-    console.log("Received subTotal from frontend:", subTotal);
-    console.log("Calculated sumTotal from database:", sumTotal);
-
     if (Math.abs(sumTotal - subTotal) > 0.01) {
       return new Response(JSON.stringify({ error: "Cart is tampered! Try adding products again!" }), { status: 400 });
     }

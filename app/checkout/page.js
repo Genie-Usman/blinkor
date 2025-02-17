@@ -12,6 +12,7 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 const Checkout = () => {
   const { cart, subTotal, addToCart, removeFromCart, clearCart, user } = useCart();
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
   const [disablePay, setDisablePay] = useState(true);
   const [formData, setFormData] = useState({
     customerName: "",
@@ -84,7 +85,41 @@ const Checkout = () => {
     }
   };
 
+  const validateForm = () => {
+    let formErrors = {};
+    // Check if required fields are filled
+    if (!formData.customerName) formErrors.customerName = "Full Name is required.";
+    if (!formData.customerPhone) formErrors.customerPhone = "Phone Number is required.";
+    if (!formData.customerEmail) formErrors.customerEmail = "Email is required.";
+    if (!formData.customerZipCode) formErrors.customerZipCode = "Zip Code is required.";
+    if (!formData.customerAddress) formErrors.customerAddress = "Address is required.";
+
+    // Email validation
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (formData.customerEmail && !emailPattern.test(formData.customerEmail)) {
+      formErrors.customerEmail = "Please enter a valid email address.";
+    }
+
+    // Phone number validation (example: xxxx-xxxxxx format)
+    const phonePattern = /^[0-9]{4}[0-9]{7}$/;
+    if (formData.customerPhone && !phonePattern.test(formData.customerPhone)) {
+      formErrors.customerPhone = "Please enter a valid phone number (xxxxxxxxxxx).";
+    }
+
+    setErrors(formErrors);
+    return Object.keys(formErrors).length === 0;
+  };
+
   const handleStripePayment = async () => {
+    if (!validateForm()) {
+      toast.error("Please fix the form errors before proceeding.", {
+          position: "top-left",
+          autoClose: 2000,
+          transition: Zoom,
+      });
+      return;
+  }
+
     setLoading(true);
     const stripe = await stripePromise;
 
@@ -127,25 +162,30 @@ const Checkout = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700">Full Name</label>
                 <input name="customerName" value={formData.customerName} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="John Doe" required />
+              {errors.customerName && <span className="text-red-500 text-sm">{errors.customerName}</span>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Phone Number</label>
                 <input name="customerPhone" value={formData.customerPhone} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="xxxx-xxxxxxx" required />
+                {errors.customerPhone && <span className="text-red-500 text-sm">{errors.customerPhone}</span>}
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">Email</label>
                 <input name="customerEmail" value={formData.customerEmail} onChange={handleChange} type="email" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="johndoe@example.com" disabled={user.value} required />
+                {errors.customerEmail && <span className="text-red-500 text-sm">{errors.customerEmail}</span>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Zip Code</label>
                 <input name="customerZipCode" value={formData.customerZipCode} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="12345" required />
+                {errors.customerZipCode && <span className="text-red-500 text-sm">{errors.customerZipCode}</span>}
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Address</label>
               <input name="customerAddress" value={formData.customerAddress} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="123 Main St." required />
+              {errors.customerAddress && <span className="text-red-500 text-sm">{errors.customerAddress}</span>}
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>

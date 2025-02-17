@@ -61,10 +61,10 @@ const Navbar = () => {
                                 <div className="absolute right-8 font-bold top-6 py-4 px-3 bg-pink-200 text-sm rounded shadow-lg w-32">
                                     <ul className="flex flex-col text-left">
                                         <li className="p-2 hover:bg-pink-300 cursor-pointer">
-                                            <CustomLink href="/myaccount">Ny Account</CustomLink>
+                                            <CustomLink href="/myaccount">My Account</CustomLink>
                                         </li>
                                         <li className="p-2 hover:bg-pink-300 cursor-pointer">
-                                            <CustomLink href="/myorders">My Orders</CustomLink>
+                                            <CustomLink href="/myorders">Orders</CustomLink>
                                         </li>
                                         <li className="p-2 hover:bg-red-300 cursor-pointer text-red-700" onClick={logout}>
                                             Logout

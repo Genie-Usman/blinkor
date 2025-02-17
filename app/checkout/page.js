@@ -5,13 +5,13 @@ import { toast, Zoom } from "react-toastify";
 import { AiFillPlusCircle, AiFillMinusCircle } from 'react-icons/ai';
 import { useCart } from '../context/CartContext';
 import { loadStripe } from '@stripe/stripe-js';
+import { jwtDecode } from "jwt-decode";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 const Checkout = () => {
-  const { cart, subTotal, addToCart, removeFromCart, clearCart } = useCart();
+  const { cart, subTotal, addToCart, removeFromCart, clearCart, user } = useCart();
   const [loading, setLoading] = useState(false);
-  const [zipcode, setZipcode] = useState("");
   const [disablePay, setDisablePay] = useState(true);
   const [formData, setFormData] = useState({
     customerName: "",
@@ -22,27 +22,36 @@ const Checkout = () => {
     customerCity: "",
     customerDistrict: "",
   });
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      console.log(decoded.email); // Decode the token
+      setFormData((prevData) => ({
+        ...prevData,
+        customerEmail: decoded.email, // Set the decoded email in the formData
+      }));
+    }
+  }, []);
 
   useEffect(() => {
     const isFormValid = Object.values(formData).every(value => value.trim() !== '');
     setDisablePay(!isFormValid);
   }, [formData]);
 
-  
-  
   const handleCheckZipcode = async (zipcode) => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/zipcodes`);
       if (!response.ok) {
         throw new Error(`Failed to fetch zipcodes: ${response.statusText}`);
       }
-  
+
       const data = await response.json();
       console.log("Fetched Zipcode Data:", data);
-  
+
       const matchedEntry = data.zipcodes.find(zip => zip.postal_code === zipcode);
       console.log("Matched Entry:", matchedEntry);
-  
+
       setFormData(prev => {
         const updatedForm = {
           ...prev,
@@ -52,7 +61,7 @@ const Checkout = () => {
         console.log("Updated Form Data:", updatedForm);
         return updatedForm;
       });
-      
+
     } catch (error) {
       console.error("Error checking zipcode:", error);
     }
@@ -72,7 +81,7 @@ const Checkout = () => {
           customerDistrict: "",
         }));
       }
-    } 
+    }
   };
 
   const handleStripePayment = async () => {
@@ -100,7 +109,7 @@ const Checkout = () => {
         position: "top-left",
         autoClose: 2000,
         transition: Zoom,
-    });
+      });
     }
     setLoading(false);
   };
@@ -127,7 +136,7 @@ const Checkout = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">Email</label>
-                <input name="customerEmail" value={formData.customerEmail} onChange={handleChange} type="email" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="johndoe@example.com" required />
+                <input name="customerEmail" value={formData.customerEmail} onChange={handleChange} type="email" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none" placeholder="johndoe@example.com" disabled={user.value} required />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Zip Code</label>

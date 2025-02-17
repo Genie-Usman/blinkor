@@ -9,8 +9,9 @@ const ClientOrderPage = () => {
     }, []); 
 
     return (
-        <>
-        </>
+        <div>
+            
+        </div>
     )
 }
 

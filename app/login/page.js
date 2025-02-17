@@ -7,6 +7,7 @@ import Image from "next/image";
 import CustomLink from "../../components/CustomLink";
 import { useCart } from "../context/CartContext";
 
+
 const Login = () => {
   const {login} = useCart();
   const router = useRouter();
@@ -14,9 +15,10 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if(localStorage.getItem('token')){
+    const token = localStorage.getItem('token')
+      if (token) {
         router.push('/')
-    }
+      }
 }, []);
 
   const handleChange = (e) => {

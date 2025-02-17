@@ -2,6 +2,7 @@ import CustomLink from '../../components/CustomLink';
 import React from 'react';
 import { connectDB } from '../lib/mongodb';
 import Order from '../../models/Order';
+import ClientOrderPage from './ClientOrderPage';
 
 const OrderPage = async ({ searchParams }) => {
   await connectDB()
@@ -120,6 +121,7 @@ const OrderPage = async ({ searchParams }) => {
           </CustomLink>
         </div>
       </div>
+      <ClientOrderPage />
     </div>
   )
 }

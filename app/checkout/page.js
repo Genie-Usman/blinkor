@@ -9,7 +9,7 @@ import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 const Checkout = () => {
-  const { cart, subTotal, addToCart, removeFromCart } = useCart();
+  const { cart, subTotal, addToCart, removeFromCart, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
   const [zipcode, setZipcode] = useState("");
   const [disablePay, setDisablePay] = useState(true);
@@ -95,6 +95,7 @@ const Checkout = () => {
     if (session.id) {
       await stripe.redirectToCheckout({ sessionId: session.id });
     } else {
+      clearCart()
       toast.error(session.error, {
         position: "top-left",
         autoClose: 2000,

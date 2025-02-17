@@ -65,7 +65,7 @@ export async function POST(req) {
       // Validating price (to ensure no frontend price manipulation)
       if (product.price !== item.price) {
         console.error(`Price mismatch for "${item.name}": Expected ${product.price}, Got ${item.price}`);
-        return new Response(JSON.stringify({ error: "Cart is tampered! Try adding products again!" }), { status: 400 });
+        return new Response(JSON.stringify({ error: "Prices of some products has been changed! Please try again!" }), { status: 400 });
       }
 
       sumTotal += item.price * item.quantity;
@@ -85,7 +85,7 @@ export async function POST(req) {
     sumTotal = parseFloat(sumTotal.toFixed(2));
 
     if (Math.abs(sumTotal - subTotal) > 0.01) {
-      return new Response(JSON.stringify({ error: "Cart is tampered! Try adding products again!" }), { status: 400 });
+      return new Response(JSON.stringify({ error: "Prices of some products has been changed! Please try again!" }), { status: 400 });
     }
 
     const orderId = Date.now() + Math.floor(Math.random() * 1000);

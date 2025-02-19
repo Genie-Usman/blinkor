@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { toast, Zoom } from "react-toastify";
+import toast from 'react-hot-toast';
 import Image from "next/image";
 import CustomLink from "../../components/CustomLink";
 import { useCart } from "../context/CartContext";
@@ -30,7 +30,18 @@ const Login = () => {
     setLoading(true);
 
     if (!formData.email || !formData.password) {
-      toast.error("Email and password are required!", { autoClose: 2000 });
+      toast.error("Email and password are required!", {
+        duration: 2000, 
+        position: 'top-right',
+        style: {
+          background: '#000', 
+          color: '#fff', 
+          fontSize: '14px',
+          fontWeight: 'bold',
+          borderRadius: '8px',
+          padding: '12px 20px',
+        },
+      });
       setLoading(false);
       return;
     }
@@ -47,14 +58,47 @@ const Login = () => {
       if (res.ok) {
         localStorage.setItem('token', data.token);
         login(data.token);
-        toast.success("Login successful!", { position: "top-left", autoClose: 500, transition: Zoom });
+        toast.success("Login successful!", {
+          duration: 2000, 
+          position: 'top-right',
+          style: {
+            background: '#000', 
+            color: '#fff', 
+            fontSize: '14px',
+            fontWeight: 'bold',
+            borderRadius: '8px',
+            padding: '12px 20px',
+          },
+        });
         setFormData({ email: "", password: "" });
         setTimeout(() => router.push("/"), 1000);
       } else {
-        toast.error(data.message || "Invalid credentials!", { autoClose: 2000 });
+        toast.error(data.message || "Invalid credentials!", {
+          duration: 2000, 
+          position: 'top-right',
+          style: {
+            background: '#000', 
+            color: '#fff', 
+            fontSize: '14px',
+            fontWeight: 'bold',
+            borderRadius: '8px',
+            padding: '12px 20px',
+          },
+        });
       }
     } catch (error) {
-      toast.error("Something went wrong. Please try again.", { autoClose: 2000 });
+      toast.error("Something went wrong. Please try again.", {
+        duration: 2000, 
+        position: 'top-right',
+        style: {
+          background: '#000', 
+          color: '#fff', 
+          fontSize: '14px',
+          fontWeight: 'bold',
+          borderRadius: '8px',
+          padding: '12px 20px',
+        },
+      });
     } finally {
       setLoading(false);
     }
@@ -69,7 +113,7 @@ const Login = () => {
         <h2 className="text-center text-2xl font-bold mt-2">Login to your account</h2>
         <div className="text-center text-gray-600">
           Or
-          <CustomLink href="/signup" className="ml-2 text-devstyle font-bold text-sm hover:text-red-700">Sign up</CustomLink>
+          <CustomLink href="/signup" className="ml-2 text-[#ec698f] font-bold text-sm hover:text-devstyle">Sign up</CustomLink>
         </div>
         <form onSubmit={handleSubmit} className="mt-6">
           <div>
@@ -95,12 +139,12 @@ const Login = () => {
             />
           </div>
           <div className="flex justify-end items-center mt-4">
-            <CustomLink href="/forgotpassword" className="text-devstyle font-bold text-sm hover:text-red-700">Forgot password?</CustomLink>
+            <CustomLink href="/forgotpassword" className="text-[#ec698f] font-bold text-sm hover:text-devstyle">Forgot password?</CustomLink>
           </div>
           <button
             type="submit"
-            className={`w-full mt-4 bg-devstyle text-white py-2 rounded-md transition ${
-              loading ? "opacity-50 cursor-not-allowed" : "hover:bg-red-700"
+            className={`w-full mt-4 bg-gray-700 text-white py-2 rounded-md transition ${
+              loading ? "opacity-50 cursor-not-allowed" : "hover:bg-[#686763] "
             }`}
             disabled={loading}
           >

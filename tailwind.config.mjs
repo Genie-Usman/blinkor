@@ -10,7 +10,7 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        devstyle: "#ff3130", 
+        devstyle: "#E0AFA0", 
       },
     },
   },

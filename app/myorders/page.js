@@ -89,7 +89,7 @@ const Orders = () => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <CustomLink
                     href={`/order?id=${order.orderId}`}
-                    className="text-devstyle hover:text-red-700"
+                    className="text-red-500 hover:text-red-700"
                   >
                     View Details
                   </CustomLink>

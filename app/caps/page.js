@@ -10,7 +10,7 @@ const Caps = async () => {
   const caps = {};
 
   for (const item of products) {
-    if (!Array.isArray(item.variants)) continue; 
+    if (!Array.isArray(item.variants)) continue;
 
     if (caps[item.title]) {
       for (const variant of item.variants) {
@@ -32,7 +32,7 @@ const Caps = async () => {
         price: item.price,
         colors: [...new Set(item.variants.filter(v => v.availableQuantity > 0).map(v => v.color))],
         sizes: [...new Set(item.variants.filter(v => v.availableQuantity > 0).map(v => v.size))],
-    };
+      };
     }
   }
 
@@ -42,16 +42,16 @@ const Caps = async () => {
         <div className="flex flex-wrap -m-4 mt-16">
           {Object.values(caps).map((item) => (
             <div key={item._id} className="lg:w-1/4 md:w-1/2 p-4 w-full">
-              <CustomLink href={`/product/${item.slug}`} className="block relative rounded overflow-hidden shadow-md">
+              <CustomLink href={`/product/${item.slug}`} className="block rounded-lg shadow-md hover:shadow-lg transition-shadow duration-100 p-6 overflow-visible">
                 <Image
-                  className="h-[25vh] md:h-[34vh] m-auto block"
+                  className="mix-blend-multiply h-[25vh] md:h-[34vh] m-auto block transform transition duration-300 ease-out hover:scale-110 hover:translate-y-2 origin-center"
                   src={item.image}
                   alt={item.title}
                   width={200}
                   height={200}
                   priority
                 />
-              </CustomLink>
+              
               <div className="mt-4 text-center md:text-left">
                 <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Caps</h3>
                 <h2 className="text-gray-900 text-lg font-medium truncate w-full">{item.title}</h2>
@@ -82,6 +82,7 @@ const Caps = async () => {
 
                 <p className="mt-1">${item.price.toFixed(2)}</p>
               </div>
+              </CustomLink>
             </div>
           ))}
         </div>

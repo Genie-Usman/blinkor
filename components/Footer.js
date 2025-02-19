@@ -23,7 +23,7 @@ const Footer = () => {
         
         <div className="w-full md:w-3/4 flex flex-wrap md:justify-between">
           <div className="w-1/2 md:w-1/4 mb-6 md:mb-0">
-            <h2 className="text-devstyle font-semibold text-sm mb-3">SHOP</h2>
+            <h2 className="text-gray-700 font-semibold text-sm mb-3">SHOP</h2>
             <nav className="list-none space-y-2">
               <li><CustomLink href="/tshirts" className="hover:text-devstyle">T-Shirts</CustomLink></li>
               <li><CustomLink href="/hoodies" className="hover:text-devstyle">Hoodies</CustomLink></li>
@@ -33,7 +33,7 @@ const Footer = () => {
           </div>
 
           <div className="w-1/2 md:w-1/4 mb-6 md:mb-0">
-            <h2 className="text-devstyle font-semibold text-sm mb-3">CUSTOMER SERVICE</h2>
+            <h2 className="text-gray-700 font-semibold text-sm mb-3">CUSTOMER SERVICE</h2>
             <nav className="list-none space-y-2">
               <li><CustomLink href="/contact" className="hover:text-devstyle">Contact Us</CustomLink></li>
               <li><CustomLink href="/about" className="hover:text-devstyle">About Us</CustomLink></li>
@@ -43,7 +43,7 @@ const Footer = () => {
           </div>
 
           <div className="w-1/2 md:w-1/4">
-            <h2 className="text-devstyle font-semibold text-sm mb-3">POLICY</h2>
+            <h2 className="text-gray-700 font-semibold text-sm mb-3">POLICY</h2>
             <nav className="list-none space-y-2">
               <li><CustomLink href="/" className="hover:text-devstyle">Privacy Policy</CustomLink></li>
               <li><CustomLink href="/" className="hover:text-devstyle">Terms & Conditions</CustomLink></li>

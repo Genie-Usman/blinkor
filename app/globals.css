@@ -2,8 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+h1, h2, h3, nav {
+  font-family: var(--font-spectral), serif;
+}
+
+p, body {
+  font-family: var(--font-lato), sans-serif;
+}
+
 body{
     overflow-x: hidden;
+    background: #f6f2f0;
 }
 
 /* Custom Scrollbar */
@@ -27,4 +36,6 @@ body{
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #f34747;
   }
+
+  
   

@@ -19,7 +19,7 @@ export async function POST(request) {
             return NextResponse.json({ message: "Unauthorized. Invalid token." }, { status: 401 });
         }
 
-        const orders = await Order.find({ customerEmail: data.email });
+        const orders = await Order.find({ customerEmail: data.email, status: 'paid' });
 
         return NextResponse.json({ message: "Orders Fetched!!", orders }, { status: 200 });
     } catch (error) {

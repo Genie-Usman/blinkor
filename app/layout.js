@@ -1,17 +1,19 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Serif_Text, Lato  } from "next/font/google";
 import ClientLayout from './clientLayout';
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const spectral = DM_Serif_Text({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-spectral',
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const lato = Lato({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-lato',
 });
 
 export const metadata = {
@@ -23,7 +25,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${spectral.variable} ${lato.variable}`}
       >
         <ClientLayout>
         <Navbar />

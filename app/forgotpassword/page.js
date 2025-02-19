@@ -31,7 +31,7 @@ const ForgotPassword = () => {
         </h2>
         <div className="text-center text-gray-600">
           Or
-          <CustomLink href={"/login"} className="ml-2 text-devstyle font-bold text-sm hover:text-red-700">Login</CustomLink>
+          <CustomLink href={"/login"} className="ml-2 text-[#ec698f] font-bold text-sm hover:text-devstyle">Login</CustomLink>
         </div>
         <form className="mt-6">
           <div>
@@ -43,7 +43,7 @@ const ForgotPassword = () => {
           </div>
           <button
             type="submit"
-            className="w-full mt-4 bg-devstyle text-white py-2 rounded-md hover:bg-red-700 transition"
+            className="w-full mt-4 bg-gray-700 text-white py-2 rounded-md hover:bg-[#686763] transition"
           >
             Continue
           </button>

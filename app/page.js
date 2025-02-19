@@ -1,8 +1,11 @@
 import React from "react";
 import Image from "next/image";
+import Slider from '../components/Slider'
 
 export default function Home() {
   return (
+    <>
+    <Slider/>
     <div className="mt-20 md:mt-16">
      <Image
         src="/banner.png"
@@ -12,5 +15,6 @@ export default function Home() {
         style={{ width: "100%", height: "auto" }}
         />
     </div>
+    </>
   );
 }

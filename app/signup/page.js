@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { toast, Zoom } from "react-toastify";
+import toast from 'react-hot-toast';
 import Image from "next/image";
 import CustomLink from "../../components/CustomLink";
 
 const Signup = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -30,6 +31,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/signup`, {
@@ -44,17 +46,49 @@ const Signup = () => {
 
       if (res.ok) {
         toast.success("Your account has been created!", {
-          position: "top-left",
-          autoClose: 2000,
-          transition: Zoom,
+          duration: 2000, 
+          position: 'top-right',
+          style: {
+            background: '#000', 
+            color: '#fff', 
+            fontSize: '14px',
+            fontWeight: 'bold',
+            borderRadius: '8px',
+            padding: '12px 20px',
+          },
         });
 
         setFormData({ name: "", email: "", password: "" });
+        setLoading(false);
       } else {
-        toast.error(data.message || "Signup failed!");
+        toast.error(data.message || "Signup failed!", {
+          duration: 2000, 
+          position: 'top-right',
+          style: {
+            background: '#000', 
+            color: '#fff', 
+            fontSize: '14px',
+            fontWeight: 'bold',
+            borderRadius: '8px',
+            padding: '12px 20px',
+          },
+        });
+        setLoading(false);
       }
     } catch (error) {
-      toast.error("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.", {
+        duration: 2000, 
+        position: 'top-right',
+        style: {
+          background: '#000', 
+          color: '#fff', 
+          fontSize: '14px',
+          fontWeight: 'bold',
+          borderRadius: '8px',
+          padding: '12px 20px',
+        },
+      });
+      setLoading(false);
     }
   };
 
@@ -78,7 +112,7 @@ const Signup = () => {
           Or
           <CustomLink
             href="/login"
-            className="ml-2 text-devstyle font-bold text-sm hover:text-red-700"
+            className="ml-2 text-[#ec698f] font-bold text-sm hover:text-devstyle"
           >
             Login
           </CustomLink>
@@ -119,9 +153,12 @@ const Signup = () => {
           </div>
           <button
             type="submit"
-            className="w-full mt-4 bg-devstyle text-white py-2 rounded-md hover:bg-red-700 transition"
+            className={`w-full mt-4 bg-gray-700 text-white py-2 rounded-md transition ${
+              loading ? "opacity-50 cursor-not-allowed" : "hover:bg-[#686763] "
+            }`}
+            disabled={loading}
           >
-            Sign up
+            {loading ? "Signing up..." : "Sign up"}
           </button>
         </form>
       </div>

@@ -1,12 +1,12 @@
 "use client";
 
 import { CartProvider } from './context/CartContext';
-import { ToastContainer } from 'react-toastify';
+import { Toaster } from 'react-hot-toast';
 
 export default function ClientLayout({ children }) {
   return (
     <CartProvider>
-      <ToastContainer />
+      <Toaster position="top-right" reverseOrder={false} />
       {children}
     </CartProvider>
   );

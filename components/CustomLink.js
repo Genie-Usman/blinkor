@@ -20,7 +20,7 @@ export default function CustomLink({ href, children, ...props }) {
 
   return (
     <>
-      <LoadingBar color="#ff3130" progress={progress} onLoaderFinished={() => setProgress(0)} />
+      <LoadingBar color="#E0AFA0" height={3} progress={progress} onLoaderFinished={() => setProgress(0)} />
       <Link href={href} {...props} onClick={handleClick}>
         {children}
       </Link>

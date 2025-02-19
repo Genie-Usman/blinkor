@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCart } from "../app/context/CartContext";
-import { toast, Zoom } from "react-toastify";
+import toast from 'react-hot-toast';
 
 const ProductDetails = ({ product }) => {
     const { addToCart, buyNow } = useCart();
@@ -54,26 +54,48 @@ const ProductDetails = ({ product }) => {
             if (matchedEntry) {
                 setIsValid(true);
                 toast.success(`Service available in ${matchedEntry.city}, ${matchedEntry.district}!`, {
-                    position: "bottom-center",
-                    autoClose: 2000,
-                    transition: Zoom,
-                });
+                    duration: 2000, 
+                    position: 'top-right',
+                    style: {
+                      background: '#000', 
+                      color: '#fff', 
+                      fontSize: '13px',
+                      fontWeight: 'bold',
+                      borderRadius: '8px',
+                      padding: '12px 20px',
+                    },
+                  });
             } else {
                 setIsValid(false);
                 toast.error("Sorry, service is not available for this zipcode!", {
-                    position: "bottom-center",
-                    autoClose: 2000,
-                    transition: Zoom,
-                });
+                    duration: 2000, 
+                    position: 'top-right',
+                    style: {
+                      background: '#000', 
+                      color: '#fff', 
+                      fontSize: '14px',
+                      fontWeight: 'bold',
+                      borderRadius: '8px',
+                      padding: '12px 20px',
+                    },
+                  });
+                
             }
         } catch (error) {
             console.error("Error checking zipcode:", error);
             setIsValid(false);
             toast.error("Error fetching zipcode data!", {
-                position: "bottom-center",
-                autoClose: 2000,
-                transition: Zoom,
-            });
+                duration: 2000, 
+                position: 'top-right',
+                style: {
+                  background: '#000', 
+                  color: '#fff', 
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  borderRadius: '8px',
+                  padding: '12px 20px',
+                },
+              });
         }
     };
 
@@ -83,11 +105,20 @@ const ProductDetails = ({ product }) => {
             return;
         }
         addToCart(product.slug, product.title, 1, product.price, selectedSize, selectedColor);
-        toast.success("Item added to cart!", {
-            position: "bottom-center",
-            autoClose: 1000,
-            transition: Zoom,
-        });
+        toast.success('Item added To Cart', {
+            duration: 2000,
+            position: 'top-right',
+            style: {
+              background: '#000',
+              color: '#fff',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              borderRadius: '2px',
+              padding: '12px 20px',
+            },
+            icon: '🛒', 
+          });
+        
     };
 
     const handleBuyNow = () => {
@@ -115,7 +146,7 @@ const ProductDetails = ({ product }) => {
                     alt={product.title}
                     width={400}
                     height={400}
-                    className="rounded-lg shadow-md"
+                    className="mix-blend-multiply h-[25vh] md:h-[70vh] m-auto block transform transition duration-300 ease-out hover:scale-110 hover:translate-y-2 origin-center"
                     priority
                 />
             </div>

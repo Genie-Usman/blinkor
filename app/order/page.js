@@ -115,7 +115,7 @@ const OrderPage = async ({ searchParams }) => {
         {/* Continue Shopping Button */}
         <div className="flex justify-center md:justify-end">
           <CustomLink href="/">
-            <button className="m-2 text-white bg-devstyle border-0 text-xs md:text-base py-1 px-2 md:p-3 focus:outline-none hover:bg-red-700 rounded">
+            <button className="m-2 text-white bg-gray-700 border-0 text-xs md:text-base py-1 px-2 md:p-3 focus:outline-none hover:bg-[#686763] rounded">
               Continue Shopping
             </button>
           </CustomLink>

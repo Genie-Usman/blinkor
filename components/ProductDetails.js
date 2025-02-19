@@ -21,6 +21,11 @@ const ProductDetails = ({ product }) => {
     const [selectedSize, setSelectedSize] = useState("");
     const [productImage, setProductImage] = useState(product.image);
 
+    // Calculate discounted price
+    const discountedPrice = product.discount
+        ? (product.price - (product.price * product.discount) / 100).toFixed(2)
+        : product.price.toFixed(2);
+
     useEffect(() => {
         const filteredVariants = product.variants.filter(
             v => v.color === selectedColor && v.availableQuantity > 0
@@ -104,7 +109,7 @@ const ProductDetails = ({ product }) => {
             setCartMessage("Please select a size before adding to cart.");
             return;
         }
-        addToCart(product.slug, product.title, 1, product.price, selectedSize, selectedColor);
+        addToCart(product.slug, product.title, 1, discountedPrice, selectedSize, selectedColor);
         toast.success('Item added To Cart', {
             duration: 2000,
             position: 'top-right',
@@ -126,7 +131,7 @@ const ProductDetails = ({ product }) => {
             setCartMessage("Please select a size before buying.");
             return;
         }
-        buyNow(product.slug, product.title, 1, product.price, selectedSize, selectedColor);
+        buyNow(product.slug, product.title, 1, discountedPrice, selectedSize, selectedColor);
         router.push("/checkout");
     };
     const handleZipcodeButton = (e) => {
@@ -162,8 +167,11 @@ const ProductDetails = ({ product }) => {
                     ({selectedSize}/{selectedColor})
                 </h1>
                 <p className="leading-relaxed">{product.description || "No description available."}</p>
+                
+
 
                 <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
+                    
                     {/* Color Selection */}
                     <div className="flex">
                         <span className="mr-3">Color</span>
@@ -201,19 +209,30 @@ const ProductDetails = ({ product }) => {
                 </div>
 
                 <div className="flex">
-                    <span className="title-font font-medium text-s md:text-2xl text-gray-900">
-                        ${product.price.toFixed(2)}
+                    {/* Price Section with Discount */}
+                <div className="flex items-center space-x-3 mt-3">
+                    {product.discount > 0 && (
+                        <span className="text-gray-500 line-through text-lg">${product.price.toFixed(2)}</span>
+                    )}
+                    <span className="title-font font-medium text-xl md:text-2xl text-gray-900">
+                        ${discountedPrice}
                     </span>
-                    <div className="flex ml-auto space-x-3">
+                    {product.discount > 0 && (
+                        <span className="bg-red-500 text-white px-2 py-1 text-sm rounded">
+                            -{product.discount}%
+                        </span>
+                    )}
+                </div>
+                    <div className="flex ml-auto space-x-2">
                         <button
-                            className="flex md:ml-2 text-xs md:text-base bg-devstyle hover:bg-red-700 text-white py-2 px-6 rounded"
+                            className="flex md:ml-2 text-xs md:text-sm bg-black hover:bg-gray-800 text-white py-3 px-4 rounded"
                             disabled={!selectedSize}
                             onClick={handleBuyNow}
                         >
                             Buy Now
                         </button>
                         <button
-                            className="flex md:ml-auto text-xs md:text-base bg-devstyle hover:bg-red-700 text-white py-2 px-6 rounded"
+                            className="flex md:ml-auto text-xs md:text-sm bg-black hover:bg-gray-800 text-white py-3 px-4 rounded"
                             onClick={handleAddToCart}
                             disabled={!selectedSize}
                         >
@@ -235,7 +254,7 @@ const ProductDetails = ({ product }) => {
                         placeholder="44000"
                     />
                     <button
-                        disabled={disable} onChange={handleZipcodeButton} className="flex text-xs bg-devstyle disabled:bg-red-400 hover:bg-red-700 text-white py-2 px-6 rounded"
+                        disabled={disable} onChange={handleZipcodeButton} className="flex text-xs bg-black disabled:bg-gray-500 hover:bg-gray-800 text-white py-2 px-6 rounded"
                         onClick={handleCheckZipcode}
                     >
                         Check

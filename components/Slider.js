@@ -16,14 +16,14 @@ const slides = [
     title: "TRENDING NOW",
     subtitle: "WOMEN COLLECTION",
     button: "SHOP NOW",
-    image: "/images/slide2.jpg",
+    image: "./banner-2.png",
   },
   {
     id: 3,
     title: "NEW SEASON",
     subtitle: "KIDS COLLECTION",
     button: "DISCOVER",
-    image: "/images/slide3.jpg",
+    image: "./banner-3.png",
   },
 ];
 
@@ -35,7 +35,7 @@ export default function HeroSlider() {
     setIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000); // Auto-slide every 5 sec
+    const interval = setInterval(nextSlide, 5000); 
     return () => clearInterval(interval);
   }, []);
 
@@ -51,7 +51,7 @@ export default function HeroSlider() {
           transition={{ duration: 0.5 }}
         >
           <div className="absolute inset-0 bg-black/30"></div>
-          <div className="absolute left-10 z-10 text-white">
+          <div className="absolute left-20 z-10 text-white">
             <h2 className="text-3xl font-bold">{slides[index].title}</h2>
             <p className="text-lg">{slides[index].subtitle}</p>
             <button className="mt-4 px-6 py-2 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition">

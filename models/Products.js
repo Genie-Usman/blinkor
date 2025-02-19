@@ -7,6 +7,7 @@ const ProductSchema = new mongoose.Schema({
   image: { type: String, required: true },
   category: { type: String, required: true },
   price: { type: Number, required: true },
+  discount: { type: Number, default: 0, }, // Store discount in percentage (e.g., 20 for 20%)
   variants: [
     {
       size: { type: String, required: true },

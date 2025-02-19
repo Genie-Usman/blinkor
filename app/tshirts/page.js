@@ -39,7 +39,12 @@ const Tshirts = async () => {
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-9 py-20 mx-auto">
-        <div className="flex flex-wrap -m-4 mt-16">
+        <h2 className="text-4xl font-extrabold text-gray-900 text-center tracking-wide uppercase">
+          <span className="text-[#C85C3D]">Drip</span> Starts Here – <br /> Premium Tees for Every <span className="text-[#C85C3D]">Vibe</span>!
+        </h2>
+
+
+        <div className="flex flex-wrap -m-4 mt-5">
           {Object.values(tshirts).map((item) => (
             <div key={item._id} className="lg:w-1/4 md:w-1/2 p-4 w-full">
               <CustomLink href={`/product/${item.slug}`} className="block rounded-lg shadow-md hover:shadow-lg transition-shadow duration-100 p-6 overflow-visible">
@@ -52,36 +57,36 @@ const Tshirts = async () => {
                   priority
                 />
 
-              <div className="mt-4 text-center md:text-left">
-                <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">T-shirts</h3>
-                <h2 className="text-gray-900 text-lg font-medium truncate w-full">{item.title}</h2>
+                <div className="mt-4 text-center md:text-left">
+                  <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">T-shirts</h3>
+                  <h2 className="text-gray-900 text-lg font-medium truncate w-full">{item.title}</h2>
 
-                {/* Render sizes */}
-                {item.sizes.length > 0 && (
-                  <div className="flex justify-center md:justify-start gap-2 mt-1 flex-wrap">
-                    {item.sizes.map((size, index) => (
-                      <span key={index} className="border border-gray-400 px-2 py-1 text-xs rounded-md">
-                        {size}
-                      </span>
-                    ))}
-                  </div>
-                )}
+                  {/* Render sizes */}
+                  {item.sizes.length > 0 && (
+                    <div className="flex justify-center md:justify-start gap-2 mt-1 flex-wrap">
+                      {item.sizes.map((size, index) => (
+                        <span key={index} className="border border-gray-400 px-2 py-1 text-xs rounded-md">
+                          {size}
+                        </span>
+                      ))}
+                    </div>
+                  )}
 
-                {/* Render colors */}
-                {item.colors.length > 0 && (
-                  <div className="flex justify-center md:justify-start gap-2 mt-1 flex-wrap">
-                    {item.colors.map((color, index) => (
-                      <span
-                        key={index}
-                        className="w-4 h-4 rounded-full border outline-none mt-1 border-gray-200"
-                        style={{ backgroundColor: color.toLowerCase() }}
-                      ></span>
-                    ))}
-                  </div>
-                )}
+                  {/* Render colors */}
+                  {item.colors.length > 0 && (
+                    <div className="flex justify-center md:justify-start gap-2 mt-1 flex-wrap">
+                      {item.colors.map((color, index) => (
+                        <span
+                          key={index}
+                          className="w-4 h-4 rounded-full border outline-none mt-1 border-gray-200"
+                          style={{ backgroundColor: color.toLowerCase() }}
+                        ></span>
+                      ))}
+                    </div>
+                  )}
 
-                <p className="mt-1">${item.price.toFixed(2)}</p>
-              </div>
+                  <p className="mt-1">${item.price.toFixed(2)}</p>
+                </div>
               </CustomLink>
             </div>
           ))}

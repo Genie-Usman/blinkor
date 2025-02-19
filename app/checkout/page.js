@@ -6,6 +6,7 @@ import { CiCirclePlus, CiCircleMinus, CiTrash } from "react-icons/ci";
 import { useCart } from '../context/CartContext';
 import { loadStripe } from '@stripe/stripe-js';
 import { jwtDecode } from "jwt-decode";
+import { Loader2 } from 'lucide-react';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -114,11 +115,11 @@ const Checkout = () => {
   const handleStripePayment = async () => {
     if (!validateForm()) {
       toast.error("Please fix the form errors before proceeding.", {
-        duration: 2000, 
+        duration: 2000,
         position: 'top-right',
         style: {
-          background: '#000', 
-          color: '#fff', 
+          background: '#000',
+          color: '#fff',
           fontSize: '14px',
           fontWeight: 'bold',
           borderRadius: '8px',
@@ -126,7 +127,7 @@ const Checkout = () => {
         },
       });
       return;
-  }
+    }
 
     setLoading(true);
     const stripe = await stripePromise;
@@ -149,11 +150,11 @@ const Checkout = () => {
     } else {
       clearCart()
       toast.error(session.error, {
-        duration: 2000, 
+        duration: 2000,
         position: 'top-right',
         style: {
-          background: '#000', 
-          color: '#fff', 
+          background: '#000',
+          color: '#fff',
           fontSize: '14px',
           fontWeight: 'bold',
           borderRadius: '8px',
@@ -177,7 +178,7 @@ const Checkout = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700">Full Name</label>
                 <input name="customerName" value={formData.customerName} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-devstyle focus:ring-1" placeholder="John Doe" required />
-              {errors.customerName && <span className="text-red-500 text-sm">{errors.customerName}</span>}
+                {errors.customerName && <span className="text-red-500 text-sm">{errors.customerName}</span>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Phone Number</label>
@@ -232,15 +233,28 @@ const Checkout = () => {
           </ol>
 
           <div className="mt-5 ml-2 flex justify-between font-bold">Subtotal: ${subTotal.toFixed(2)}
-          <CiTrash onClick={clearCart}  className="text-gray-700 text-xl cursor-pointer hover:text-gray-200" />
+            <CiTrash onClick={clearCart} className="text-gray-700 text-xl cursor-pointer hover:text-gray-200" />
           </div>
         </div>)}
 
         {/* Place Order Button */}
         <div className="flex justify-end">
-          <button onClick={handleStripePayment} disabled={disablePay} className={`m-1 w-28 text-white bg-[#635BFF] border-0 text-sm py-3 px-2 rounded-md shadow-sm transition duration-200 ease-in-out ${disablePay ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#4B46D1] focus:ring-2 focus:ring-blue-300'}`}>
-            {loading ? 'Processing...' : 'Pay with Stripe'}
+          <button
+            onClick={handleStripePayment}
+            disabled={disablePay}
+            className={`m-1 w-32 flex items-center justify-center gap-2 text-white bg-[#635BFF] border-0 text-sm py-3 px-4 rounded-md shadow-md transition-all duration-300 ease-in-out 
+  ${disablePay ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#4B46D1] focus:ring-2 focus:ring-blue-300'}`}
+          >
+            {loading ? (
+              <>
+              Processing
+                <Loader2 className="animate-spin w-5 h-5" />
+              </>
+            ) : (
+              "Pay with Stripe"
+            )}
           </button>
+
         </div>
       </div>
     </div>

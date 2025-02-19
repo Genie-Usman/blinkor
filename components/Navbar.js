@@ -37,7 +37,7 @@ const Navbar = () => {
                     <CustomLink href="/">
                         <Image
                             className="w-32 md:w-48"
-                            src="/Blinkor-5.png"
+                            src="/Blinkor.png"
                             alt="logo"
                             width={200}
                             height={50}

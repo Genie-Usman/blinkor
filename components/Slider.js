@@ -9,7 +9,7 @@ const slides = [
     title: "LATEST ARRIVALS",
     subtitle: "MEN COLLECTION",
     button: "EXPLORE NOW",
-    image: "/images/slide1.jpg", // Replace with your image paths
+    image: "./banner-1.png", // Replace with your image paths
   },
   {
     id: 2,
@@ -40,7 +40,7 @@ export default function HeroSlider() {
   }, []);
 
   return (
-    <div className="relative w-full h-[500px] overflow-hidden">
+    <div className="relative w-full h-[500px] mt-14 overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
           key={slides[index].id}

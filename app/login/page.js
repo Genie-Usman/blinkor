@@ -6,20 +6,21 @@ import toast from 'react-hot-toast';
 import Image from "next/image";
 import CustomLink from "../../components/CustomLink";
 import { useCart } from "../context/CartContext";
+import { Loader2 } from "lucide-react";
 
 
 const Login = () => {
-  const {login} = useCart();
+  const { login } = useCart();
   const router = useRouter();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token')
-      if (token) {
-        router.push('/')
-      }
-}, []);
+    if (token) {
+      router.push('/')
+    }
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,11 +32,11 @@ const Login = () => {
 
     if (!formData.email || !formData.password) {
       toast.error("Email and password are required!", {
-        duration: 2000, 
+        duration: 2000,
         position: 'top-right',
         style: {
-          background: '#000', 
-          color: '#fff', 
+          background: '#000',
+          color: '#fff',
           fontSize: '14px',
           fontWeight: 'bold',
           borderRadius: '8px',
@@ -59,11 +60,11 @@ const Login = () => {
         localStorage.setItem('token', data.token);
         login(data.token);
         toast.success("Login successful!", {
-          duration: 2000, 
+          duration: 2000,
           position: 'top-right',
           style: {
-            background: '#000', 
-            color: '#fff', 
+            background: '#000',
+            color: '#fff',
             fontSize: '14px',
             fontWeight: 'bold',
             borderRadius: '8px',
@@ -74,11 +75,11 @@ const Login = () => {
         setTimeout(() => router.push("/"), 1000);
       } else {
         toast.error(data.message || "Invalid credentials!", {
-          duration: 2000, 
+          duration: 2000,
           position: 'top-right',
           style: {
-            background: '#000', 
-            color: '#fff', 
+            background: '#000',
+            color: '#fff',
             fontSize: '14px',
             fontWeight: 'bold',
             borderRadius: '8px',
@@ -88,11 +89,11 @@ const Login = () => {
       }
     } catch (error) {
       toast.error("Something went wrong. Please try again.", {
-        duration: 2000, 
+        duration: 2000,
         position: 'top-right',
         style: {
-          background: '#000', 
-          color: '#fff', 
+          background: '#000',
+          color: '#fff',
           fontSize: '14px',
           fontWeight: 'bold',
           borderRadius: '8px',
@@ -143,12 +144,18 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className={`w-full mt-4 bg-gray-700 text-white py-2 rounded-md transition ${
-              loading ? "opacity-50 cursor-not-allowed" : "hover:bg-[#686763] "
-            }`}
+            className={`w-full mt-4 flex items-center justify-center gap-2 bg-black text-white py-2 rounded-md transition-all duration-300 ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-800"
+              }`}
             disabled={loading}
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? (
+              <>
+                Logging in
+                <Loader2 className="animate-spin w-5 h-5" />
+              </>
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
       </div>

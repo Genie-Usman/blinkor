@@ -5,11 +5,12 @@ import Image from "next/image";
 const Footer = () => {
   return (
     <footer className="bg-gray-100 text-gray-700 body-font">
+      <hr />
       <div className="container px-5 py-12 mx-auto flex flex-wrap md:flex-nowrap flex-col md:flex-row">
         <div className="w-full md:w-1/4 flex-shrink-0 text-center md:text-left mb-8 md:mb-0">
           <CustomLink href="/" className="flex flex-col items-center md:items-start">
             <Image
-              src="/logo-banner.png"
+              src="/Blinkor.png"
               alt="logo"
               width={180}
               height={180}
@@ -17,10 +18,13 @@ const Footer = () => {
               loading="eager"
             />
           </CustomLink>
-          <p className="mt-2 text-sm italic text-gray-600">&lt;Code/&gt; Your Look</p>
-          <p className="text-sm italic text-gray-600">Premium Coding T-Shirts & Apparel</p>
+          <div className="mt-2 text-xs  text-gray-600">
+            <p className="my-2 ml-2">CODE YOUR FUTURE</p>
+            <p className="my-2 ml-2">BLINK INTO FASHION</p>
+            <p className="my-2 ml-2">STYLE REDEFINED</p>
+          </div>
         </div>
-        
+
         <div className="w-full md:w-3/4 flex flex-wrap md:justify-between">
           <div className="w-1/2 md:w-1/4 mb-6 md:mb-0">
             <h2 className="text-gray-700 font-semibold text-sm mb-3">SHOP</h2>
@@ -53,7 +57,7 @@ const Footer = () => {
       </div>
 
       <div className="border-t border-gray-300 mt-6 py-4 text-center flex flex-col sm:flex-row items-center justify-between container mx-auto px-5">
-        <p className="text-gray-600 text-sm">© 2025 DevStyle.com</p>
+        <p className="text-gray-600 text-sm">© 2025 Blinkor.com</p>
         <div className="flex space-x-4 mt-3 sm:mt-0">
           <a href="#" className="text-gray-500 hover:text-blue-600">
             <svg fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">

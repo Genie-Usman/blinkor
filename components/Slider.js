@@ -2,14 +2,16 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 const slides = [
   {
     id: 1,
     title: "LATEST ARRIVALS",
-    subtitle: "MEN COLLECTION",
-    button: "EXPLORE NOW",
-    image: "./banner-1.png", // Replace with your image paths
+    subtitle: "MINIONS COLLECTION",
+    button: "MAYHEM AWAITS!",
+    image: "./banner-1.png",
+    link: "/minionscollection"
   },
   {
     id: 2,
@@ -17,6 +19,7 @@ const slides = [
     subtitle: "WOMEN COLLECTION",
     button: "SHOP NOW",
     image: "./banner-2.png",
+    link: "/cartooncollection"
   },
   {
     id: 3,
@@ -24,6 +27,7 @@ const slides = [
     subtitle: "KIDS COLLECTION",
     button: "DISCOVER",
     image: "./banner-3.png",
+    link: "/cartooncollection"
   },
 ];
 
@@ -54,9 +58,11 @@ export default function HeroSlider() {
           <div className="absolute left-20 z-10 text-white">
             <h2 className="text-3xl font-bold">{slides[index].title}</h2>
             <p className="text-lg">{slides[index].subtitle}</p>
-            <button className="mt-4 px-6 py-2 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition">
+            <Link href={slides[index].link}>
+            <button  className="mt-4 px-6 py-2 bg-white text-black font-semibold rounded-lg hover:bg-gray-200 transition">
               {slides[index].button}
             </button>
+          </Link>
           </div>
           <img
             src={slides[index].image}

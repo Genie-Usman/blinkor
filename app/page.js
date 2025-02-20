@@ -14,7 +14,7 @@ export default function Home() {
     router.push(path);
   };
   const products = [
-    { title: "Premium T-Shirts", description: "Soft, stylish, and comfortable.", image: "/tshirt.jpg", path: "/tshirts" },
+    { title: "Minions Collection ", description: "Playful, Bold, Unstoppable!", image: "/minioncollection.jpg", path: "/minionscollection" },
     { title: "Stylish Hoodies", description: "Perfect for every season.", image: "/hoodie.jpg", path: "/hoodies" },
     { title: "Trendy Caps", description: "Complete your look with our caps.", image: "/cap.jpg", path: "/caps" },
   ];

@@ -3,11 +3,11 @@ import CustomLink from "../../components/CustomLink";
 import { connectDB } from "../lib/mongodb";
 import Products from "../../models/Products";
 
-const Tshirts = async () => {
+const Minioncollection = async () => {
   await connectDB();
-  const products = await Products.find({ category: { $in: ["tshirts", "minion"] } }).lean();
+  const products = await Products.find({ category: "minion" }).lean();
 
-  const tshirts = {};
+  const cartoon = {};
 
   for (const item of products) {
     if (!Array.isArray(item.variants)) continue;
@@ -15,19 +15,19 @@ const Tshirts = async () => {
     const discount = item.discount || 0;
     const discountedPrice = item.price - (item.price * discount) / 100;
 
-    if (tshirts[item.title]) {
+    if (cartoon[item.title]) {
       for (const variant of item.variants) {
         if (variant.availableQuantity > 0) {
-          if (!tshirts[item.title].colors.includes(variant.color)) {
-            tshirts[item.title].colors.push(variant.color);
+          if (!cartoon[item.title].colors.includes(variant.color)) {
+            cartoon[item.title].colors.push(variant.color);
           }
-          if (!tshirts[item.title].sizes.includes(variant.size)) {
-            tshirts[item.title].sizes.push(variant.size);
+          if (!cartoon[item.title].sizes.includes(variant.size)) {
+            cartoon[item.title].sizes.push(variant.size);
           }
         }
       }
     } else {
-      tshirts[item.title] = {
+      cartoon[item.title] = {
         _id: item._id.toString(),
         title: item.title,
         slug: item.slug,
@@ -45,12 +45,13 @@ const Tshirts = async () => {
     <section className="text-gray-600 body-font">
       <div className="container px-9 py-20 mx-auto">
         <h2 className="text-4xl font-extrabold text-gray-900 text-center tracking-wide uppercase">
-          <span className="text-[#C85C3D]">Drip</span> Starts Here – <br /> Premium Tees for Every <span className="text-[#C85C3D]">Vibe</span>!
+          <span className="text-[#C85C3D] font-bold text-xl tracking-wide uppercase">
+            MINION COLLECTION: <span className="text-[#F4A261]">MAYHEM AWAITS!</span>
+          </span>
+
         </h2>
-
-
         <div className="flex flex-wrap -m-4 mt-5">
-          {Object.values(tshirts).map((item) => (
+          {Object.values(cartoon).map((item) => (
             <div key={item._id} className="lg:w-1/4 md:w-1/2 p-4 w-full">
               <CustomLink href={`/product/${item.slug}`} className="block rounded-lg shadow-md hover:shadow-lg transition-shadow duration-100 p-6 overflow-visible">
                 <Image
@@ -63,7 +64,7 @@ const Tshirts = async () => {
                 />
 
                 <div className="mt-4 text-center md:text-left">
-                  <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">T-shirts</h3>
+                  <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Minions</h3>
                   <h2 className="text-gray-900 text-lg font-medium truncate w-full">{item.title}</h2>
 
                   {/* Render sizes */}
@@ -90,8 +91,8 @@ const Tshirts = async () => {
                     </div>
                   )}
 
-                   {/* Price Display with Discount */}
-                   {item.discount > 0 ? (
+                  {/* Price Display with Discount */}
+                  {item.discount > 0 ? (
                     <div className="mt-1 text-center md:text-left">
                       <span className="text-gray-500 text-sm line-through mr-2">${item.price.toFixed(2)}</span>
                       <span className="text-red-600 text-lg font-bold">${item.discountedPrice}</span>
@@ -110,4 +111,4 @@ const Tshirts = async () => {
   );
 };
 
-export default Tshirts;
+export default Minioncollection;

@@ -62,20 +62,31 @@ export async function POST(req) {
         );
       }
 
-      // Validating price (to ensure no frontend price manipulation)
-      if (product.price !== item.price) {
-        console.error(`Price mismatch for "${item.name}": Expected ${product.price}, Got ${item.price}`);
-        return new Response(JSON.stringify({ error: "Prices of some products has been changed! Please try again!" }), { status: 400 });
+      // Validating price considering discount
+      const discountedPrice = parseFloat(
+        (product.price * (1 - product.discount / 100)).toFixed(2)
+      );
+
+      if (discountedPrice !== parseFloat(item.price)) {
+        console.error(
+          `Price mismatch for "${item.name}": Expected ${discountedPrice}, Got ${item.price}`
+        );
+        return new Response(
+          JSON.stringify({
+            error: "Prices of some products have changed! Please try again!",
+          }),
+          { status: 400 }
+        );
       }
 
-      sumTotal += item.price * item.quantity;
+      sumTotal += discountedPrice * item.quantity;
 
-      // Formating items for Stripe
+      // Formatting items for Stripe
       formattedItems.push({
         price_data: {
           currency: "usd",
           product_data: { name: item.name },
-          unit_amount: item.price * 100,
+          unit_amount: Math.round(discountedPrice * 100),
         },
         quantity: item.quantity,
       });
@@ -85,7 +96,12 @@ export async function POST(req) {
     sumTotal = parseFloat(sumTotal.toFixed(2));
 
     if (Math.abs(sumTotal - subTotal) > 0.01) {
-      return new Response(JSON.stringify({ error: "Prices of some products has been changed! Please try again!" }), { status: 400 });
+      return new Response(
+        JSON.stringify({
+          error: "Prices of some products have changed! Please try again!",
+        }),
+        { status: 400 }
+      );
     }
 
     const orderId = Date.now() + Math.floor(Math.random() * 1000);
@@ -118,6 +134,9 @@ export async function POST(req) {
     return new Response(JSON.stringify({ id: session.id }), { status: 200 });
   } catch (error) {
     console.error("Error processing order:", error);
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    return new Response(
+      JSON.stringify({ error: error.message }),
+      { status: 500 }
+    );
   }
 }

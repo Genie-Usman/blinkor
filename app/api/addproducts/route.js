@@ -31,6 +31,8 @@ export async function POST(request) {
                     }
                 });
 
+                existingProduct.discount = item.discount || existingProduct.discount;
+                existingProduct.price = item.price || existingProduct.price;
                 await existingProduct.save();
             } else {
                 const newProduct = new Products({
@@ -40,6 +42,7 @@ export async function POST(request) {
                     image: item.image,
                     category: item.category,
                     price: item.price,
+                    discount: item.discount || 0,
                     variants: item.variants,
                 });
 

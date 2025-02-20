@@ -1,0 +1,103 @@
+[
+  {
+    "title": "All Worked Out T-Shirt",
+    "slug": "All-Worked-Out-T-Shirt",
+    "description": "Officially Licensed Minion T-shirt",
+    "image": "https://m.media-amazon.com/images/I/B1EWx17iUcL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+    "category": "minion",
+    "price": 45,
+    "discount": 25,
+    "variants": [
+      {
+        "size": "S",
+        "color": "Gray",
+        "image": "https://m.media-amazon.com/images/I/B1EWx17iUcL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+        "availableQuantity": 10
+      },
+      {
+        "size": "M",
+        "color": "Gray",
+        "image": "https://m.media-amazon.com/images/I/B1EWx17iUcL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+        "availableQuantity": 10
+      },
+      {
+        "size": "L",
+        "color": "Gray",
+        "image": "https://m.media-amazon.com/images/I/B1EWx17iUcL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+        "availableQuantity": 10
+      },
+      {
+        "size": "XL",
+        "color": "Gray",
+        "image": "https://m.media-amazon.com/images/I/B1EWx17iUcL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+        "availableQuantity": 10
+      },
+      {
+        "size": "S",
+        "color": "SkyBlue",
+        "image": "https://m.media-amazon.com/images/I/B1cRsgg-hzL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+        "availableQuantity": 10
+      },
+      {
+        "size": "M",
+        "color": "SkyBlue",
+        "image": "https://m.media-amazon.com/images/I/B1cRsgg-hzL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+        "availableQuantity": 10
+      },
+      {
+        "size": "S",
+        "color": "Silver",
+        "image": "https://m.media-amazon.com/images/I/A164sa6e7oL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+        "availableQuantity": 10
+      },
+      {
+        "size": "M",
+        "color": "Silver",
+        "image": "https://m.media-amazon.com/images/I/A164sa6e7oL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+        "availableQuantity": 10
+      },
+      {
+        "size": "L",
+        "color": "Silver",
+        "image": "https://m.media-amazon.com/images/I/A164sa6e7oL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+        "availableQuantity": 10
+      },
+      {
+        "size": "S",
+        "color": "Yellow",
+        "image": "https://m.media-amazon.com/images/I/A1e+j+PaYAL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+        "availableQuantity": 10
+      },
+      {
+        "size": "M",
+        "color": "Yellow",
+        "image": "https://m.media-amazon.com/images/I/A1e+j+PaYAL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+        "availableQuantity": 10
+      },
+      {
+        "size": "L",
+        "color": "Yellow",
+        "image": "https://m.media-amazon.com/images/I/A1e+j+PaYAL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+        "availableQuantity": 10
+      },
+      {
+        "size": "S",
+        "color": "Black",
+        "image": "https://m.media-amazon.com/images/I/B1pppR4gVKL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+        "availableQuantity": 10
+      },
+      {
+        "size": "M",
+        "color": "Black",
+        "image": "https://m.media-amazon.com/images/I/B1pppR4gVKL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+        "availableQuantity": 10
+      },
+      {
+        "size": "L",
+        "color": "Black",
+        "image": "https://m.media-amazon.com/images/I/B1pppR4gVKL._CLa%7C2140%2C2000%7C91f8r1UQR-L.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_AC_SX679_.png",
+        "availableQuantity": 10
+      }
+    ]
+  }
+]

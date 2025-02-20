@@ -12,6 +12,9 @@ const Mugs = async () => {
   for (const item of products) {
     if (!Array.isArray(item.variants)) continue;
 
+    const discount = item.discount || 0;
+    const discountedPrice = item.price - (item.price * discount) / 100;
+
     if (mugs[item.title]) {
       for (const variant of item.variants) {
         if (variant.availableQuantity > 0) {
@@ -30,6 +33,8 @@ const Mugs = async () => {
         slug: item.slug,
         image: item.variants.find(v => v.availableQuantity > 0)?.image || item.image || "/placeholder.jpg",
         price: item.price,
+        discountedPrice: discountedPrice.toFixed(2),
+        discount,
         colors: [...new Set(item.variants.filter(v => v.availableQuantity > 0).map(v => v.color))],
         sizes: [...new Set(item.variants.filter(v => v.availableQuantity > 0).map(v => v.size))],
       };
@@ -39,7 +44,10 @@ const Mugs = async () => {
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-9 py-20 mx-auto">
-        <div className="flex flex-wrap -m-4 mt-16">
+      <h2 className="text-4xl font-extrabold text-gray-900 text-center tracking-wide uppercase">
+          <span className="text-[#C85C3D]">Sip</span> in Style – <br /> Premium Mugs for Every <span className="text-[#C85C3D]">Vibe</span>!
+        </h2>
+        <div className="flex flex-wrap -m-4 mt-5">
           {Object.values(mugs).map((item) => (
             <div key={item._id} className="lg:w-1/4 md:w-1/2 p-4 w-full">
               <CustomLink href={`/product/${item.slug}`} className="block rounded-lg shadow-md hover:shadow-lg transition-shadow duration-100 p-6 overflow-visible">
@@ -80,7 +88,16 @@ const Mugs = async () => {
                     </div>
                   )}
 
-                  <p className="mt-1">${item.price.toFixed(2)}</p>
+                  {/* Price Display with Discount */}
+                  {item.discount > 0 ? (
+                    <div className="mt-1 text-center md:text-left">
+                      <span className="text-gray-500 text-sm line-through mr-2">${item.price.toFixed(2)}</span>
+                      <span className="text-red-600 text-lg font-bold">${item.discountedPrice}</span>
+                      <span className="text-green-600 text-sm ml-2">-{item.discount}%</span>
+                    </div>
+                  ) : (
+                    <p className="mt-1">${item.price.toFixed(2)}</p>
+                  )}
                 </div>
               </CustomLink>
             </div>

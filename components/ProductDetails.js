@@ -145,13 +145,13 @@ const ProductDetails = ({ product }) => {
     return (
         <div className="container mx-auto px-5 py-10 flex flex-col lg:flex-row gap-10">
             {/* Product Image */}
-            <div className="flex mt-4 space-x-2">
+            <div className="flex mt-0 space-x-2">
                 <Image
                     src={productImage}
                     alt={product.title}
                     width={400}
                     height={400}
-                    className="mix-blend-multiply h-[25vh] md:h-[70vh] m-auto block transform transition duration-300 ease-out hover:scale-110 hover:translate-y-2 origin-center"
+                    className="mix-blend-multiply h-[50vh] md:h-[77vh] m-auto block transform transition duration-300 ease-out hover:scale-105 hover:translate-y-2 origin-center"
                     priority
                 />
             </div>
@@ -187,7 +187,7 @@ const ProductDetails = ({ product }) => {
                     </div>
 
                     {/* Size Selection */}
-                    <div className="flex ml-6 items-center">
+                    <div className="flex md:ml-6 absolute mt-24 md:static md:mt-0 items-center">
                         <span className="mr-3">Size</span>
                         <select
                             className="rounded border border-gray-300 py-2 px-3 focus:outline-none"
@@ -210,7 +210,7 @@ const ProductDetails = ({ product }) => {
 
                 <div className="flex">
                     {/* Price Section with Discount */}
-                <div className="flex items-center space-x-3 mt-3">
+                <div className="flex items-center absolute md:static mb-10 ml-32 md:mb-0 md:ml-0 space-x-3 -mt-[1.5rem] md:mt-3">
                     {product.discount > 0 && (
                         <span className="text-gray-500 line-through text-lg">${product.price.toFixed(2)}</span>
                     )}
@@ -223,7 +223,7 @@ const ProductDetails = ({ product }) => {
                         </span>
                     )}
                 </div>
-                    <div className="flex ml-auto space-x-2">
+                    <div className="flex ml-auto md:mt-0 mt-7 space-x-2">
                         <button
                             className="flex md:ml-2 text-xs md:text-sm bg-black hover:bg-gray-800 text-white py-3 px-4 rounded"
                             disabled={!selectedSize}

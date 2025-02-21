@@ -15,7 +15,7 @@ export default function Home() {
   };
   const products = [
     { title: "Minions Collection", description: "Playful, Bold, Unstoppable!", image: "/minioncollection.jpg", path: "/minionscollection" },
-    { title: "Stylish Hoodies", description: "Perfect for every season.", image: "/hoodie.jpg", path: "/hoodies" },
+    { title: "Stylish Hoodies", description: "Perfect for every season.", image: "/hoodie.webp", path: "/stylishhoodies" },
     { title: "Trendy Caps", description: "Complete your look with our caps.", image: "/cap.jpg", path: "/caps" },
   ];
   return (
@@ -54,7 +54,7 @@ export default function Home() {
 
               return (
                 <div key={path} className="bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 transition-transform duration-300">
-                  <Image src={image} alt={title} width={400} height={300} className="w-full" />
+                  <Image src={image} alt={title} width={400} height={300} className="w-full h-[65vh]" />
                   <div className="p-6">
                     <h3 className="text-xl font-semibold">{title}</h3>
                     <p className="text-gray-600 mt-2">{description}</p>

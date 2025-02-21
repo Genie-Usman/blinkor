@@ -15,11 +15,11 @@ const slides = [
   },
   {
     id: 2,
-    title: "TRENDING NOW",
-    subtitle: "WOMEN COLLECTION",
+    title: "EXCLUSIVE SITEWIDE SALE",
+    subtitle: "LIMITED-TIME DEALS ON ALL PRODUCTS",
     button: "SHOP NOW",
     image: "./banner-2.png",
-    link: "/cartooncollection"
+    link: "/allproducts"
   },
   {
     id: 3,

@@ -45,8 +45,8 @@ const Minioncollection = async () => {
     <section className="text-gray-600 body-font">
       <div className="container px-9 py-20 mx-auto">
         <h2 className="text-4xl font-extrabold text-gray-900 text-center tracking-wide uppercase">
-          <span className="text-[#C85C3D] font-bold text-xl tracking-wide uppercase">
-            MINION COLLECTION: <span className="text-[#F4A261]">MAYHEM AWAITS!</span>
+          <span className="text-[#C85C3D] font-bold text-4xl tracking-wide uppercase">
+            MINIONS COLLECTION: <span className="text-[#F4A261]">MAYHEM AWAITS!</span>
           </span>
 
         </h2>

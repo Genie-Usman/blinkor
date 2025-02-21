@@ -14,7 +14,7 @@ export default function Home() {
     router.push(path);
   };
   const products = [
-    { title: "Minions Collection ", description: "Playful, Bold, Unstoppable!", image: "/minioncollection.jpg", path: "/minionscollection" },
+    { title: "Minions Collection", description: "Playful, Bold, Unstoppable!", image: "/minioncollection.jpg", path: "/minionscollection" },
     { title: "Stylish Hoodies", description: "Perfect for every season.", image: "/hoodie.jpg", path: "/hoodies" },
     { title: "Trendy Caps", description: "Complete your look with our caps.", image: "/cap.jpg", path: "/caps" },
   ];
@@ -34,8 +34,8 @@ export default function Home() {
           >
             {[...Array(3)].map((_, i) => (
               <div key={i} className="flex space-x-8">
-                <span>CODE BLINK STYLE</span>
-                <span>CODE YOUR FUTURE</span>
+                <span>DRIP BLINK STYLE</span>
+                <span>ELEVATE YOUR DRIP</span>
                 <span>BLINK INTO FASHION</span>
                 <span>STYLE REDEFINED</span>
               </div>

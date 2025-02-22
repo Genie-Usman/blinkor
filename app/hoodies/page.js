@@ -5,7 +5,7 @@ import Products from "../../models/Products";
 
 const Hoodies = async () => {
   await connectDB();
-  const products = await Products.find({ category: { $in: ["hoodies", "stylishhoodie"] } }).lean();
+  const products = await Products.find({ category: { $in: ["hoodies", "stylishhoodies"] } }).lean();
   products.sort(() => Math.random() - 0.5)
 
   const hoodies = {};

@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import SidebarFilter from "../../components/SidebarFilter";
 import CustomLink from "../../components/CustomLink";
+import { AiOutlineFilter } from "react-icons/ai";
 
 const ClientAllProducts = ({ products = [] }) => {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [filteredProducts, setFilteredProducts] = useState(products);
     const [filters, setFilters] = useState({ priceRange: [0, 100], colors: [], category: [] });
 
@@ -32,19 +34,26 @@ const ClientAllProducts = ({ products = [] }) => {
         setFilteredProducts(filtered);
     }, [filters, products]);
 
+    const handleApplyFilters = (filters) => {
+        console.log("Applied Filters:", filters);
+        setIsSidebarOpen(false);
+      };
+    
+
     return (
         <section className="text-gray-600 body-font">
 
             {/* Products Section */}
             <div className="container px-9 py-20 mx-auto">
-                <h2 className="text-4xl font-extrabold text-gray-900 text-center tracking-wide uppercase">
-                    <span className="text-[#C85C3D] font-bold text-4xl tracking-wide uppercase">
+                <h2 className="text-xl mt-9 md:mt-6 md:text-4xl font-extrabold text-gray-900 text-center tracking-wide uppercase">
+                    <span className="text-[#C85C3D] font-bold md:text-4xl tracking-wide uppercase">
                         HOT DEALS: <span className="text-[#F4A261]">DISCOUNTS YOU CAN'T MISS!</span>
                     </span>
                 </h2>
 
                 {/* Filter Button */}
-                <button className="flex items-center bg-gray-700 text-white px-3 py-2 text-sm rounded-md hover:bg-devstyle transition-all duration-200 mt-2" onClick={() => setIsFilterOpen(true)}>
+                <button className="flex items-center bg-gray-700 text-white px-3 py-2 gap-2 text-sm rounded-md hover:bg-devstyle transition-all duration-200 mt-2" onClick={() => setIsFilterOpen(true)}>
+                <AiOutlineFilter className="h-4 w-4" /> {/* Filter Icon */}
                     Open Filters
                 </button>
 

@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Dialog } from "@headlessui/react";
 import { CiCircleRemove } from "react-icons/ci";
-import { FaCheck } from "react-icons/fa";
-
+import { FaCheck, FaFilter } from "react-icons/fa";
 
 const SidebarFilter = ({ isOpen, onClose, onApply }) => {
   const [priceRange, setPriceRange] = useState([0, 100]);
@@ -15,8 +13,8 @@ const SidebarFilter = ({ isOpen, onClose, onApply }) => {
     return category
       .replace(/([A-Z])/g, " $1")
       .replace(/^./, (str) => str.toUpperCase())
-      .replace("hoodie", "Hoodie")
-      .replace("tshirts", "T-Shirts")
+      .replace("hoodies", " Hoodies")
+      .replace("tshirts", "T-Shirts");
   };
 
   const handleApply = () => {
@@ -25,20 +23,25 @@ const SidebarFilter = ({ isOpen, onClose, onApply }) => {
   };
 
   return (
-    <Dialog open={isOpen} onClose={onClose} className="fixed inset-0 z-50">
-      {/* Overlay */}
-      <div
-        className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out"
-        onClick={onClose}
-      />
+    <>
+      {/* Overlay with Fade Animation */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out"
+          onClick={onClose}
+        />
+      )}
 
-      {/* Sidebar */}
-      <div className="bg-[#f3f3f3] overflow-y-auto max-h-screen custom-scrollbar rounded-lg z-50 fixed inset-y-0 left-0 w-80 shadow-2xl transform transition-transform duration-300 ease-in-out">
-        <div className="h-full flex flex-col p-6">
+      {/* Sidebar with Slide Animation */}
+      <div
+        className={`fixed inset-y-0 left-0 w-80 bg-[#f3f3f3] shadow-2xl transform transition-transform duration-300 ease-in-out z-[777] ${isOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+      >
+        <div className="h-full flex flex-col p-6 overflow-y-auto custom-scrollbar">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-gray-900">Filters</h2>
-            <button onClick={onClose} className="absolute top-4 right-2 cursor-pointer">
+            <button onClick={onClose} className="cursor-pointer">
               <CiCircleRemove className="hover:text-gray-600 text-2xl text-black" />
             </button>
           </div>
@@ -93,7 +96,7 @@ const SidebarFilter = ({ isOpen, onClose, onApply }) => {
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-3">Category</label>
             <div className="grid grid-cols-2 gap-3">
-              {["tshirts", "minion", "hoodies", "stylishhoodie", "caps", "mugs"].map((cat) => (
+              {["tshirts", "minion", "hoodies", "stylishhoodies", "caps", "mugs"].map((cat) => (
                 <label
                   key={cat}
                   className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
@@ -123,14 +126,15 @@ const SidebarFilter = ({ isOpen, onClose, onApply }) => {
           <div className="mt-auto space-y-4">
             <button
               onClick={handleApply}
-              className="w-full bg-black text-white px-4 py-2.5 rounded-lg hover:bg-gray-800 active:bg-gray-800 transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 mb-10"
+              className="w-full bg-black text-white px-4 py-2.5 rounded-lg hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 flex items-center justify-center space-x-2"
             >
-              Apply Filters
+              <FaFilter className="h-4 w-4" />
+              <span>Apply Filters</span>
             </button>
           </div>
         </div>
       </div>
-    </Dialog>
+    </>
   );
 };
 

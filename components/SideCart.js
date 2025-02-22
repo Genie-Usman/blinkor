@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import CustomLink from './CustomLink';
 import { CiCircleRemove, CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 import { BiShoppingBag, BiTrash } from "react-icons/bi";

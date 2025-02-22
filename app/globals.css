@@ -21,20 +21,20 @@ body{
   }
   
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: #f8d7da;
+    background: #f3f3f3;
     border-radius: 10px;
     margin-top: 2px;
     margin-bottom: 2px;
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #ff3130;
+    background: #E0AFA0;
     border-radius: 10px;
     transition: background 0.3s;
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #f34747;
+    background: #E0AFA0;
     /* color: be; */
   }
 

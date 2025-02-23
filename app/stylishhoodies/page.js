@@ -53,14 +53,17 @@ const StylishHoodies = async () => {
                     {Object.values(stylishHoodies).map((item) => (
                         <div key={item._id} className="lg:w-1/4 md:w-1/2 p-4 w-full">
                             <CustomLink href={`/product/${item.slug}`} className="block rounded-lg shadow-md hover:shadow-lg transition-shadow duration-100 p-6 overflow-visible">
+                            <div className="relative h-[25vh] md:h-[45vh] flex items-center justify-center overflow-visible group">
+
                                 <Image
-                                    className="mix-blend-multiply h-[25vh] md:h-[45vh] m-auto block transform transition duration-300 ease-out hover:scale-110 hover:translate-y-2 origin-center"
+                                    className="mix-blend-multiply w-full h-full object-contain transform transition duration-300 ease-out group-hover:scale-105 origin-center"
                                     src={item.image}
                                     alt={item.title}
                                     width={200}
                                     height={200}
                                     priority
                                 />
+                                </div>
 
                                 <div className="mt-4 text-center md:text-left">
                                     <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Stylish Hoodies</h3>
@@ -70,7 +73,7 @@ const StylishHoodies = async () => {
                                     {item.sizes.length > 0 && (
                                         <div className="flex justify-center md:justify-start gap-2 mt-1 flex-wrap">
                                             {item.sizes.map((size, index) => (
-                                                <span key={index} className="border border-gray-400 px-2 py-1 text-xs rounded-md">
+                                                <span key={index} className="border border-gray-300 px-3 py-1 text-xs rounded-full bg-[#F3F4F6] hover:bg-[#E5E7EB] transition-colors duration-200">
                                                     {size}
                                                 </span>
                                             ))}
@@ -83,7 +86,7 @@ const StylishHoodies = async () => {
                                             {item.colors.map((color, index) => (
                                                 <span
                                                     key={index}
-                                                    className="w-4 h-4 rounded-full border outline-none mt-1 border-gray-200"
+                                                    className="w-6 h-6 rounded-full border-2 border-gray-200 hover:border-gray-400 transition-colors duration-200 shadow-sm"
                                                     style={{ backgroundColor: color.toLowerCase() }}
                                                 ></span>
                                             ))}

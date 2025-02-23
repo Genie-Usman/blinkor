@@ -86,7 +86,7 @@ const StylishHoodies = async () => {
                                             {item.colors.map((color, index) => (
                                                 <span
                                                     key={index}
-                                                    className="w-6 h-6 rounded-full border-2 border-gray-200 hover:border-gray-400 transition-colors duration-200 shadow-sm"
+                                                    className="w-4 h-4 rounded-full border-2 border-gray-200 hover:border-gray-400 transition-colors duration-200 shadow-sm"
                                                     style={{ backgroundColor: color.toLowerCase() }}
                                                 ></span>
                                             ))}

@@ -4,7 +4,11 @@ import { useState } from "react";
 import { CiCircleRemove } from "react-icons/ci";
 import { FaCheck, FaFilter } from "react-icons/fa";
 
-const SidebarFilter = ({ isOpen, onClose, onApply }) => {
+const SidebarFilter = ({ isOpen, onClose, onApply, filterOptions = {
+  priceRange: { min: 0, max: 100 },
+  colors: [],
+  categories: [],
+} }) => {
   const [priceRange, setPriceRange] = useState([0, 100]);
   const [colors, setColors] = useState([]);
   const [category, setCategory] = useState([]);
@@ -51,8 +55,8 @@ const SidebarFilter = ({ isOpen, onClose, onApply }) => {
             <label className="block text-sm font-medium text-gray-700 mb-3">Price Range ($)</label>
             <input
               type="range"
-              min="0"
-              max="100"
+              min={filterOptions.priceRange.min}
+              max={filterOptions.priceRange.max}
               value={priceRange[1]}
               onChange={(e) => setPriceRange([0, Number(e.target.value)])}
               className="w-full h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer range-sm accent-gray-800 transition-all duration-200 ease-in-out"
@@ -66,7 +70,7 @@ const SidebarFilter = ({ isOpen, onClose, onApply }) => {
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-3">Colors</label>
             <div className="grid grid-cols-2 gap-3">
-              {["Black", "Red", "Navy", "RoyalBlue", "SkyBlue", "Gray", "Yellow", "Pink", "HotPink", "Silver", "Gainsboro", "Green", "Purple", "ForestGreen", "Orange", "Brown"].map((color) => (
+              {filterOptions.colors.map((color) => (
                 <label
                   key={color}
                   className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
@@ -96,7 +100,7 @@ const SidebarFilter = ({ isOpen, onClose, onApply }) => {
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-3">Category</label>
             <div className="grid grid-cols-2 gap-3">
-              {["tshirts", "minion", "hoodies", "stylishhoodies", "caps", "mugs"].map((cat) => (
+              {filterOptions.categories.map((cat) => (
                 <label
                   key={cat}
                   className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer"

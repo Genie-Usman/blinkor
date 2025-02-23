@@ -5,11 +5,13 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCart } from "../app/context/CartContext";
 import toast from 'react-hot-toast';
+import { Loader2 } from "lucide-react";
 
 const ProductDetails = ({ product }) => {
     const { addToCart, buyNow } = useCart();
     const [zipcode, setZipcode] = useState("");
     const [isValid, setIsValid] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [cartMessage, setCartMessage] = useState("");
     const [disable, setDisable] = useState(true);
     const router = useRouter();
@@ -59,48 +61,48 @@ const ProductDetails = ({ product }) => {
             if (matchedEntry) {
                 setIsValid(true);
                 toast.success(`Service available in ${matchedEntry.city}, ${matchedEntry.district}!`, {
-                    duration: 2000, 
+                    duration: 2000,
                     position: 'top-right',
                     style: {
-                      background: '#000', 
-                      color: '#fff', 
-                      fontSize: '13px',
-                      fontWeight: 'bold',
-                      borderRadius: '8px',
-                      padding: '12px 20px',
+                        background: '#000',
+                        color: '#fff',
+                        fontSize: '13px',
+                        fontWeight: 'bold',
+                        borderRadius: '8px',
+                        padding: '12px 20px',
                     },
-                  });
+                });
             } else {
                 setIsValid(false);
                 toast.error("Sorry, service is not available for this zipcode!", {
-                    duration: 2000, 
+                    duration: 2000,
                     position: 'top-right',
                     style: {
-                      background: '#000', 
-                      color: '#fff', 
-                      fontSize: '14px',
-                      fontWeight: 'bold',
-                      borderRadius: '8px',
-                      padding: '12px 20px',
+                        background: '#000',
+                        color: '#fff',
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                        borderRadius: '8px',
+                        padding: '12px 20px',
                     },
-                  });
-                
+                });
+
             }
         } catch (error) {
             console.error("Error checking zipcode:", error);
             setIsValid(false);
             toast.error("Error fetching zipcode data!", {
-                duration: 2000, 
+                duration: 2000,
                 position: 'top-right',
                 style: {
-                  background: '#000', 
-                  color: '#fff', 
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  borderRadius: '8px',
-                  padding: '12px 20px',
+                    background: '#000',
+                    color: '#fff',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    borderRadius: '8px',
+                    padding: '12px 20px',
                 },
-              });
+            });
         }
     };
 
@@ -114,16 +116,16 @@ const ProductDetails = ({ product }) => {
             duration: 2000,
             position: 'top-right',
             style: {
-              background: '#000',
-              color: '#fff',
-              fontSize: '14px',
-              fontWeight: 'bold',
-              borderRadius: '2px',
-              padding: '12px 20px',
+                background: '#000',
+                color: '#fff',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                borderRadius: '2px',
+                padding: '12px 20px',
             },
-            icon: '🛒', 
-          });
-        
+            icon: '🛒',
+        });
+
     };
 
     const handleBuyNow = () => {
@@ -131,8 +133,10 @@ const ProductDetails = ({ product }) => {
             setCartMessage("Please select a size before buying.");
             return;
         }
+        setLoading(true);
         buyNow(product.slug, product.title, 1, discountedPrice, selectedSize, selectedColor);
         router.push("/checkout");
+        setLoading(false);
     };
     const handleZipcodeButton = (e) => {
         setZipcode(e.target.value)
@@ -143,17 +147,22 @@ const ProductDetails = ({ product }) => {
         }
     };
     return (
-        <div className="container mx-auto px-5 py-10 flex flex-col lg:flex-row gap-10">
+        <div className="container mx-auto px-5 py-10 flex justify-center flex-col lg:flex-row gap-10">
             {/* Product Image */}
-            <div className="flex mt-0 space-x-2">
-                <Image
-                    src={productImage}
-                    alt={product.title}
-                    width={400}
-                    height={400}
-                    className="mix-blend-multiply h-[50vh] md:h-[77vh] m-auto block transform transition duration-300 ease-out hover:scale-105 hover:translate-y-2 origin-center"
-                    priority
-                />
+            <div className="flex-1 flex justify-center lg:justify-start">
+                <div className="relative w-full h-[50vh] md:h-[75vh] flex items-center justify-center overflow-visible">
+
+                    <div className="relative w-full h-[50vh] md:h-[75vh] flex items-center justify-center overflow-visible">
+                        <Image
+                            src={productImage}
+                            alt={product.title}
+                            width={400}
+                            height={400}
+                            className="object-contain w-full h-full mix-blend-multiply transform transition duration-300 ease-out hover:scale-105 origin-center"
+                            priority
+                        />
+                    </div>
+                </div>
             </div>
 
             <div className="w-full lg:w-1/2">
@@ -167,11 +176,11 @@ const ProductDetails = ({ product }) => {
                     ({selectedSize}/{selectedColor})
                 </h1>
                 <p className="leading-relaxed">{product.description || "No description available."}</p>
-                
+
 
 
                 <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-                    
+
                     {/* Color Selection */}
                     <div className="flex">
                         <span className="mr-3">Color</span>
@@ -210,26 +219,33 @@ const ProductDetails = ({ product }) => {
 
                 <div className="flex">
                     {/* Price Section with Discount */}
-                <div className="flex items-center absolute md:static mb-10 ml-32 md:mb-0 md:ml-0 space-x-3 -mt-[1.5rem] md:mt-3">
-                    {product.discount > 0 && (
-                        <span className="text-gray-500 line-through text-lg">${product.price.toFixed(2)}</span>
-                    )}
-                    <span className="title-font font-medium text-xl md:text-2xl text-gray-900">
-                        ${discountedPrice}
-                    </span>
-                    {product.discount > 0 && (
-                        <span className="bg-red-500 text-white px-2 py-1 text-sm rounded">
-                            -{product.discount}%
+                    <div className="flex items-center absolute md:static mb-10 ml-32 md:mb-0 md:ml-0 space-x-3 -mt-[1.5rem] md:mt-3">
+                        {product.discount > 0 && (
+                            <span className="text-gray-500 line-through text-lg">${product.price.toFixed(2)}</span>
+                        )}
+                        <span className="title-font font-medium text-xl md:text-2xl text-gray-900">
+                            ${discountedPrice}
                         </span>
-                    )}
-                </div>
+                        {product.discount > 0 && (
+                            <span className="bg-red-500 text-white px-2 py-1 text-sm rounded">
+                                -{product.discount}%
+                            </span>
+                        )}
+                    </div>
                     <div className="flex ml-auto md:mt-0 mt-7 space-x-2">
                         <button
-                            className="flex md:ml-2 text-xs md:text-sm bg-black hover:bg-gray-800 text-white py-3 px-4 rounded"
-                            disabled={!selectedSize}
+                            className="flex md:ml-2 text-xs md:text-sm bg-black hover:bg-gray-800 text-white py-3 px-4 rounded transition-all disabled:bg-gray-400 disabled:cursor-not-allowed"
+                            disabled={!selectedSize || loading}
                             onClick={handleBuyNow}
                         >
-                            Buy Now
+                            {loading ? (
+                                <>
+                                    <Loader2 className="animate-spin w-4 h-4 mr-2" /> {/* Loader */}
+                                    Processing...
+                                </>
+                            ) : (
+                                "Buy Now"
+                            )}
                         </button>
                         <button
                             className="flex md:ml-auto text-xs md:text-sm bg-black hover:bg-gray-800 text-white py-3 px-4 rounded"

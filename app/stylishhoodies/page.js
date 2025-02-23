@@ -5,7 +5,7 @@ import Products from "../../models/Products";
 
 const StylishHoodies = async () => {
     await connectDB();
-    const products = await Products.find({ category: "stylishhoodie" }).lean();
+    const products = await Products.find({ category: "stylishhoodies" }).lean();
 
     const stylishHoodies = {};
 

@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import SidebarFilter from "../../components/SidebarFilter";
-import CustomLink from "../../components/CustomLink";
+import SidebarFilter from "./SidebarFilter";
+import CustomLink from "./CustomLink";
 import { AiOutlineFilter } from "react-icons/ai";
 
-const ClientAllProducts = ({ products = [] }) => {
+const FilteredProducts = ({ products = [] }) => {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [filteredProducts, setFilteredProducts] = useState(products);
@@ -37,8 +37,8 @@ const ClientAllProducts = ({ products = [] }) => {
     const handleApplyFilters = (filters) => {
         console.log("Applied Filters:", filters);
         setIsSidebarOpen(false);
-      };
-    
+    };
+
 
     return (
         <section className="text-gray-600 body-font">
@@ -53,7 +53,7 @@ const ClientAllProducts = ({ products = [] }) => {
 
                 {/* Filter Button */}
                 <button className="flex items-center bg-gray-700 text-white px-3 py-2 gap-2 text-sm rounded-md hover:bg-devstyle transition-all duration-200 mt-2" onClick={() => setIsFilterOpen(true)}>
-                <AiOutlineFilter className="h-4 w-4" /> {/* Filter Icon */}
+                    <AiOutlineFilter className="h-4 w-4" /> {/* Filter Icon */}
                     Open Filters
                 </button>
 
@@ -65,15 +65,16 @@ const ClientAllProducts = ({ products = [] }) => {
                         filteredProducts.map((item) => (
                             <div key={item._id} className="lg:w-1/4 md:w-1/2 p-2 w-full">
                                 <CustomLink href={`/product/${item.slug}`} className="block rounded-lg shadow-md hover:shadow-lg transition-shadow duration-100 p-6 overflow-visible">
-                                    <Image
-                                        className="mix-blend-multiply h-[25vh] md:h-[41vh] m-auto block transform transition duration-300 ease-out hover:scale-110 hover:translate-y-2 origin-center"
-                                        src={item.image}
-                                        alt={item.title}
-                                        width={200}
-                                        height={200}
-                                        priority
-                                    />
-
+                                    <div className="relative h-[25vh] md:h-[45vh] flex items-center justify-center overflow-visible group">
+                                        <Image
+                                            className="mix-blend-multiply w-full h-full object-contain transform transition duration-300 ease-out group-hover:scale-105 origin-center"
+                                            src={item.image}
+                                            alt={item.title}
+                                            width={200}
+                                            height={200}
+                                            priority
+                                        />
+                                    </div>
                                     <div className="mt-4 text-center md:text-left">
                                         <h3 className="text-gray-500 text-xs tracking-widest capitalize title-font mb-1">{item.category}</h3>
                                         <h2 className="text-gray-900 text-lg font-medium truncate w-full">{item.title}</h2>
@@ -125,4 +126,4 @@ const ClientAllProducts = ({ products = [] }) => {
     );
 };
 
-export default ClientAllProducts;
+export default FilteredProducts;

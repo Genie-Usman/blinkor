@@ -1,6 +1,6 @@
 import { connectDB } from "../lib/mongodb";
 import Products from "../../models/Products";
-import ClientAllProducts from "./clientAllProducts";
+import FilteredProducts from "../../components/FilteredProducts";
 
 const AllProducts = async () => {
     await connectDB();
@@ -25,7 +25,7 @@ const AllProducts = async () => {
 
     return (
         <section className="text-gray-600 body-font">
-            <ClientAllProducts products={Object.values(formattedProducts)} />
+            <FilteredProducts products={Object.values(formattedProducts)} />
         </section>
     );
 };

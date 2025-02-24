@@ -1,23 +1,29 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import SidebarFilter from "../../components/SidebarFilter";
 import CustomLink from "../../components/CustomLink";
 import { AiOutlineFilter } from "react-icons/ai";
 import { useFilter } from "../context/FilterContext";
 
-const ClientAllProducts = ({ products = [] }) => {
+const FilteredCaps = ({ caps = [] }) => {
     const { setFilters, useFilterLogic, setIsFilterOpen, isFilterOpen } = useFilter();
-    const filteredProducts = useFilterLogic(products);
+    const [loadedCaps, setLoadedCaps] = useState([]);
+
+    useEffect(() => {
+        if (caps.length > 0) {
+            setLoadedCaps(caps);
+        }
+    }, [caps]);
+
+    const filteredCaps = useFilterLogic(loadedCaps);
 
     return (
         <section className="text-gray-600 body-font">
             <div className="container px-9 py-20 mx-auto">
                 <h2 className="text-xl mt-9 md:mt-6 md:text-4xl font-extrabold text-gray-900 text-center tracking-wide uppercase">
-                    <span className="text-[#C85C3D] font-bold md:text-4xl tracking-wide uppercase">
-                        HOT DEALS:{" "}
-                        <span className="text-[#F4A261]">DISCOUNTS YOU CAN'T MISS!</span>
-                    </span>
+                <span className="text-[#C85C3D]">Drip</span> Starts Here – <br /> Premium Caps for Every <span className="text-[#C85C3D]">Vibe</span>!
                 </h2>
                 <button
                     className="flex items-center bg-gray-700 text-white px-3 py-2 gap-2 text-sm rounded-md hover:bg-devstyle transition-all duration-200 mt-2"
@@ -50,12 +56,12 @@ const ClientAllProducts = ({ products = [] }) => {
                             "Orange",
                             "Brown",
                         ],
-                        categories: ["coding tshirts", "minions tshirts", "coding hoodies", "stylish hoodies", "cartoon caps","comic caps", "mugs"],
+                        categories: ["cartoon caps", "comic caps"],
                     }}
                 />
                 <div className="flex flex-wrap -m-4 mt-5">
-                    {filteredProducts.length ? (
-                        filteredProducts.map((item) => (
+                    {filteredCaps.length ? (
+                        filteredCaps.map((item) => (
                             <div key={item._id} className="lg:w-1/4 md:w-1/2 p-2 w-full">
                                 <CustomLink
                                     href={`/product/${item.slug}`}
@@ -73,7 +79,7 @@ const ClientAllProducts = ({ products = [] }) => {
                                     </div>
                                     <div className="mt-4 text-center md:text-left">
                                         <h3 className="text-gray-500 text-xs tracking-widest capitalize title-font mb-1">
-                                            {item.category}
+                                        Caps
                                         </h3>
                                         <h2 className="text-gray-900 text-lg font-medium truncate w-full">
                                             {item.title}
@@ -129,4 +135,4 @@ const ClientAllProducts = ({ products = [] }) => {
     );
 };
 
-export default ClientAllProducts;
+export default FilteredCaps;

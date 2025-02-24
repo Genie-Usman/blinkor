@@ -47,7 +47,7 @@ const FilteredHoodies = ({ hoodies = [] }) => {
                             "Orange",
                             "Brown",
                         ],
-                        categories: ["hoodies", "stylishhoodies"],
+                        categories: ["coding hoodies", "stylish hoodies"],
                     }}
                 />
                 <div className="flex flex-wrap -m-4 mt-5">

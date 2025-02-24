@@ -5,7 +5,7 @@ import ClientAllProducts from "./ClientAllProducts";
 const AllProducts = async () => {
     await connectDB();
     const products = await Products.find({
-        category: { $in: ["tshirts", "minion", "hoodies", "stylishhoodies", "caps", "mugs"] },
+        category: { $in: ["coding tshirts", "minions tshirts", "coding hoodies", "stylish hoodies", "cartoon caps", "comic caps","mugs"] },
     }).lean();
 
     products.sort(() => Math.random() - 0.5);

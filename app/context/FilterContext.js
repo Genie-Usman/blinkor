@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useMemo } from "react";
+import { usePathname } from "next/navigation"; 
 const FilterContext = createContext();
 
 export const FilterProvider = ({ children }) => {
@@ -10,15 +11,23 @@ export const FilterProvider = ({ children }) => {
     category: [],
   });
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const pathname = usePathname(); // Detect page changes
+
+  // Reset filters when the user navigates to a new page
+  useEffect(() => {
+    setFilters({
+      priceRange: [0, 100],
+      colors: [],
+      category: [],
+    });
+  }, [pathname]); // Runs every time the route changes
+
 
   const useFilterLogic = (products) => {
-    const [filteredProducts, setFilteredProducts] = useState(products);
+    return useMemo(() => {
+      if (!products || products.length === 0) return [];
 
-    useEffect(() => {
-      if (!products || products.length === 0) return;
-
-      const filtered = products.filter((product) => {
-        
+      return products.filter((product) => {
         const matchesPrice =
           product.discountedPrice >= filters.priceRange[0] &&
           product.discountedPrice <= filters.priceRange[1];
@@ -43,15 +52,13 @@ export const FilterProvider = ({ children }) => {
 
         return matchesPrice && matchesCategory && matchesColor;
       });
-
-      setFilteredProducts(filtered);
-    }, [filters, products]);
-
-    return filteredProducts;
+    }, [filters, products]); // Only recompute when `filters` or `products` change
   };
 
   return (
-    <FilterContext.Provider value={{ filters, setFilters, useFilterLogic,isFilterOpen, setIsFilterOpen }}>
+    <FilterContext.Provider
+      value={{ filters, setFilters, useFilterLogic, isFilterOpen, setIsFilterOpen }}
+    >
       {children}
     </FilterContext.Provider>
   );

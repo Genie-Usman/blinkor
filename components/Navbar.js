@@ -3,15 +3,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import CustomLink from "./CustomLink";
-import { CiShoppingCart, CiUser, CiLogin   } from "react-icons/ci";
+import { CiShoppingCart, CiUser, CiLogin } from "react-icons/ci";
 import SideCart from "./SideCart";
 import { useCart } from "../app/context/CartContext";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
-    const { user, logout } = useCart();
+    const { user, logout, itemCount } = useCart();
     const dropdownRef = useRef(null);
     const [cartOpen, setCartOpen] = useState(false);
-    const [dropdown, setDropdown] = useState(false);
+    const [dropdown, setDropdown] = useState(false)
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -79,7 +80,16 @@ const Navbar = () => {
                 <div className="flex absolute right-2 md:right-5 mt-2 md:0 flex-end items-center space-x-2 md:space-x-5">
                     {user.value ? (
                         <div ref={dropdownRef}>
-                            <CiUser  onClick={toggleDropdown} className="text-base text-gray-700 hover:text-red-700 md:text-xl cursor-pointer" />
+                            <motion.div
+                                whileHover={{ scale: 1.1, rotate: 5 }}
+                                whileTap={{ rotate: 10, scale: 0.9 }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                            >
+                                <CiUser
+                                    onClick={toggleDropdown}
+                                    className="text-base text-gray-700 hover:text-devstyle md:text-2xl cursor-pointer transition-colors duration-300"
+                                />
+                            </motion.div>
                             {dropdown && (
                                 <div className="absolute right-8 font-bold top-6 py-4 px-3 bg-[#BCB8B1] text-sm rounded shadow-lg w-32">
                                     <ul className="flex flex-col text-left">
@@ -98,13 +108,37 @@ const Navbar = () => {
                         </div>
                     ) : (
                         <CustomLink href="/login">
-                            <CiLogin  className="text-base text-gray-700 hover:text-devstyle md:text-2xl cursor-pointer" />
+                            <motion.div
+                                whileHover={{ scale: 1.1, rotate: 5 }}
+                                whileTap={{ scale: 0.9, rotate: -5 }}
+                                transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                                className="cursor-pointer"
+                            >
+                                <CiLogin className="text-base text-gray-700 hover:text-devstyle md:text-2xl" />
+                            </motion.div>
+
                         </CustomLink>
                     )}
-                    <CiShoppingCart
+                    <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="relative cursor-pointer"
                         onClick={toggleCart}
-                        className="text-base text-gray-700 hover:text-devstyle md:text-2xl cursor-pointer"
-                    />
+                    >
+                        {/* Shopping Cart Icon */}
+                        <CiShoppingCart className="text-gray-700 hover:text-devstyle md:text-3xl transition-all duration-200" />
+                        {Number(itemCount) > 0 && (
+                            <motion.span
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1.1 }} // Subtle pop effect
+                                transition={{ type: "spring", stiffness: 500, damping: 20, mass: 1 }}
+                                className="absolute -top-1.5 -right-1.5 bg-gray-800 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+                            >
+                                {itemCount}
+                            </motion.span>
+                        )}
+
+                    </motion.div>
                 </div>
                 <SideCart cartOpen={cartOpen} toggleCart={toggleCart} />
             </div>

@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import Image from "next/image";
 import CustomLink from "../../components/CustomLink";
 import { Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Signup = () => {
   const router = useRouter();
@@ -96,81 +97,90 @@ const Signup = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg md:mt-16">
-        <div className="flex justify-center">
-          <Image
-            className="m-auto"
-            src="/blinkor.png"
-            alt="logo"
-            width={500}
-            height={250}
-            style={{ width: "45%", height: "auto" }}
-          />
-        </div>
-        <h2 className="text-center text-2xl font-bold mt-2">
-          Sign up for your account
-        </h2>
-        <div className="text-center text-gray-600">
-          Or
-          <CustomLink
-            href="/login"
-            className="ml-2 text-[#ec698f] font-bold text-sm hover:text-devstyle"
-          >
-            Login
-          </CustomLink>
-        </div>
-        <form onSubmit={handleSubmit} className="mt-6">
-          <div>
-            <input
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              type="text"
-              className="w-full px-4 py-2 mt-2 border rounded-md focus:ring-1 focus:outline-none focus:ring-devstyle"
-              placeholder="Full Name"
-              required
-            />
-          </div>
-          <div className="mt-4">
-            <input
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              type="email"
-              className="w-full px-4 py-2 mt-2 border rounded-md focus:ring-1 focus:outline-none focus:ring-devstyle"
-              placeholder="Email Address"
-              required
-            />
-          </div>
-          <div className="mt-4">
-            <input
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              type="password"
-              className="w-full px-4 py-2 mt-2 border rounded-md focus:ring-1 focus:outline-none focus:ring-devstyle"
-              placeholder="Password"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className={`w-full mt-4 flex items-center justify-center gap-2 bg-black text-white py-2 rounded-md transition-all duration-300 ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-800"
-              }`}
-            disabled={loading}
-          >
-            {loading ? (
-              <>
-                Signing up
-                <Loader2 className="animate-spin w-5 h-5" />
-              </>
-            ) : (
-              "Sign up"
-            )}
-          </button>
-        </form>
-      </div>
+  <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg md:mt-16">
+    <motion.div
+      className="flex justify-center"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
+      <Image
+        className="m-auto"
+        src="/blinkor.png"
+        alt="logo"
+        width={500}
+        height={250}
+        style={{ width: "45%", height: "auto" }}
+      />
+    </motion.div>
+    <h2 className="text-center text-2xl font-semibold text-gray-800 mt-4">
+          Sign up <span className="text-gray-600">& Start Shopping</span>
+    </h2>
+    
+    <div className="text-center text-gray-600 mt-1">
+      Already have an account? 
+      <CustomLink
+        href="/login"
+        className="ml-2 text-[#1e3a8a] font-semibold text-sm hover:underline"
+      >
+        Log in
+      </CustomLink>
     </div>
+    <form onSubmit={handleSubmit} className="mt-6">
+      <div>
+        <input
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          type="text"
+          className="w-full px-4 py-2 mt-2 border rounded-md focus:ring-1 focus:outline-none focus:ring-black"
+          placeholder="Full Name"
+          required
+        />
+      </div>
+      <div className="mt-4">
+        <input
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          type="email"
+          className="w-full px-4 py-2 mt-2 border rounded-md focus:ring-1 focus:outline-none focus:ring-black"
+          placeholder="Email Address"
+          required
+        />
+      </div>
+      <div className="mt-4">
+        <input
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          type="password"
+          className="w-full px-4 py-2 mt-2 border rounded-md focus:ring-1 focus:outline-none focus:ring-black"
+          placeholder="Password"
+          required
+        />
+      </div>
+      <button
+        type="submit"
+        className={`w-full mt-4 flex items-center justify-center gap-2 bg-gray-900 text-white py-2 rounded-md transition-all duration-300 ${
+          loading ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-700"
+        }`}
+        disabled={loading}
+      >
+        {loading ? (
+          <>
+            Signing up
+            <Loader2 className="animate-spin w-5 h-5" />
+          </>
+        ) : (
+          "Sign Up"
+        )}
+      </button>
+    </form>
+  </div>
+</div>
+
+
   );
 };
 

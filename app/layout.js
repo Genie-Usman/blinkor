@@ -17,8 +17,8 @@ const lato = Lato({
 });
 
 export const metadata = {
-  title: "DevStyle - Code Your Look",
-  description: "DevStyle.com - Code Your Look",
+  title: "Blinkor - Drip. Blink. Style",
+  description: "Blinkor - Drip. Blink. Style",
 };
 
 export default function RootLayout({ children }) {

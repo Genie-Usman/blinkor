@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useCart } from "../app/context/CartContext";
 import toast from 'react-hot-toast';
 import { Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const ProductDetails = ({ product }) => {
     const { addToCart, buyNow } = useCart();
@@ -23,7 +24,6 @@ const ProductDetails = ({ product }) => {
     const [selectedSize, setSelectedSize] = useState("");
     const [productImage, setProductImage] = useState(product.image);
 
-    // Calculate discounted price
     const discountedPrice = product.discount
         ? (product.price - (product.price * product.discount) / 100).toFixed(2)
         : product.price.toFixed(2);
@@ -128,15 +128,20 @@ const ProductDetails = ({ product }) => {
 
     };
 
-    const handleBuyNow = () => {
+    const handleBuyNow = async () => {
         if (!selectedSize) {
             setCartMessage("Please select a size before buying.");
             return;
         }
-        setLoading(true);
-        buyNow(product.slug, product.title, 1, discountedPrice, selectedSize, selectedColor);
-        router.push("/checkout");
-        setLoading(false);
+        setLoading(true)
+        try {
+            await buyNow(product.slug, product.title, 1, discountedPrice, selectedSize, selectedColor)
+            router.push("/checkout")
+        } catch (error) {
+            toast.error("Failed to process your request. Please try again.");
+        } finally {
+            setLoading(false)
+        }
     };
     const handleZipcodeButton = (e) => {
         setZipcode(e.target.value)
@@ -148,11 +153,14 @@ const ProductDetails = ({ product }) => {
     };
     return (
         <div className="container mx-auto px-5 py-10 flex justify-center flex-col lg:flex-row gap-10">
-            {/* Product Image */}
             <div className="flex-1 flex justify-center lg:justify-start">
-                <div className="relative w-full h-[50vh] md:h-[75vh] flex items-center justify-center overflow-visible">
-
-                    <div className="relative w-full h-[50vh] md:h-[75vh] flex items-center justify-center overflow-visible">
+                <div className="relative w-full h-[50vh] md:h-[75vh] cursor-pointer flex items-center justify-center overflow-visible">
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+                        className="relative w-full h-[50vh] md:h-[75vh] mix-blend-multiply flex items-center justify-center overflow-visible"
+                    >
                         <Image
                             src={productImage}
                             alt={product.title}
@@ -161,13 +169,13 @@ const ProductDetails = ({ product }) => {
                             className="object-contain w-full h-full mix-blend-multiply transform transition duration-300 ease-out hover:scale-105 origin-center"
                             priority
                         />
-                    </div>
+                    </motion.div>
                 </div>
             </div>
 
             <div className="w-full lg:w-1/2">
                 <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                    {product.brand || "DevStyle"}
+                    Blinkor
                 </h2>
                 <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
                     {product.title}
@@ -177,49 +185,77 @@ const ProductDetails = ({ product }) => {
                 </h1>
                 <p className="leading-relaxed">{product.description || "No description available."}</p>
 
-
-
-                <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-
-                    {/* Color Selection */}
+                <div className="flex justify-between mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                     <div className="flex">
                         <span className="mr-3">Color</span>
                         {uniqueColors.map((color, index) => (
-                            <button
+                            <motion.button
                                 key={index}
                                 onClick={() => setSelectedColor(color)}
                                 className={`border-2 rounded-full w-7 h-7 mx-1 transition ${selectedColor === color ? "border-black" : "border-gray-300"
                                     }`}
                                 style={{ backgroundColor: color }}
-                            ></button>
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                                transition={{ type: "spring", stiffness: 300, damping: 10 }}
+                            ></motion.button>
                         ))}
                     </div>
 
-                    {/* Size Selection */}
-                    <div className="flex md:ml-6 absolute mt-24 md:static md:mt-0 items-center">
-                        <span className="mr-3">Size</span>
-                        <select
-                            className="rounded border border-gray-300 py-2 px-3 focus:outline-none"
-                            value={selectedSize}
-                            onChange={(e) => setSelectedSize(e.target.value)}
-                            disabled={availableSizes.length === 0}
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        className="flex md:ml-6 absolute mt-24 md:static md:mt-0 items-center"
+                    >
+                        <span className="mr-3 text-base font-medium text-gray-700">Size</span>
+
+                        <motion.div
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="relative"
                         >
-                            {availableSizes.length > 0 ? (
-                                availableSizes.map((size, index) => (
-                                    <option key={index} value={size}>
-                                        {size}
-                                    </option>
-                                ))
-                            ) : (
-                                <option disabled>No size available</option>
-                            )}
-                        </select>
-                    </div>
+                            <select
+                                className="appearance-none rounded-lg border border-gray-300 bg-white py-2 pl-3 pr-8 text-sm text-gray-800 focus:border-gray-800 focus:outline-none focus:ring-1 focus:ring-gray-800 focus:ring-opacity-50 transition-all shadow-sm hover:shadow-md"
+                                value={selectedSize}
+                                onChange={(e) => setSelectedSize(e.target.value)}
+                                disabled={availableSizes.length === 0}
+                            >
+                                {availableSizes.length > 0 ? (
+                                    availableSizes.map((size, index) => (
+                                        <option key={index} value={size}>
+                                            {size}
+                                        </option>
+                                    ))
+                                ) : (
+                                    <option disabled>No size available</option>
+                                )}
+                            </select>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                                <svg
+                                    className="h-4 w-4"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clipRule="evenodd"
+                                    />
+                                </svg>
+                            </div>
+                        </motion.div>
+                    </motion.div>
                 </div>
 
                 <div className="flex">
-                    {/* Price Section with Discount */}
-                    <div className="flex items-center absolute md:static mb-10 ml-32 md:mb-0 md:ml-0 space-x-3 -mt-[1.5rem] md:mt-3">
+                    <motion.div
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+                        className="flex items-center absolute md:static mb-10 ml-32 md:mb-0 md:ml-0 space-x-3 -mt-[1.5rem] md:mt-3"
+                    >
                         {product.discount > 0 && (
                             <span className="text-gray-500 line-through text-lg">${product.price.toFixed(2)}</span>
                         )}
@@ -227,26 +263,29 @@ const ProductDetails = ({ product }) => {
                             ${discountedPrice}
                         </span>
                         {product.discount > 0 && (
-                            <span className="bg-red-500 text-white px-2 py-1 text-sm rounded">
+                            <span className="bg-gradient-to-r from-pink-500 to-orange-500 text-white px-3 py-1 text-sm rounded-full shadow-lg hover:shadow-xl transition-shadow">
                                 -{product.discount}%
                             </span>
                         )}
-                    </div>
+                    </motion.div>
+
                     <div className="flex ml-auto md:mt-0 mt-7 space-x-2">
-                        <button
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ type: "spring", stiffness: 300, damping: 10 }}
                             className="flex md:ml-2 text-xs md:text-sm bg-black hover:bg-gray-800 text-white py-3 px-4 rounded transition-all disabled:bg-gray-400 disabled:cursor-not-allowed"
                             disabled={!selectedSize || loading}
                             onClick={handleBuyNow}
                         >
                             {loading ? (
                                 <>
-                                    <Loader2 className="animate-spin w-4 h-4 mr-2" /> {/* Loader */}
-                                    Processing...
+                                    <Loader2 className="animate-spin w-5 h-5" />
                                 </>
                             ) : (
                                 "Buy Now"
                             )}
-                        </button>
+                        </motion.button>
                         <button
                             className="flex md:ml-auto text-xs md:text-sm bg-black hover:bg-gray-800 text-white py-3 px-4 rounded"
                             onClick={handleAddToCart}
@@ -257,27 +296,33 @@ const ProductDetails = ({ product }) => {
                     </div>
                 </div>
 
-                {cartMessage && <p className="mt-2 text-green-500 text-sm">{cartMessage}</p>}
+                {cartMessage && <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="mt-2 text-green-500 text-sm"
+                >
+                    {cartMessage}
+                </motion.p>}
 
-                {/* Zipcode Checker */}
                 <div className="flex mt-5 items-center">
                     <span className="text-sm">Enter Zip-code to check Service</span>
                     <input
-                        className="ml-2 border-2 h-8 border-gray-300 rounded p-2 w-24 mr-2"
+                        className="ml-2 h-8 w-24 rounded-lg border-2 border-gray-300 bg-white px-3 py-1 text-sm text-gray-800 placeholder-gray-400 focus:border-gray-700 focus:outline-none focus:ring-0 focus:ring-gray-800 focus:ring-opacity-50 transition-all shadow-sm hover:shadow-md"
                         type="text"
                         value={zipcode}
                         onChange={handleZipcodeButton}
                         placeholder="44000"
                     />
                     <button
-                        disabled={disable} onChange={handleZipcodeButton} className="flex text-xs bg-black disabled:bg-gray-500 hover:bg-gray-800 text-white py-2 px-6 rounded"
+                        disabled={disable} onChange={handleZipcodeButton} className="ml-2 flex text-xs bg-black disabled:bg-gray-500 hover:bg-gray-800 text-white py-2 px-6 rounded"
                         onClick={handleCheckZipcode}
                     >
                         Check
                     </button>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -80,11 +80,12 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  const buyNow = (id, name, quantity, price, size, color) => {
-    const key = generateCartKey(id, size, color);
+  const buyNow = async (id, name, quantity, price, size, color) => {
+    await new Promise((resolve) => setTimeout(resolve, 1500))
+    const key = generateCartKey(id, size, color)
     setCart(() => {
       const newCart = {};
-      newCart[key] = { id, name, quantity, price, size, color };
+      newCart[key] = { id, name, quantity, price, size, color }
 
       saveCart(newCart);
       return newCart;

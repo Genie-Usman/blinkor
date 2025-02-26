@@ -1,80 +1,78 @@
-"use client"; // Force this component to run on the client-side
+import HomePageClient from "./HomePageClient";
+import ClientRecommendedProducts from "../components/ClientRecommendedProducts";
+import { connectDB } from "../app/lib/mongodb";
+import Products from "../models/Products";
 
-import React, { useState } from "react";
-import Image from "next/image";
-import Slider from "../components/Slider";
-import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+export default async function Home() {
+  await connectDB();
+  const recommendedProducts = await Products.aggregate([
+    {
+      $match: {
+        category: {
+          $in: [
+            "coding tshirts", "minions tshirts", "coding hoodies", "stylish hoodies",
+            "cartoon caps", "comic caps", "comic sips", "screen sips", "toon sips"
+          ]
+        }
+      }
+    },
+    { $sample: { size: 20 } }
+  ]);
 
-export default function Home() {
-  const router = useRouter();
-  const handleClick = (path, setLoading) => {
-    setLoading(true);
-    router.push(path);
-  };
-  const products = [
-    { title: "Minions Collection", description: "Playful, Bold, Unstoppable!", image: "/minioncollection.jpg", path: "/minionscollection" },
-    { title: "Stylish Hoodies", description: "Perfect for every season.", image: "/hoodie.webp", path: "/stylishhoodies" },
-    { title: "Trendy Caps", description: "Complete your look with our caps.", image: "/cap.jpg", path: "/caps" },
-  ];
+  const processRecommendedProducts = (products) => {
+    return products.reduce((acc, item) => {
+        if (!Array.isArray(item.variants)) return acc;
+
+        const discount = item.discount || 0;
+        const discountedPrice = (item.price - (item.price * discount) / 100).toFixed(2);
+        const availableVariants = item.variants?.filter(v => v.availableQuantity > 0) || [];
+        const uniqueColors = [...new Set(availableVariants.map(v => v.color))];
+        const uniqueSizes = [...new Set(availableVariants.map(v => v.size))];
+        const image = availableVariants.find(v => v.image)?.image || item.image || "/placeholder.jpg";
+
+        if (acc.recommendedProducts[item.title]) {
+            acc.recommendedProducts[item.title].colors.push(
+                ...uniqueColors.filter(c => !acc.recommendedProducts[item.title].colors.includes(c))
+            );
+            acc.recommendedProducts[item.title].sizes.push(
+                ...uniqueSizes.filter(s => !acc.recommendedProducts[item.title].sizes.includes(s))
+            );
+        } else {
+            acc.recommendedProducts[item.title] = {
+                _id: item._id.toString(),
+                title: item.title,
+                slug: item.slug,
+                image,
+                price: item.price,
+                discountedPrice,
+                discount,
+                colors: uniqueColors,
+                sizes: uniqueSizes,
+            };
+        }
+
+        acc.formattedProducts.push({
+            _id: item._id.toString(),
+            title: item.title,
+            slug: item.slug,
+            category: item.category,
+            image,
+            price: item.price,
+            discountedPrice,
+            discount,
+            colors: uniqueColors,
+            sizes: uniqueSizes,
+        });
+
+        return acc;
+    }, { recommendedProducts: {}, formattedProducts: [] });
+};
+const processedData = processRecommendedProducts(recommendedProducts);
+
   return (
     <>
-      <Slider />
-      <div className="w-full rotate-[3deg] mt-20">
-        <div className="relative w-full overflow-hidden bg-black py-3">
-          <motion.div
-            className="flex w-max space-x-8 font-bold text-white text-3xl uppercase tracking-wide"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{
-              repeat: Infinity,
-              duration: 10,
-              ease: "linear",
-            }}
-          >
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="flex space-x-8">
-                <span>DRIP BLINK STYLE</span>
-                <span>ELEVATE YOUR DRIP</span>
-                <span>BLINK INTO FASHION</span>
-                <span>STYLE REDEFINED</span>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </div>
-      <section className="py-16 bg-gray-100">
-        <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
-            Featured Collections
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {products.map(({ title, description, image, path }) => {
-              const [loading, setLoading] = useState(false);
-
-              return (
-                <div key={path} className="bg-white rounded-lg shadow-lg overflow-hidden hover:scale-105 transition-transform duration-300">
-                  <Image src={image} alt={title} width={400} height={300} className="w-full h-[65vh]" />
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold">{title}</h3>
-                    <p className="text-gray-600 mt-2">{description}</p>
-
-                    <button
-                      onClick={() => handleClick(path, setLoading)}
-                      disabled={loading}
-                      className={`mt-4 px-4 py-2 flex items-center justify-center gap-2 bg-black text-white rounded-full hover:bg-gray-800 transition duration-300 ${loading ? "opacity-70 cursor-not-allowed" : ""
-                        }`}
-                    >
-                      {loading ? <Loader2 className="animate-spin w-5 h-5" /> : "Shop Now"}
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-      </section>
+      <HomePageClient />
+      <ClientRecommendedProducts recommendedProducts={processedData.formattedProducts} />
     </>
   );
 }

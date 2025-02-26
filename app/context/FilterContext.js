@@ -11,9 +11,8 @@ export const FilterProvider = ({ children }) => {
     category: [],
   });
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const pathname = usePathname(); // Detect page changes
+  const pathname = usePathname();
 
-  // Reset filters when the user navigates to a new page
   useEffect(() => {
     setFilters({
       priceRange: [0, 100],
@@ -52,7 +51,7 @@ export const FilterProvider = ({ children }) => {
 
         return matchesPrice && matchesCategory && matchesColor;
       });
-    }, [filters, products]); // Only recompute when `filters` or `products` change
+    }, [filters, products]);
   };
 
   return (

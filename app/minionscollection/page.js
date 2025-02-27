@@ -5,9 +5,9 @@ import Products from "../../models/Products";
 
 const Minioncollection = async () => {
   await connectDB();
-  const products = await Products.find({ category: "minion" }).lean();
+  const products = await Products.find({ category: "minions tshirts" }).lean();
 
-  const cartoon = {};
+  const minions = {};
 
   for (const item of products) {
     if (!Array.isArray(item.variants)) continue;
@@ -15,19 +15,19 @@ const Minioncollection = async () => {
     const discount = item.discount || 0;
     const discountedPrice = item.price - (item.price * discount) / 100;
 
-    if (cartoon[item.title]) {
+    if (minions[item.title]) {
       for (const variant of item.variants) {
         if (variant.availableQuantity > 0) {
-          if (!cartoon[item.title].colors.includes(variant.color)) {
-            cartoon[item.title].colors.push(variant.color);
+          if (!minions[item.title].colors.includes(variant.color)) {
+            minions[item.title].colors.push(variant.color);
           }
-          if (!cartoon[item.title].sizes.includes(variant.size)) {
-            cartoon[item.title].sizes.push(variant.size);
+          if (!minions[item.title].sizes.includes(variant.size)) {
+            minions[item.title].sizes.push(variant.size);
           }
         }
       }
     } else {
-      cartoon[item.title] = {
+      minions[item.title] = {
         _id: item._id.toString(),
         title: item.title,
         slug: item.slug,
@@ -51,7 +51,7 @@ const Minioncollection = async () => {
 
         </h2>
         <div className="flex flex-wrap -m-4 mt-5">
-          {Object.values(cartoon).map((item) => (
+          {Object.values(minions).map((item) => (
             <div key={item._id} className="lg:w-1/4 md:w-1/2 p-4 w-full">
               <CustomLink href={`/product/${item.slug}`} className="block rounded-lg shadow-md hover:shadow-lg transition-shadow duration-100 p-6 overflow-visible">
                 <Image
@@ -65,9 +65,7 @@ const Minioncollection = async () => {
 
                 <div className="mt-4 text-center md:text-left">
                   <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Minions</h3>
-                  <h2 className="text-gray-900 text-lg font-medium truncate w-full">{item.title}</h2>
-
-                  {/* Render sizes */}
+                  <h2 className="text-gray-900 text-lg h-14 font-semibold line-clamp-2 w-full">{item.title}</h2>
                   {item.sizes.length > 0 && (
                     <div className="flex justify-center md:justify-start gap-2 mt-1 flex-wrap">
                       {item.sizes.map((size, index) => (
@@ -77,8 +75,6 @@ const Minioncollection = async () => {
                       ))}
                     </div>
                   )}
-
-                  {/* Render colors */}
                   {item.colors.length > 0 && (
                     <div className="flex justify-center md:justify-start gap-2 mt-1 flex-wrap">
                       {item.colors.map((color, index) => (
@@ -90,8 +86,6 @@ const Minioncollection = async () => {
                       ))}
                     </div>
                   )}
-
-                  {/* Price Display with Discount */}
                   {item.discount > 0 ? (
                     <div className="mt-1 text-center md:text-left">
                       <span className="text-gray-500 text-sm line-through mr-2">${item.price.toFixed(2)}</span>

@@ -75,7 +75,7 @@ const ClientAllProducts = ({ products = [] }) => {
                                         <h3 className="text-gray-500 text-xs tracking-widest capitalize title-font mb-1">
                                             {item.category}
                                         </h3>
-                                        <h2 className="text-gray-900 text-lg font-medium truncate w-full">
+                                        <h2 className="text-gray-900 text-lg h-14 font-semibold line-clamp-2 w-full">
                                             {item.title}
                                         </h2>
                                         {item.sizes.length > 0 && (

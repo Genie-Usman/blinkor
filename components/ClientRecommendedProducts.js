@@ -19,7 +19,7 @@ const ClientRecommendedProducts = ({ recommendedProducts = [] }) => {
                             <div key={item._id} className="lg:w-1/4 md:w-1/2 p-2 w-full">
                                 <CustomLink
                                     href={`/product/${item.slug}`}
-                                    className="block rounded-lg shadow-md hover:shadow-lg transition-shadow duration-100 p-6 overflow-visible"
+                                    className="block rounded-md shadow-sm hover:shadow-md border-gray-400 transition-shadow duration-100 p-6 overflow-visible"
                                 >
                                     <div className="relative h-[25vh] md:h-[45vh] flex items-center justify-center overflow-visible group">
                                         <Image
@@ -35,7 +35,7 @@ const ClientRecommendedProducts = ({ recommendedProducts = [] }) => {
                                         <h3 className="text-gray-500 text-xs tracking-widest capitalize title-font mb-1">
                                             {item.category || "Miscellaneous"}
                                         </h3>
-                                        <h2 className="text-gray-900 text-lg font-medium truncate w-full">
+                                        <h2 className="text-gray-900 text-lg h-14 font-semibold line-clamp-2 w-full">
                                             {item.title}
                                         </h2>
 

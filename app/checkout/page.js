@@ -7,6 +7,7 @@ import { useCart } from '../context/CartContext';
 import { loadStripe } from '@stripe/stripe-js';
 import { jwtDecode } from "jwt-decode";
 import { Loader2 } from 'lucide-react';
+import Image from 'next/image';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -166,8 +167,8 @@ const Checkout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-16">
+    <div className="min-h-screen bg-[#f6f2f0]/80 py-8">
+      <div className="max-w-4xl mx-auto bg-[#f6f2f0]/80  rounded-lg p-8 mt-10 md:mt-8">
         <h1 className="text-3xl font-bold mb-6 text-center">Checkout</h1>
 
         {/* Shipping Information */}
@@ -177,84 +178,112 @@ const Checkout = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">Full Name</label>
-                <input name="customerName" value={formData.customerName} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-devstyle focus:ring-1" placeholder="John Doe" required />
+                <input name="customerName" value={formData.customerName} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-800 rounded-md shadow-sm focus:outline-none bg-[#f6f2f0] focus:ring-gray-900 focus:ring-1" placeholder="John Doe" required />
                 {errors.customerName && <span className="text-red-500 text-sm">{errors.customerName}</span>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Phone Number</label>
-                <input name="customerPhone" value={formData.customerPhone} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-devstyle focus:ring-1" placeholder="xxxx-xxxxxxx" required />
+                <input name="customerPhone" value={formData.customerPhone} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-800 rounded-md shadow-sm focus:outline-none bg-[#f6f2f0] focus:ring-gray-900 focus:ring-1" placeholder="xxxx-xxxxxxx" required />
                 {errors.customerPhone && <span className="text-red-500 text-sm">{errors.customerPhone}</span>}
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">Email</label>
-                <input name="customerEmail" value={formData.customerEmail} onChange={handleChange} type="email" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-devstyle focus:ring-1" placeholder="johndoe@example.com" disabled={user.value} required />
+                <input name="customerEmail" value={formData.customerEmail} onChange={handleChange} type="email" className="mt-1 block w-full px-3 py-2 border border-gray-800 rounded-md shadow-sm focus:outline-none bg-[#f6f2f0] focus:ring-gray-900 focus:ring-1" placeholder="johndoe@example.com" disabled={user.value} required />
                 {errors.customerEmail && <span className="text-red-500 text-sm">{errors.customerEmail}</span>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Zip Code</label>
-                <input name="customerZipCode" value={formData.customerZipCode} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-devstyle focus:ring-1" placeholder="12345" required />
+                <input name="customerZipCode" value={formData.customerZipCode} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-800 rounded-md shadow-sm focus:outline-none bg-[#f6f2f0] focus:ring-gray-900 focus:ring-1" placeholder="12345" required />
                 {errors.customerZipCode && <span className="text-red-500 text-sm">{errors.customerZipCode}</span>}
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Address</label>
-              <input name="customerAddress" value={formData.customerAddress} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-devstyle focus:ring-1" placeholder="123 Main St." required />
+              <input name="customerAddress" value={formData.customerAddress} onChange={handleChange} type="text" className="mt-1 block w-full px-3 py-2 border border-gray-800 rounded-md shadow-sm focus:outline-none bg-[#f6f2f0] focus:ring-gray-900 focus:ring-1" placeholder="123 Main St." required />
               {errors.customerAddress && <span className="text-red-500 text-sm">{errors.customerAddress}</span>}
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">City</label>
-                <input type="text" name="customerCity" value={formData.customerCity} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-devstyle focus:ring-1" placeholder="New York City" readOnly required />
+                <input type="text" name="customerCity" value={formData.customerCity} className="mt-1 block w-full px-3 py-2 border border-gray-800 rounded-md shadow-sm focus:outline-none bg-[#f6f2f0] focus:ring-gray-900 focus:ring-1" placeholder="New York City" readOnly required />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">District</label>
-                <input type="text" name="customerDistrict" value={formData.customerDistrict} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-devstyle focus:ring-1" placeholder="New York" readOnly required />
+                <input type="text" name="customerDistrict" value={formData.customerDistrict} className="mt-1 block w-full px-3 py-2 border border-gray-800 rounded-md shadow-sm focus:outline-none bg-[#f6f2f0] focus:ring-gray-900 focus:ring-1" placeholder="New York" readOnly required />
               </div>
             </div>
           </form>
         </div>
 
         {/* Order Summary */}
-        {!isEmpty && (<div className="bg-[#BCB8B1] px-5 py-10 mb-4 rounded">
-          <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-          <ol className="ml-4 font-semibold list-decimal">
-            {Object.entries(cart).map(([key, item]) => (
-              <li key={key} className="my-5 flex justify-between items-center">
-                <div className="w-2/3 text-sm font-medium">{item.name} ({item.size}/{item.color})</div>
-                <div className="w-1/3 flex items-center justify-end space-x-2">
-                  <CiCircleMinus className="text-gray-700 text-xl cursor-pointer hover:text-gray-200" onClick={() => removeFromCart(item.id, item.size, item.color)} />
-                  <span className="text-md font-semibold">{item.quantity}</span>
-                  <CiCirclePlus className="text-gray-700 text-xl cursor-pointer hover:text-gray-200" onClick={() => addToCart(item.id, item.name, 1, item.price, item.size, item.color)} />
-                </div>
-              </li>
-            ))}
-          </ol>
+        {!isEmpty && (
+          <div className="bg-[#f6f2f0]/80 backdrop-blur-lg shadow-sm border border-gray-200 px-6 py-8">
+            <h2 className="text-2xl font-semibold mb-6 text-gray-900">Order Summary</h2>
+            <ol className="space-y-4">
+              {Object.entries(cart).map(([key, item]) => (
+                <li
+                  key={key}
+                  className="flex justify-between items-center bg-[#f6f2f0]/80 backdrop-blur-sm p-4 shadow-sm hover:shadow-md transition-shadow duration-200 border border-[#f6f2f0]/20"
+                >
+                  <div className="flex items-center space-x-4 w-2/3">
+                    <Image
+                      src={item.image}
+                      alt="Product Image"
+                      width={64}
+                      height={64}
+                      className="object-cover transform transition mix-blend-multiply duration-300 ease-out hover:scale-105"
+                    />
+                    <div className="text-xs md:text-sm text-gray-800">
+                      <p className="font-semibold">{item.name}</p>
+                      <p className="text-gray-500 text-xs mt-1">{item.size} / {item.color}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3 bg-[#f6f2f0]/90 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-[#f6f2f0]/20">
+                    <CiCircleMinus
+                      className="text-gray-500 text-sm md:text-xl cursor-pointer hover:text-black transition-transform transform hover:scale-110"
+                      onClick={() => removeFromCart(item.id, item.size, item.color)}
+                    />
+                    <span className="text-gray-900 font-medium">{item.quantity}</span>
+                    <CiCirclePlus
+                      className="text-gray-500 text-sm md:text-xl cursor-pointer hover:text-black transition-transform transform hover:scale-110"
+                      onClick={() => addToCart(item.id, item.name, 1, item.price, item.size, item.color, item.image)}
+                    />
+                  </div>
+                </li>
+              ))}
+            </ol>
 
-          <div className="mt-5 ml-2 flex justify-between font-bold">Subtotal: ${subTotal.toFixed(2)}
-            <CiTrash onClick={clearCart} className="text-gray-700 text-xl cursor-pointer hover:text-gray-200" />
+            <div className="mt-6 flex justify-between text-lg font-semibold text-gray-900">
+              <div className='ml-2'>
+                <span>Subtotal:</span>
+                <span className='ml-2 text-green-600'>${subTotal.toFixed(2)}</span>
+              </div>
+              <CiTrash
+                onClick={clearCart}
+                className="text-gray-600 text-xl cursor-pointer hover:text-red-600 transition-transform transform hover:scale-110"
+              />
+            </div>
           </div>
-        </div>)}
-
+        )}
         {/* Place Order Button */}
-        <div className="flex justify-end">
+        <div className="flex justify-end mt-4">
           <button
             onClick={handleStripePayment}
             disabled={disablePay}
-            className={`m-1 w-32 flex items-center justify-center gap-2 text-white bg-[#635BFF] border-0 text-sm py-3 px-4 rounded-md shadow-md transition-all duration-300 ease-in-out 
-  ${disablePay ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#4B46D1] focus:ring-2 focus:ring-blue-300'}`}
+            className={`m-1 w-28 flex items-center justify-center gap-2 text-white bg-gradient-to-r from-[#635BFF] to-[#4B46D1] border-0 text-xs py-3 px-4 rounded-md shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2
+      ${disablePay ? 'opacity-50 cursor-not-allowed hover:scale-100 hover:shadow-md' : ''}`}
           >
             {loading ? (
               <>
-              Processing
-                <Loader2 className="animate-spin w-5 h-5" />
+                Paying...
+                <Loader2 className="animate-spin w-4 h-4" />
               </>
             ) : (
               "Pay with Stripe"
             )}
           </button>
-
         </div>
       </div>
     </div>

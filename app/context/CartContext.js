@@ -63,22 +63,40 @@ export const CartProvider = ({ children }) => {
 
   const generateCartKey = (id, size, color) => `${id}_${size}_${color}`;
 
-  const addToCart = (id, name, quantity, price, size, color) => {
-    const key = generateCartKey(id, size, color);
+  const addToCart = (id, name, quantity, price, size, color, variants = []) => {
+    const key = `${id}_${size}_${color}`
+    const selectedVariant = Array.isArray(variants) 
+      ? variants.find(variant => variant.size === size && variant.color === color) 
+      : null;
+    
+    const variantImage = selectedVariant ? selectedVariant.image : ""
+  
     setCart((prevCart) => {
-      const newCart = { ...prevCart };
-
+      const newCart = { ...prevCart }
+  
       if (newCart[key]) {
-        newCart[key] = { ...newCart[key], quantity: newCart[key].quantity + quantity };
+        newCart[key] = {
+          ...newCart[key],
+          quantity: newCart[key].quantity + quantity,
+        };
       } else {
-        newCart[key] = { id, name, quantity, price, size, color };
+        newCart[key] = {
+          id,
+          name,
+          quantity,
+          price,
+          size,
+          color,
+          image: variantImage,
+        };
       }
-
+  
       saveCart(newCart);
       return newCart;
-
     });
   };
+  
+  
 
   const buyNow = async (id, name, quantity, price, size, color) => {
     await new Promise((resolve) => setTimeout(resolve, 1500))

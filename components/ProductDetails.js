@@ -111,7 +111,7 @@ const ProductDetails = ({ product }) => {
             setCartMessage("Please select a size before adding to cart.");
             return;
         }
-        addToCart(product.slug, product.title, 1, discountedPrice, selectedSize, selectedColor);
+        addToCart(product.slug, product.title, 1, discountedPrice, selectedSize, selectedColor, product.variants);
         toast.success('Item added To Cart', {
             duration: 2000,
             position: 'top-right',
@@ -177,7 +177,7 @@ const ProductDetails = ({ product }) => {
                 <h2 className="text-sm title-font text-gray-500 tracking-widest">
                     Blinkor
                 </h2>
-                <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+                <h1 className="text-gray-900 text-3xl title-font font-bold mb-1">
                     {product.title}
                 </h1>
                 <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">

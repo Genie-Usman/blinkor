@@ -62,7 +62,7 @@ const SidebarFilter = ({
 
       {/* Sidebar */}
       <div
-        className={`fixed inset-y-0 left-0 w-80 bg-[#f3f3f3] shadow-2xl transform transition-transform duration-300 ease-in-out z-[777] ${isOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed inset-y-0 left-0 w-80 bg-white/90 backdrop-blur-md shadow-2xl transform transition-transform duration-300 ease-in-out z-[777] ${isOpen ? "translate-x-0" : "-translate-x-full"
           }`}
       >
         <div className="h-full flex flex-col p-6 overflow-y-auto custom-scrollbar">

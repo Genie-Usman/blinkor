@@ -28,7 +28,6 @@ export async function POST(request) {
         }
         return NextResponse.json(foundUser, { status: 200 });
     } catch (error) {
-        console.error("Error fetching user:", error);
         return NextResponse.json({ message: "Server error", error: error.message }, { status: 500 });
     }
 }

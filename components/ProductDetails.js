@@ -113,7 +113,7 @@ const ProductDetails = ({ product }) => {
         }
         addToCart(product.slug, product.title, 1, discountedPrice, selectedSize, selectedColor, product.variants);
         toast.success('Item added To Cart', {
-            duration: 2000,
+            duration: 1000,
             position: 'top-right',
             style: {
                 background: '#000',
@@ -135,7 +135,7 @@ const ProductDetails = ({ product }) => {
         }
         setLoading(true)
         try {
-            await buyNow(product.slug, product.title, 1, discountedPrice, selectedSize, selectedColor)
+            await buyNow(product.slug, product.title, 1, discountedPrice, selectedSize, selectedColor, product.variants)
             router.push("/checkout")
         } catch (error) {
             toast.error("Failed to process your request. Please try again.");
@@ -216,7 +216,7 @@ const ProductDetails = ({ product }) => {
                             className="relative"
                         >
                             <select
-                                className="appearance-none rounded-lg border border-gray-300 bg-white py-2 pl-3 pr-8 text-sm text-gray-800 focus:border-gray-800 focus:outline-none focus:ring-1 focus:ring-gray-800 focus:ring-opacity-50 transition-all shadow-sm hover:shadow-md"
+                                className="appearance-none rounded-lg border border-gray-300 bg-[#f6f2f0] py-2 pl-3 pr-8 text-sm text-gray-800 focus:border-gray-800 focus:outline-none focus:ring-1 focus:ring-gray-800 focus:ring-opacity-50 transition-all shadow-sm hover:shadow-md"
                                 value={selectedSize}
                                 onChange={(e) => setSelectedSize(e.target.value)}
                                 disabled={availableSizes.length === 0}
@@ -308,7 +308,7 @@ const ProductDetails = ({ product }) => {
                 <div className="flex mt-5 items-center">
                     <span className="text-sm">Enter Zip-code to check Service</span>
                     <input
-                        className="ml-2 h-8 w-24 rounded-lg border-2 border-gray-300 bg-white px-3 py-1 text-sm text-gray-800 placeholder-gray-400 focus:border-gray-700 focus:outline-none focus:ring-0 focus:ring-gray-800 focus:ring-opacity-50 transition-all shadow-sm hover:shadow-md"
+                        className="ml-2 h-8 w-24 rounded-lg border-2 border-gray-300 bg-[#f6f2f0] px-3 py-1 text-sm text-gray-800 placeholder-gray-400 focus:border-gray-700 focus:outline-none focus:ring-0 focus:ring-gray-800 focus:ring-opacity-50 transition-all shadow-sm hover:shadow-md"
                         type="text"
                         value={zipcode}
                         onChange={handleZipcodeButton}

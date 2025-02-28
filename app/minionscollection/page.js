@@ -41,6 +41,43 @@ const Minioncollection = async () => {
     }
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
+  
+  const childVariants = {
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { type: "spring", damping: 12, stiffness: 100, duration: 0.6 },
+    },
+  };
+  
+  const accentVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { type: "spring", damping: 10, stiffness: 150, duration: 0.8 },
+    },
+    hover: {
+      scale: 1.1,
+      color: "#E74C3C",
+      textShadow: "0 0 10px rgba(232, 76, 60, 0.7)",
+      transition: { type: "spring", stiffness: 300 },
+    },
+    tap: { scale: 0.9 },
+  };
+
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-9 py-20 mx-auto">
@@ -64,8 +101,8 @@ const Minioncollection = async () => {
                 />
 
                 <div className="mt-4 text-center md:text-left">
-                  <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Minions</h3>
-                  <h2 className="text-gray-900 text-lg h-14 font-semibold line-clamp-2 w-full">{item.title}</h2>
+                  <h2 className="text-gray-500 text-xs tracking-widest title-font mb-1">Minions</h2>
+                  <h3 className="text-gray-900 text-base h-14 font-semibold line-clamp-2 w-full">{item.title}</h3>
                   {item.sizes.length > 0 && (
                     <div className="flex justify-center md:justify-start gap-2 mt-1 flex-wrap">
                       {item.sizes.map((size, index) => (

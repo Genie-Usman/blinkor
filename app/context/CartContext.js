@@ -88,27 +88,29 @@ export const CartProvider = ({ children }) => {
           size,
           color,
           image: variantImage,
-        };
+        }
       }
   
-      saveCart(newCart);
-      return newCart;
-    });
-  };
-  
-  
+      saveCart(newCart)
+      return newCart
+    })
+  }
 
-  const buyNow = async (id, name, quantity, price, size, color) => {
+  const buyNow = async (id, name, quantity, price, size, color, variants = []) => {
     await new Promise((resolve) => setTimeout(resolve, 1500))
     const key = generateCartKey(id, size, color)
+    const selectedVariant = Array.isArray(variants) 
+    ? variants.find(variant => variant.size === size && variant.color === color) 
+    : null;
+  
+  const variantImage = selectedVariant ? selectedVariant.image : ""
     setCart(() => {
       const newCart = {};
-      newCart[key] = { id, name, quantity, price, size, color }
+      newCart[key] = { id, name, quantity, price, size, color, image: variantImage }
 
       saveCart(newCart);
       return newCart;
     });
-
   }
 
   const removeFromCart = (id, size, color) => {

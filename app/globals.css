@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-h1, h3, nav {
+h1,h2, nav {
   font-family: var(--font-spectral), serif;
 }
 
-p,h2, body {
+p,h3, body {
   font-family: var(--font-lato), sans-serif;
 }
 

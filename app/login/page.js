@@ -100,7 +100,7 @@ const Login = () => {
           borderRadius: '8px',
           padding: '12px 20px',
         },
-      });
+      })
     } finally {
       setLoading(false);
     }

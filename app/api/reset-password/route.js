@@ -8,11 +8,16 @@ export async function POST(req) {
   try {
     await connectDB()
 
-    const { token, email, password } = await req.json()
+    const { token, email, password, confirmPassword } = await req.json();
 
-    if (!token || !email || !password) {
-      return NextResponse.json({ message: "Invalid request" }, { status: 400 });
+    if (!token || !email || !password || !confirmPassword) {
+      return NextResponse.json({ message: "All fields are required" }, { status: 400 })
     }
+
+    if (password !== confirmPassword) {
+      return NextResponse.json({ message: "Passwords do not match" }, { status: 400 })
+    }
+
 
     const forgotRecord = await Forgot.findOne({ email })
 

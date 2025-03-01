@@ -37,6 +37,9 @@ const Checkout = () => {
         customerEmail: decoded.email,
       }));
     }
+    else{
+      router.push("/login");
+    }
   }, []);
   useEffect(() => {
     const isFormValid = Object.values(formData).every(value => value.trim() !== '');
@@ -51,11 +54,6 @@ const Checkout = () => {
   }, [formData.customerEmail]);
 
   const fetchUser = async (token) => {
-
-    if (!token) {
-      router.push("/login");
-      return;
-    }
 
     try {
       const res = await fetch("/api/getuser", {

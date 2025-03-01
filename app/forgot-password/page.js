@@ -1,9 +1,13 @@
 "use client";
 import { useState } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import toast from 'react-hot-toast';
+import { Loader2 } from "lucide-react";
+import CustomLink from "../../components/CustomLink";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -18,44 +22,112 @@ const ForgotPassword = () => {
       });
 
       const data = await res.json();
-      setMessage(data.message);
-
       if (res.ok) {
-        setEmail(""); // Clear input on success
-      }
+        toast.success(data.message, {
+            duration: 2500,
+            position: 'top-right',
+            style: {
+                background: '#000',
+                color: '#fff',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                borderRadius: '8px',
+                padding: '12px 20px',
+            },
+        })
+        setEmail("")
+    } else {
+        toast.error(data.message, {
+            duration: 1500,
+            position: 'top-right',
+            style: {
+                background: '#000',
+                color: '#fff',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                borderRadius: '8px',
+                padding: '12px 20px',
+            },
+        })
+    }
     } catch (error) {
-      setMessage("An error occurred. Please try again.");
+      toast.error("An error occurred. Please try again.", {
+        duration: 1500,
+        position: 'top-right',
+        style: {
+            background: '#000',
+            color: '#fff',
+            fontSize: '14px',
+            fontWeight: 'bold',
+            borderRadius: '8px',
+            padding: '12px 20px',
+        },
+    })
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">Forgot Password</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="email"
-          className="w-full p-2 border border-gray-300 rounded"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <button
-          type="submit"
-          className="w-full p-2 bg-blue-500 text-white rounded disabled:opacity-50"
-          disabled={loading}
-        >
-          {loading ? "Sending..." : "Send Reset Link"}
-        </button>
-      </form>
-      {message && (
-        <p className={`mt-4 ${message.includes("sent") ? "text-green-500" : "text-red-500"}`}>
-          {message}
-        </p>
-      )}
-    </div>
+      <div className="flex min-h-screen items-center justify-center bg-gray-100">
+        <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg mt-16">
+          <motion.div
+            className="flex justify-center"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <Image
+              className="m-auto"
+              src="/blinkor.png"
+              alt="logo"
+              width={500}
+              height={250}
+              style={{ width: "45%", height: "auto" }}
+            />
+          </motion.div>
+          <h2 className="text-center text-2xl font-semibold text-gray-800 mt-4">
+            Forgot <span className="text-gray-600">Password!</span>
+          </h2>
+          <div className="text-center text-gray-600 mt-1">
+                Already have an account? 
+                <CustomLink
+                  href="/login"
+                  className="ml-2 text-[#1e3a8a] font-semibold text-sm hover:underline"
+                >
+                  Log in
+                </CustomLink>
+              </div>
+          <form onSubmit={handleSubmit} className="mt-6">
+            <div>
+              <input
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                className="w-full px-4 py-2 mt-2 border rounded-lg focus:ring-1 focus:outline-none focus:ring-gray-800"
+                placeholder="Email Address"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className={`w-full mt-4 flex items-center justify-center gap-2 bg-gray-900 text-white py-2 rounded-lg transition-all duration-300 ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-700"
+                }`}
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  Sending
+                  <Loader2 className="animate-spin w-5 h-5" />
+                </>
+              ) : (
+                "Send Reset Link"
+              )}
+            </button>
+          </form>
+        </div>
+      </div>
   );
 };
 

@@ -122,6 +122,7 @@ const Login = () => {
                 width={500}
                 height={250}
                 style={{ width: "45%", height: "auto" }}
+                 loading="eager"
               />
             </motion.div>
         <h2 className="text-center text-2xl font-semibold text-gray-800 mt-4">

@@ -257,7 +257,7 @@ const ProductDetails = ({ product }) => {
                         className="flex items-center absolute md:static mb-10 ml-32 md:mb-0 md:ml-0 space-x-3 -mt-[1.5rem] md:mt-3"
                     >
                         {product.discount > 0 && (
-                            <span className="text-gray-500 line-through text-lg">${product.price.toFixed(2)}</span>
+                            <span className="text-gray-500 line-through text-sm md:text-lg">${product.price.toFixed(2)}</span>
                         )}
                         <span className="title-font font-medium text-xl md:text-2xl text-gray-900">
                             ${discountedPrice}

@@ -62,7 +62,7 @@ const Signup = () => {
         
         setFormData({ name: "", email: "", password: "" });
         setLoading(false);
-        router.push('/')
+        router.push('/login')
       } else {
         toast.error(data.message || "Signup failed!", {
           duration: 2000, 

@@ -7,14 +7,17 @@ import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 
 const ResetPassword = () => {
-    const searchParams = useSearchParams();
-    const token = searchParams.get("token");
-    const email = searchParams.get("email");
+    const searchParams = useSearchParams()
     const router = useRouter();
 
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setToken(searchParams.get("token"));
+        setEmail(searchParams.get("email"));
+    }, [searchParams]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

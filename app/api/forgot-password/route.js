@@ -7,50 +7,53 @@ import User from "../../../models/User";
 import Forgot from "../../../models/Forgot";
 
 export async function POST(req) {
-    try {
-        await connectDB()
-        const { email } = await req.json()
+  try {
+    await connectDB()
+    const { email } = await req.json()
 
-        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            return NextResponse.json({ message: "Valid email is required" }, { status: 400 })
-        }
-        const user = await User.findOne({ email })
-        if (!user) {
-            return NextResponse.json({ message: "User not found" }, { status: 404 })
-        }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return NextResponse.json({ message: "Valid email is required" }, { status: 400 })
+    }
+    const user = await User.findOne({ email })
+    if (!user) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 })
+    }
 
-        const rawToken = randomBytes(32).toString("hex")
-        const hashedToken = await bcrypt.hash(rawToken, 10)
+    const rawToken = randomBytes(32).toString("hex")
+    const hashedToken = await bcrypt.hash(rawToken, 10)
 
-        await Forgot.findOneAndUpdate(
-            { email },
-            {
-                resetPasswordToken: hashedToken,
-                resetPasswordExpires: Date.now() + 60 * 60 * 1000,
-            },
-            { upsert: true, new: true }
-        );
+    await Forgot.findOneAndUpdate(
+      { email },
+      {
+        resetPasswordToken: hashedToken,
+        resetPasswordExpires: Date.now() + 60 * 60 * 1000,
+      },
+      { upsert: true, new: true }
+    );
 
-        const resetLink = `${process.env.NEXT_PUBLIC_HOST}/reset-password?token=${encodeURIComponent(rawToken)}&email=${encodeURIComponent(email)}`
+    const resetLink = `https://blinkor.vercel.app/reset-password?token=${encodeURIComponent(rawToken)}&email=${encodeURIComponent(email)}`
 
-        const transporter = nodemailer.createTransport({
-            service: "Gmail",
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
-            },
-        });
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
 
-        const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: email,
-            subject: "Password Reset Request",
-            html: `
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Password Reset Request",
+      html: `
           <div style="font-family: Arial, sans-serif; background-color: #eeeae6; padding: 40px 0;">
             <!-- Centered Container -->
             <div style="max-width: 600px; margin: 0 auto; text-align: center;">
               <!-- Logo -->
-              <img src="https://blinkor.vercel.app/Blinkor.png" alt="Brand Logo" style="width: 120px; height: auto; margin-bottom: 24px;">
+              <img src="https://blinkor.vercel.app/Blinkor.png" 
+     alt="Brand Logo" 
+     style="width: 200px; height: auto; margin-bottom: 24px;">
+
       
               <!-- Heading -->
               <h2 style="font-size: 28px; font-weight: bold; color: #000000; margin-bottom: 16px;">
@@ -89,12 +92,12 @@ export async function POST(req) {
             </div>
           </div>
         `,
-        };
+    };
 
-        await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
 
-        return NextResponse.json({ message: "Password reset link sent to your email." }, { status: 200 });
-    } catch (error) {
-        return NextResponse.json({ message: "Failed to send email. Please try again later." }, { status: 500 });
-    }
+    return NextResponse.json({ message: "Password reset link sent to your email." }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ message: "Failed to send email. Please try again later." }, { status: 500 });
+  }
 }

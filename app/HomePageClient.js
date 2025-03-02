@@ -5,7 +5,6 @@ import Slider from "../components/Slider";
 import { motion } from "framer-motion";
 
 export default function Home() {
-
   return (
     <>
       <Slider />

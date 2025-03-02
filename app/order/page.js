@@ -25,15 +25,13 @@ const OrderPage = async ({ searchParams }) => {
 
   return (
 
-    <div className="min-h-screen bg-gray-100 py-8 mt-16">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
+    <div className="min-h-screen bg-[#f6f2f0] py-8 mt-16">
+      <div className="max-w-4xl mx-auto bg-[#f6f2f0] shadow-md p-8">
         <h1 className="text-2xl font-bold mb-6 text-center">Order Confirmation</h1>
         <p className="text-gray-600 mb-8 text-center">
           Thank you for your order! Your order has been confirmed and will be
           shipped soon.
         </p>
-
-        {/* Order Details */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4 text-center">Order Details</h2>
           <div className="space-y-4">
@@ -51,14 +49,12 @@ const OrderPage = async ({ searchParams }) => {
             </div>
           </div>
         </div>
-
-        {/* Order Items */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4 text-center">Order Items</h2>
           <div className="overflow-x-auto">
             <table className="min-w-full border border-gray-200 shadow-lg rounded-lg">
               <thead>
-                <tr className="bg-gray-100 text-gray-700 uppercase text-sm leading-normal">
+                <tr className="bg-gray-900 text-white uppercase text-sm leading-normal">
                   <th className="py-3 px-6 text-left">#</th>
                   <th className="py-3 px-6 text-left">Item</th>
                   <th className="py-3 px-6 text-left">Size/Color</th>
@@ -82,7 +78,7 @@ const OrderPage = async ({ searchParams }) => {
                 ))}
               </tbody>
               <tfoot>
-                <tr className="bg-gray-100 font-semibold text-gray-700">
+                <tr className="bg-gray-900 font-semibold text-white">
                   <td colSpan="5" className="py-3 px-6 text-right">Total Amount:</td>
                   <td className="py-3 px-6 text-center">${order.totalAmount.toFixed(2)}</td>
                 </tr>
@@ -90,10 +86,6 @@ const OrderPage = async ({ searchParams }) => {
             </table>
           </div>
         </div>
-
-
-
-        {/* Shipping Address */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4 text-center">Shipping Address</h2>
           <div className="space-y-2">
@@ -104,18 +96,13 @@ const OrderPage = async ({ searchParams }) => {
             <p><span className="font-semibold">District:</span> {order.customerDistrict}</p>
           </div>
         </div>
-
-
-        {/* Payment Method */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4 text-center">Payment Method</h2>
           <p>Card</p>
         </div>
-
-        {/* Continue Shopping Button */}
         <div className="flex justify-center md:justify-end">
           <CustomLink href="/">
-            <button className="m-2 text-white bg-gray-700 border-0 text-xs md:text-base py-1 px-2 md:p-3 focus:outline-none hover:bg-[#686763] rounded">
+            <button className="m-2 text-white bg-gray-900 border-0 text-xs md:text-base py-1 px-2 md:p-3 focus:outline-none hover:bg-gray-700 rounded">
               Continue Shopping
             </button>
           </CustomLink>

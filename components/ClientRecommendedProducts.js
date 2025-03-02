@@ -46,7 +46,7 @@ const ClientRecommendedProducts = ({ recommendedProducts = [] }) => {
         <section className="text-gray-600 body-font">
             <div className="container px-9 py-20 mx-auto">
                 <motion.h2
-                    className="text-2xl justify-center items-center mt-10 md:mt-8 md:text-5xl font-bold text-gray-900 text-center tracking-tight uppercase leading-tight whitespace-nowrap"
+                    className="text-xl justify-center items-center mt-10 md:mt-8 md:text-5xl font-bold text-gray-900 text-center tracking-tight uppercase leading-tight whitespace-nowrap"
                     variants={containerVariants}
                     initial="hidden"
                     whileInView="visible"
@@ -144,12 +144,36 @@ const ClientRecommendedProducts = ({ recommendedProducts = [] }) => {
                                     </div>
                                 </CustomLink>
                             </div>
+
                         ))
                     ) : (
                         <div className="w-full flex justify-center items-center py-10">
                             <p className="text-gray-500 text-lg">No recommended products available.</p>
                         </div>
                     )}
+                </div>
+                <div className="mt-16 flex justify-center items-center">
+                    <CustomLink
+                        href="/allproducts"
+                        className="w-4/6 md:w-1/6 md:right-10 flex absolute bg-black text-white px-4 py-2.5 rounded-lg hover:bg-gray-800 transition-all duration-200 ease-in-out transform hover:scale-105 items-center justify-center gap-2"
+                    >
+                        <span>See More Products</span>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="lucide lucide-arrow-right"
+                        >
+                            <path d="M5 12h14" />
+                            <path d="m12 5 7 7-7 7" />
+                        </svg>
+                    </CustomLink>
                 </div>
             </div>
         </section>

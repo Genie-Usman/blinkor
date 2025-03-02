@@ -9,7 +9,6 @@ import { useFilter } from "../app/context/FilterContext";
 const SidebarFilter = ({
   isOpen,
   onClose,
-  onApply,
   filterOptions = {
     priceRange: { min: 0, max: 100 },
     colors: [],
@@ -26,11 +25,6 @@ const SidebarFilter = ({
       category: [],
     });
   }, [pathname])
-
-  // const handleApply = () => {
-  //   onApply(filters); // Ensure the latest filters are sent
-  //   onClose();
-  // };
 
   const toggleColor = (color) => {
     setFilters((prev) => ({
@@ -52,29 +46,23 @@ const SidebarFilter = ({
 
   return (
     <>
-      {/* Overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out"
           onClick={onClose}
         />
       )}
-
-      {/* Sidebar */}
       <div
         className={`fixed inset-y-0 left-0 w-80 bg-white/90 backdrop-blur-md shadow-2xl transform transition-transform duration-300 ease-in-out z-[777] ${isOpen ? "translate-x-0" : "-translate-x-full"
           }`}
       >
         <div className="h-full flex flex-col p-6 overflow-y-auto custom-scrollbar">
-          {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-gray-900">Filters</h2>
             <button onClick={onClose} className="cursor-pointer">
               <CiCircleRemove className="hover:text-gray-600 text-2xl text-black" />
             </button>
           </div>
-
-          {/* Price Range Filter */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-3">
               Price Range ($)
@@ -99,8 +87,6 @@ const SidebarFilter = ({
               ${filters.priceRange[0]} - ${filters.priceRange[1]}
             </p>
           </div>
-
-          {/* Color Filter */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-3">
               Colors
@@ -127,8 +113,6 @@ const SidebarFilter = ({
               ))}
             </div>
           </div>
-
-          {/* Category Filter */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-3">
               Category
@@ -155,15 +139,13 @@ const SidebarFilter = ({
               ))}
             </div>
           </div>
-
-          {/* Apply Filters Button */}
           <div className="mt-auto space-y-4">
             <button
-              onClick={onClose} // Change the handler to a close function
+              onClick={onClose}
               className="w-full bg-black text-white px-4 py-2.5 rounded-lg hover:bg-gray-800 transition-all duration-200 ease-in-out transform hover:scale-105 flex items-center justify-center gap-2"
             >
-              <FaTimes className="h-4 w-4" /> {/* Replace FaFilter with FaTimes (close icon) */}
-              <span>Close</span> {/* Change the text to "Close" */}
+              <FaTimes className="h-4 w-4" />
+              <span>Close</span>
             </button>
           </div>
         </div>

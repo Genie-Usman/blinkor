@@ -43,23 +43,23 @@ const Orders = () => {
   return (
     <div className="container mx-auto px-10 py-8 mt-16 min-h-screen">
       <h1 className="text-3xl text-center font-bold mb-6">Your Orders</h1>
-      <div className="bg-white shadow-md rounded-lg overflow-x-auto">
+      <div className="bg-[#f6f2f0] shadow-md overflow-x-auto">
         <table className="min-w-full">
-          <thead className="bg-gray-100">
+          <thead className="bg-gray-900">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                 Order ID
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                 Date
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                 Total
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                 Status
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                 Actions
               </th>
             </tr>

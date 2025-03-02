@@ -5,20 +5,81 @@ import SidebarFilter from "../../components/SidebarFilter";
 import CustomLink from "../../components/CustomLink";
 import { AiOutlineFilter } from "react-icons/ai";
 import { useFilter } from "../context/FilterContext";
+import { motion } from "framer-motion";
 
 const ClientAllProducts = ({ products = [] }) => {
     const { setFilters, useFilterLogic, setIsFilterOpen, isFilterOpen } = useFilter();
     const filteredProducts = useFilterLogic(products);
 
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.2,
+                delayChildren: 0.3,
+            },
+        },
+    };
+    
+    const childVariants = {
+        hidden: { opacity: 0, y: 30, scale: 0.95 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: { type: "spring", damping: 12, stiffness: 100, duration: 0.6 },
+        },
+    };
+    
+    const accentVariants = {
+        hidden: { opacity: 0, scale: 0.8 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            transition: { type: "spring", damping: 10, stiffness: 150, duration: 0.8 },
+        },
+        hover: {
+            scale: 1.1,
+            color: "#E74C3C",
+            textShadow: "0 0 10px rgba(232, 76, 60, 0.7)",
+            transition: { type: "spring", stiffness: 300 },
+        },
+        tap: { scale: 0.9 },
+    };
+
     return (
         <section className="text-gray-600 body-font">
             <div className="container px-9 py-20 mx-auto">
-                <h2 className="text-xl mt-9 md:mt-6 md:text-4xl font-extrabold text-gray-900 text-center tracking-wide uppercase">
-                    <span className="text-[#C85C3D] font-bold md:text-4xl tracking-wide uppercase">
-                        HOT DEALS:{" "}
-                        <span className="text-[#F4A261]">DISCOUNTS YOU CAN'T MISS!</span>
-                    </span>
-                </h2>
+            <motion.h2
+                                className="text-xl justify-center items-center mt-10 md:mt-8 md:text-5xl font-bold text-gray-900 text-center tracking-tight uppercase leading-tight whitespace-nowrap"
+                                variants={containerVariants}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, amount: 0.5 }}
+                            >
+                                <motion.span
+                                    className="text-[#C85C3D] font-semibold cursor-pointer"
+                                    variants={accentVariants}
+                                    whileHover="hover"
+                                    whileTap="tap"
+                                >
+                                    Hot Deals
+                                </motion.span>
+                                <motion.span variants={childVariants}> : </motion.span>
+                                <motion.span variants={childVariants}>
+                                    You Can't{" "}
+                                    <motion.span
+                                        className="text-[#C85C3D] font-semibold cursor-pointer"
+                                        variants={accentVariants}
+                                        whileHover="hover"
+                                        whileTap="tap"
+                                    >
+                                        Miss
+                                    </motion.span>
+                                    !
+                                </motion.span>
+                            </motion.h2>
                 <button
                     className="flex items-center bg-gray-700 text-white px-3 py-2 gap-2 text-sm rounded-md hover:bg-devstyle transition-all duration-200 mt-2"
                     onClick={() => setIsFilterOpen(true)}

@@ -7,21 +7,29 @@ import { CiShoppingCart, CiUser, CiLogin } from "react-icons/ci";
 import SideCart from "./SideCart";
 import { useCart } from "../app/context/CartContext";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
+
 
 const Navbar = () => {
     const { user, logout, itemCount } = useCart();
-    const dropdownRef = useRef(null);
-    const [cartOpen, setCartOpen] = useState(false);
+    const dropdownRef = useRef(null)
+    const pathname = usePathname()
+    const [cartOpen, setCartOpen] = useState(false)
     const [dropdown, setDropdown] = useState(false)
 
+    useEffect(() => {
+        setDropdown(false);
+    }, [pathname]);
+    
+    
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setDropdown(false);
             }
         };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside)
+        return () => document.removeEventListener("mousedown", handleClickOutside)
     }, []);
 
     const toggleCart = () => {
@@ -91,12 +99,12 @@ const Navbar = () => {
                                 />
                             </motion.div>
                             {dropdown && (
-                                <div className="absolute right-8 font-bold top-6 py-4 px-3 bg-[#BCB8B1] text-sm rounded shadow-lg w-32">
+                                <div className="absolute right-4 md:right-8 font-bold top-4 md:top-8 py-4 px-3 bg-[#BCB8B1] text-sm rounded shadow-lg w-32">
                                     <ul className="flex flex-col text-left">
-                                        <li className="p-2 hover:text-[#F4F3EE] cursor-pointer">
+                                        <li className="p-2 hover:text-gray-800 cursor-pointer">
                                             <CustomLink href="/myaccount">My Account</CustomLink>
                                         </li>
-                                        <li className="p-2 hover:text-[#F4F3EE] cursor-pointer">
+                                        <li className="p-2 hover:text-gray-800 cursor-pointer">
                                             <CustomLink href="/myorders">Orders</CustomLink>
                                         </li>
                                         <li className="p-2 hover:text-red-900 cursor-pointer text-red-600" onClick={logout}>
@@ -125,14 +133,13 @@ const Navbar = () => {
                         className="relative cursor-pointer"
                         onClick={toggleCart}
                     >
-                        {/* Shopping Cart Icon */}
                         <CiShoppingCart className="text-gray-700 hover:text-devstyle md:text-3xl transition-all duration-200" />
                         {Number(itemCount) > 0 && (
                             <motion.span
                                 initial={{ scale: 0 }}
-                                animate={{ scale: 1.1 }} // Subtle pop effect
+                                animate={{ scale: 1.1 }}
                                 transition={{ type: "spring", stiffness: 500, damping: 20, mass: 1 }}
-                                className="absolute -top-1.5 -right-1.5 bg-gray-800 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+                                className="absolute -top-0.5 md:-top-1.5 -right-1.5 bg-gray-800 text-white md:text-[10px] font-bold md:px-1.5 md:py-0.5 rounded-full  text-[6px] px-1 py-0.145"
                             >
                                 {itemCount}
                             </motion.span>

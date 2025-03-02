@@ -85,7 +85,7 @@ const Checkout = () => {
 
   const handleCheckZipcode = async (zipcode) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/zipcodes`);
+      const response = await fetch(`/api/zipcodes`);
       if (!response.ok) {
         throw new Error(`Failed to fetch zipcodes: ${response.statusText}`);
       }

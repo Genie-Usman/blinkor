@@ -50,7 +50,7 @@ export async function POST(req) {
             <!-- Centered Container -->
             <div style="max-width: 600px; margin: 0 auto; text-align: center;">
               <!-- Logo -->
-              <img src="https://blinkor.com/public/Blinkor-5.png" alt="Brand Logo" style="width: 120px; height: auto; margin-bottom: 24px;">
+              <img src="https://blinkor.vercel.app/Blinkor.png" alt="Brand Logo" style="width: 120px; height: auto; margin-bottom: 24px;">
       
               <!-- Heading -->
               <h2 style="font-size: 28px; font-weight: bold; color: #000000; margin-bottom: 16px;">

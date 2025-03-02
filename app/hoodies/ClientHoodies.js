@@ -137,7 +137,7 @@ const FilteredHoodies = ({ hoodies = [] }) => {
                                         <h2 className="text-gray-500 text-xs tracking-widest capitalize title-font mb-1">
                                         Hoodies
                                         </h2>
-                                        <h3 className="text-gray-900 text-base h-14 font-semibold line-clamp-2 w-full">
+                                        <h3 className="text-gray-900 text-base h-12 font-semibold line-clamp-2 w-full">
                                             {item.title}
                                         </h3>
                                         {item.sizes.length > 0 && (

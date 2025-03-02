@@ -110,21 +110,22 @@ const Login = () => {
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg mt-16">
         <motion.div
-              className="flex justify-center"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            >
-              <Image
-                className="m-auto"
-                src="/blinkor.png"
-                alt="logo"
-                width={500}
-                height={250}
-                style={{ width: "45%", height: "auto" }}
-                 loading="eager"
-              />
-            </motion.div>
+          className="flex justify-center"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <Image
+            className="m-auto"
+            src="/blinkor.png"
+            alt="logo"
+            width={500}
+            height={250}
+            style={{ width: "45%", height: "auto" }}
+            loading="eager"
+            unoptimized={true}
+          />
+        </motion.div>
         <h2 className="text-center text-2xl font-semibold text-gray-800 mt-4">
           Welcome Back! <span className="text-gray-600">Continue Your Shopping</span>
         </h2>

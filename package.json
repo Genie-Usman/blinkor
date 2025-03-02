@@ -27,7 +27,8 @@
     "react-toastify": "^11.0.3",
     "react-top-loading-bar": "^3.0.2",
     "stripe": "^17.6.0",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "vercel": "^41.3.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

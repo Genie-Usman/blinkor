@@ -110,8 +110,8 @@ export async function POST(req) {
       customer_email: customerEmail,
       line_items: formattedItems,
       mode: "payment",
-      success_url: `${process.env.NEXT_PUBLIC_HOST}/order?id=${orderId}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_HOST}/cancel`,
+      success_url: `https://blinkor.vercel.app/order?id=${orderId}`,
+      cancel_url: `https://blinkor.vercel.app/cancel`,
     });
 
     const newOrder = new Order({

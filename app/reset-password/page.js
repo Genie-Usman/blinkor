@@ -6,6 +6,7 @@ import Image from "next/image";
 import toast from 'react-hot-toast';
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Suspense } from 'react';
 
 const ResetPassword = () => {
     const searchParams = useSearchParams()
@@ -107,6 +108,7 @@ const ResetPassword = () => {
     };
 
     return (
+        <Suspense fallback={ <Loader2 className="animate-spin w-5 h-5" />}>
         <div className="flex min-h-screen items-center justify-center bg-gray-100">
             <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg mt-16">
                 <motion.div
@@ -169,6 +171,7 @@ const ResetPassword = () => {
                 </form>
             </div>
         </div>
+        </Suspense>
     );
 };
 

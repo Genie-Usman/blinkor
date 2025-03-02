@@ -3,6 +3,8 @@ import React from 'react';
 import { connectDB } from '../lib/mongodb';
 import Order from '../../models/Order';
 import ClientOrderPage from './ClientOrderPage';
+import { Suspense } from 'react';
+import { Loader2 } from 'lucide-react';
 
 const OrderPage = async ({ searchParams }) => {
   await connectDB()
@@ -24,7 +26,7 @@ const OrderPage = async ({ searchParams }) => {
   };
 
   return (
-
+    <Suspense fallback={ <Loader2 className="animate-spin w-5 h-5" />}>
     <div className="min-h-screen bg-[#f6f2f0] py-8 mt-16">
       <div className="max-w-4xl mx-auto bg-[#f6f2f0] shadow-md p-8">
         <h1 className="text-2xl font-bold mb-6 text-center">Order Confirmation</h1>
@@ -110,6 +112,7 @@ const OrderPage = async ({ searchParams }) => {
       </div>
       <ClientOrderPage />
     </div>
+    </Suspense>
   )
 }
 

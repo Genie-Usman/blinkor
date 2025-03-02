@@ -8,6 +8,8 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Suspense } from 'react';
 
+export const dynamic = "force-dynamic";
+
 const ResetPassword = () => {
     const searchParams = useSearchParams()
     const token = searchParams.get("token")

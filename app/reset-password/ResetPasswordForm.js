@@ -20,12 +20,34 @@ const ResetPasswordForm = () => {
         e.preventDefault();
 
         if (!token || !email) {
-            toast.error("Invalid reset link. Please request a new one.");
-            return;
-        }
+            toast.error("Invalid reset link. Please request a new one.", {
+                duration: 1500,
+                position: 'top-right',
+                style: {
+                    background: '#000',
+                    color: '#fff',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    borderRadius: '8px',
+                    padding: '12px 20px',
+                },
+            })
+                return;
+            }
 
         if (password !== confirmPassword) {
-            toast.error("Passwords do not match!");
+            toast.error("Passwords do not match!", {
+                duration: 1500,
+                position: 'top-right',
+                style: {
+                    background: '#000',
+                    color: '#fff',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    borderRadius: '8px',
+                    padding: '12px 20px',
+                },
+            })
             return;
         }
 
@@ -39,13 +61,35 @@ const ResetPasswordForm = () => {
 
             const data = await res.json();
             if (res.ok) {
-                toast.success(data.message);
+                toast.success(data.message, {
+                    duration: 1500,
+                    position: 'top-right',
+                    style: {
+                        background: '#000',
+                        color: '#fff',
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                        borderRadius: '8px',
+                        padding: '12px 20px',
+                    },
+                })
                 setTimeout(() => router.push("/login"), 1500);
             } else {
                 toast.error(data.message);
             }
         } catch (error) {
-            toast.error("Something went wrong. Please try again.");
+            toast.error("Something went wrong. Please try again.", {
+                duration: 1500,
+                position: 'top-right',
+                style: {
+                    background: '#000',
+                    color: '#fff',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    borderRadius: '8px',
+                    padding: '12px 20px',
+                },
+        });
         } finally {
             setLoading(false);
         }
@@ -60,7 +104,7 @@ const ResetPasswordForm = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
                 >
-                    <Image src="/blinkor.png" alt="logo" width={500} height={250} style={{ width: "45%", height: "auto" }} />
+                    <Image src="/Blinkor.png" alt="logo" width={500} height={250} style={{ width: "45%", height: "auto" }} />
                 </motion.div>
                 <h2 className="text-center text-2xl font-semibold text-gray-800 mt-4">
                     Reset Your <span className="text-gray-600">Password!</span>

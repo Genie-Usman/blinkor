@@ -79,7 +79,7 @@ const ForgotPassword = () => {
           >
             <Image
               className="m-auto"
-              src="/blinkor.png"
+              src="/Blinkor.png"
               alt="logo"
               width={500}
               height={250}

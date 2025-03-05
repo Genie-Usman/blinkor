@@ -29,7 +29,7 @@ const SideCart = ({ cartOpen, toggleCart }) => {
       ref={slideRef}
       className={`fixed top-0 right-0 h-full w-96 bg-[#f6f2f0]/95 backdrop-blur-lg shadow-2xl border-l border-[#f6f2f0]/20 overflow-y-auto max-h-screen custom-scrollbar 
   transform transition-transform duration-300 ease-in-out ${cartOpen ? 'translate-x-0' : 'translate-x-full'}
-  p-6 z-50`}
+  md:p-6 p-8 z-50`}
     >
       <div className="flex justify-between items-center pb-5 mb-6 border-b border-[#f6f2f0]/20">
         <h2 className="font-bold text-2xl text-[#1E1E1E] tracking-tight">Your Cart</h2>

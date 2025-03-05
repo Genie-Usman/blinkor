@@ -45,7 +45,7 @@ const ProductDetails = ({ product }) => {
             setSelectedSize("");
             setProductImage(product.image);
         }
-    }, [selectedColor, product.variants]);
+    }, [selectedColor, product.variants, product.image]);
 
     const handleCheckZipcode = async () => {
         try {

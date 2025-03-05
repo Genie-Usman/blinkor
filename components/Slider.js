@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import Image from "next/image";
 
 const slides = [
   {
@@ -10,7 +11,7 @@ const slides = [
     title: "LATEST ARRIVALS",
     subtitle: "MINIONS COLLECTION",
     button: "MAYHEM AWAITS!",
-    image: "./banner-1.png",
+    image: "/banner-1.png",
     link: "/minionscollection",
   },
   {
@@ -18,7 +19,7 @@ const slides = [
     title: "EXCLUSIVE SITEWIDE SALE",
     subtitle: "LIMITED-TIME DEALS ON ALL PRODUCTS",
     button: "SHOP NOW",
-    image: "./banner-2.png",
+    image: "/banner-2.png",
     link: "/allproducts",
   },
 ];
@@ -32,7 +33,7 @@ export default function HeroSlider() {
     setIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1))
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000)
+    const interval = setInterval(nextSlide, 3000)
     return () => clearInterval(interval)
   }, [])
 
@@ -44,7 +45,7 @@ export default function HeroSlider() {
   };
 
   return (
-    <div className="relative w-full h-[250px] sm:h-[400px] md:h-[500px] mt-20 md:mt-14  overflow-hidden">
+    <div className="relative w-full h-[200px] sm:h-[400px] md:h-[500px] mt-20 md:mt-14  overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
           key={slides[index].id}
@@ -77,10 +78,13 @@ export default function HeroSlider() {
               )}
             </button>
           </div>
-          <img
+          <Image
             src={slides[index].image}
             alt={slides[index].title}
-            className="w-full h-full object-cover object-center"/>
+            className="w-full h-full object-cover object-center"
+            height={800}
+            width={800}
+            />
         </motion.div>
       </AnimatePresence>
       <button

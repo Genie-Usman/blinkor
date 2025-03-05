@@ -95,7 +95,7 @@ const Navbar = () => {
                             >
                                 <CiUser
                                     onClick={toggleDropdown}
-                                    className="text-base text-gray-700 hover:text-devstyle md:text-2xl cursor-pointer transition-colors duration-300"
+                                    className="text-xl text-gray-700 hover:text-devstyle md:text-2xl cursor-pointer transition-colors duration-300"
                                 />
                             </motion.div>
                             {dropdown && (
@@ -122,7 +122,7 @@ const Navbar = () => {
                                 transition={{ type: "spring", stiffness: 400, damping: 15 }}
                                 className="cursor-pointer"
                             >
-                                <CiLogin className="text-base text-gray-700 hover:text-devstyle md:text-2xl" />
+                                <CiLogin className="text-xl text-gray-700 hover:text-devstyle md:text-2xl" />
                             </motion.div>
 
                         </CustomLink>
@@ -133,7 +133,7 @@ const Navbar = () => {
                         className="relative cursor-pointer"
                         onClick={toggleCart}
                     >
-                        <CiShoppingCart className="text-gray-700 hover:text-devstyle md:text-3xl transition-all duration-200" />
+                        <CiShoppingCart className="text-gray-700 text-xl hover:text-devstyle md:text-3xl transition-all duration-200" />
                         {Number(itemCount) > 0 && (
                             <motion.span
                                 initial={{ scale: 0 }}

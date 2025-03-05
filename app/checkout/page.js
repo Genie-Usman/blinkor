@@ -40,7 +40,7 @@ const Checkout = () => {
     else{
       router.push("/login");
     }
-  }, []);
+  }, [router]);
   useEffect(() => {
     const isFormValid = Object.values(formData).every(value => value.trim() !== '');
     setDisablePay(!isFormValid);
@@ -85,28 +85,56 @@ const Checkout = () => {
 
   const handleCheckZipcode = async (zipcode) => {
     try {
-      const response = await fetch(`/api/zipcodes`);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch zipcodes: ${response.statusText}`);
-      }
-  
-      const data = await response.json();
-      const matchedEntry = data.zipcodes.find(zip => zip.postal_code === zipcode.toString());
-  
-      setFormData(prev => {
-        const updatedForm = {
-          ...prev,
-          customerCity: matchedEntry ? matchedEntry.city : '',
-          customerDistrict: matchedEntry ? matchedEntry.district : '',
+        const response = await fetch(`/api/zipcodes`);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch zipcodes: ${response.statusText}`);
         }
-        return updatedForm;
-      });
-  
+
+        const data = await response.json();
+        if (!data?.zipcodes || !Array.isArray(data.zipcodes)) {
+            throw new Error("Invalid zipcodes data format.");
+        }
+
+        const matchedEntry = data.zipcodes.find(zip => zip.postal_code.toString() === zipcode.toString());
+
+        if (matchedEntry) {
+            setFormData(prev => ({
+                ...prev,
+                customerCity: matchedEntry.city,
+                customerDistrict: matchedEntry.district,
+            }));
+
+            toast.success(`Service available in ${matchedEntry.city}, ${matchedEntry.district}!`, {
+                duration: 2000,
+                position: 'top-right',
+                style: {
+                    background: '#000',
+                    color: '#fff',
+                    fontSize: '13px',
+                    fontWeight: 'bold',
+                    borderRadius: '8px',
+                    padding: '12px 20px',
+                },
+            });
+        } else {
+            toast.error("Sorry, service is not available for this zipcode!", {
+                duration: 2000,
+                position: 'top-right',
+                style: {
+                    background: '#000',
+                    color: '#fff',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    borderRadius: '8px',
+                    padding: '12px 20px',
+                },
+            });
+        }
     } catch (error) {
-      console.error("Error checking zipcode:", error);
+        console.error("Error checking zipcode:", error);
     }
-  };
-  
+};
+
 
   const handleChange = async (e) => {
     const { name, value } = e.target

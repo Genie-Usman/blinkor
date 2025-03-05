@@ -254,12 +254,12 @@ const ProductDetails = ({ product }) => {
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
-                        className="flex items-center absolute md:static mb-10 ml-36 md:mb-0 md:ml-0 space-x-3 -mt-[1.5rem] md:mt-3"
+                        className="flex items-center md:mb-0 md:ml-0 space-x-3 mt-8 md:mt-0"
                     >
                         {product.discount > 0 && (
-                            <span className="text-gray-500 line-through text-md md:text-lg">${product.price.toFixed(2)}</span>
+                            <span className="text-gray-500 line-through text-lg md:text-lg">${product.price.toFixed(2)}</span>
                         )}
-                        <span className="title-font font-medium text-md md:text-2xl text-gray-900">
+                        <span className="title-font font-medium text-xl md:text-2xl text-gray-900">
                             ${discountedPrice}
                         </span>
                         {product.discount > 0 && (
@@ -268,7 +268,7 @@ const ProductDetails = ({ product }) => {
                             </span>
                         )}
                     </motion.div>
-                    <div className="flex ml-auto md:mt-0 mt-7 space-x-2">
+                    <div className="flex absolute md:static ml-32 md:ml-auto md:mt-0 mt-20 space-x-2">
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
@@ -304,7 +304,7 @@ const ProductDetails = ({ product }) => {
                     {cartMessage}
                 </motion.p>}
 
-                <div className="flex mt-5 items-center">
+                <div className="flex mt-20 md:mt-5 items-center">
                     <span className="text-sm">Enter Zip-code to check Service</span>
                     <input
                         className="ml-2 h-8 w-24 rounded-lg border-2 border-gray-300 bg-[#f6f2f0] px-3 py-1 text-sm text-gray-800 placeholder-gray-400 focus:border-gray-700 focus:outline-none focus:ring-0 focus:ring-gray-800 focus:ring-opacity-50 transition-all shadow-sm hover:shadow-md"

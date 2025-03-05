@@ -85,7 +85,7 @@ const Navbar = () => {
                         <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-devstyle transition-all duration-300 ease-in-out group-hover:w-full"></span>
                     </CustomLink>
                 </nav>
-                <div className="flex absolute right-2 md:right-5 mt-2 md:0 flex-end items-center space-x-2 md:space-x-5">
+                <div className="flex absolute right-3 md:right-5 mt-2 md:0 flex-end items-center space-x-2 md:space-x-5">
                     {user.value ? (
                         <div ref={dropdownRef}>
                             <motion.div
@@ -139,7 +139,7 @@ const Navbar = () => {
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1.1 }}
                                 transition={{ type: "spring", stiffness: 500, damping: 20, mass: 1 }}
-                                className="absolute -top-0.5 md:-top-1.5 -right-1.5 bg-gray-800 text-white md:text-[10px] font-bold md:px-1.5 md:py-0.5 rounded-full  text-[6px] px-1 py-0.145"
+                                className="absolute top-0 md:-top-1.5 -right-1 bg-gray-800 text-white md:text-[10px] font-bold md:px-1.5 md:py-0.5 rounded-full  text-[6px] px-1 py-0.145"
                             >
                                 {itemCount}
                             </motion.span>

@@ -49,7 +49,7 @@ const ProductDetails = ({ product }) => {
 
     const handleCheckZipcode = async () => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/zipcodes`);
+            const response = await fetch(`/api/zipcodes`);
             if (!response.ok) {
                 throw new Error(`Failed to fetch zipcodes: ${response.statusText}`);
             }
@@ -306,6 +306,8 @@ const ProductDetails = ({ product }) => {
 
                 <div className="flex mt-20 md:mt-5 items-center">
                     <span className="text-sm">Enter Zip-code to check Service</span>
+                    <div className=" absolute mt-20 ml-28 md:static md:mt-0 md:ml-0 flex items-center">
+
                     <input
                         className="ml-2 h-8 w-24 rounded-lg border-2 border-gray-300 bg-[#f6f2f0] px-3 py-1 text-sm text-gray-800 placeholder-gray-400 focus:border-gray-700 focus:outline-none focus:ring-0 focus:ring-gray-800 focus:ring-opacity-50 transition-all shadow-sm hover:shadow-md"
                         type="text"
@@ -319,6 +321,8 @@ const ProductDetails = ({ product }) => {
                     >
                         Check
                     </button>
+                    
+                    </div>
                 </div>
             </div>
         </div >

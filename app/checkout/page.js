@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { CiCirclePlus, CiCircleMinus, CiTrash } from "react-icons/ci";
 import { useCart } from '../context/CartContext';
@@ -27,7 +27,6 @@ const Checkout = () => {
     customerDistrict: "",
   });
   const router = useRouter();
-  const fetchedUser = useRef(false);
   const isEmpty = Object.keys(cart).length === 0;
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -49,44 +48,41 @@ const Checkout = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const fetchUser = async (token) => {
-
-      try {
-        const res = await fetch("/api/getuser", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token }),
-        });
-  
-        if (!res.ok) {
-          throw new Error("Failed to fetch user data");
-        }
-  
-        const data = await res.json();
-  
-        setFormData((prevData) => ({
-          ...prevData,
-          customerName: data.name || prevData.customerName,
-          customerPhone: data.phone || prevData.customerPhone,
-          customerZipCode: data.zipcode ? data.zipcode.toString() : prevData.customerZipCode,
-          customerAddress: data.address || prevData.customerAddress,
-        }))
-        if (data.zipcode) {
-          handleCheckZipcode(data.zipcode.toString())
-        }
-      } catch (error) {
-        toast.error("Failed to fetch user details.");
-      }
-    };
-  
-    if (!fetchedUser.current && formData.customerEmail && token) {
+    if (formData.customerEmail && token) {
       fetchUser(token);
-      fetchedUser.current = true
-      console.log("fetching user data");
     }
   }, [formData.customerEmail]);
 
-  
+  const fetchUser = async (token) => {
+
+    try {
+      const res = await fetch("/api/getuser", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+
+      const data = await res.json();
+
+      setFormData((prevData) => ({
+        ...prevData,
+        customerName: data.name || prevData.customerName,
+        customerPhone: data.phone || prevData.customerPhone,
+        customerZipCode: data.zipcode ? data.zipcode.toString() : prevData.customerZipCode,
+        customerAddress: data.address || prevData.customerAddress,
+      }))
+      if (data.zipcode) {
+        handleCheckZipcode(data.zipcode.toString())
+      }
+    } catch (error) {
+      toast.error("Failed to fetch user details.");
+    }
+  };
+
   const handleCheckZipcode = async (zipcode) => {
     try {
         const response = await fetch(`/api/zipcodes`);

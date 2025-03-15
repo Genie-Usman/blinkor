@@ -3,8 +3,14 @@ import { Readable } from "stream";
 import { connectDB } from "../../../lib/mongodb";
 import Order from "../../../../models/Order";
 import Product from "../../../../models/Products";
+import { ReadableStream } from "web-streams-polyfill/ponyfill";
 
 export const runtime = "nodejs"; // Ensure Node.js runtime in Vercel
+
+// Ensure Stripe environment variables are set
+if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
+  throw new Error("Stripe environment variables are not set.");
+}
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -14,6 +20,21 @@ export const config = {
     externalResolver: true, // Prevents Next.js from auto-parsing
   },
 };
+
+// Function to convert web ReadableStream to Node.js stream.Readable
+function webStreamToNodeStream(webStream) {
+  const reader = webStream.getReader();
+  return new Readable({
+    async read() {
+      const { done, value } = await reader.read();
+      if (done) {
+        this.push(null); // End the stream
+      } else {
+        this.push(value); // Push the chunk
+      }
+    },
+  });
+}
 
 // Function to manually read the raw body from the request stream
 async function getRawBody(readable) {
@@ -80,9 +101,12 @@ export async function POST(req) {
   }
 
   try {
-    // ✅ Get the raw body using a Readable stream
-    const rawBody = await getRawBody(Readable.toWeb(req.body));
-    
+    // ✅ Convert web ReadableStream to Node.js stream.Readable
+    const nodeStream = webStreamToNodeStream(req.body);
+
+    // ✅ Get the raw body using a Node.js stream.Readable
+    const rawBody = await getRawBody(nodeStream);
+
     // ✅ Verify Stripe Webhook Signature
     const event = stripe.webhooks.constructEvent(
       rawBody,

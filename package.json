@@ -30,7 +30,8 @@
     "react-is": "^19.0.0",
     "react-top-loading-bar": "^3.0.2",
     "stripe": "^17.6.0",
-    "vercel": "^41.3.0"
+    "vercel": "^41.3.0",
+    "web-streams-polyfill": "^4.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

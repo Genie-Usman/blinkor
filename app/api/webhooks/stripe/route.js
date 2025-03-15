@@ -1,5 +1,4 @@
 import Stripe from "stripe";
-import { Readable } from "stream";
 import { connectDB } from "../../../lib/mongodb";
 import Order from "../../../../models/Order";
 import Product from "../../../../models/Products";
@@ -20,26 +19,14 @@ export const config = {
   },
 };
 
-// Function to convert web ReadableStream to Node.js stream.Readable
-function webStreamToNodeStream(webStream) {
-  const reader = webStream.getReader();
-  return new Readable({
-    async read() {
-      const { done, value } = await reader.read();
-      if (done) {
-        this.push(null); // End the stream
-      } else {
-        this.push(Buffer.from(value)); // Push the chunk as a Buffer
-      }
-    },
-  });
-}
-
-// Function to manually read the raw body from the request stream
-async function getRawBody(readable) {
+// Function to read the raw body from the web ReadableStream
+async function getRawBody(readableStream) {
   const chunks = [];
-  for await (const chunk of readable) {
-    chunks.push(chunk);
+  const reader = readableStream.getReader();
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value);
   }
   return Buffer.concat(chunks);
 }
@@ -100,11 +87,8 @@ export async function POST(req) {
   }
 
   try {
-    // ✅ Convert web ReadableStream to Node.js stream.Readable
-    const nodeStream = webStreamToNodeStream(req.body);
-
-    // ✅ Get the raw body using a Node.js stream.Readable
-    const rawBody = await getRawBody(nodeStream);
+    // ✅ Read the raw body from the web ReadableStream
+    const rawBody = await getRawBody(req.body);
 
     // ✅ Verify Stripe Webhook Signature
     const event = stripe.webhooks.constructEvent(

@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import CustomLink from "../../components/CustomLink";
 
+export const dynamic = "force-dynamic";
+
 const Orders = () => {
   const router = useRouter();
   const [orders, setOrders] = useState([]);
@@ -23,7 +25,8 @@ const Orders = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ token })
+          body: JSON.stringify({ token }),
+          cache: "no-store"
         });
 
         if (!res.ok) {

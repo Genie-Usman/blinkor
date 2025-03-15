@@ -6,10 +6,12 @@ import ClientOrderPage from './ClientOrderPage';
 import { Suspense } from 'react';
 import { Loader2 } from 'lucide-react';
 
+export const dynamic = "force-dynamic";
+
 const OrderPage = async ({ searchParams }) => {
   await connectDB()
   const {id} = await searchParams;
-  const order = await Order.findOne({ orderId: id }).lean();
+  const order = await Order.findOne({ orderId: id }).lean().exec();
 
   const plainOrder = {
     ...order,

@@ -1,8 +1,7 @@
 import { DM_Serif_Text, Lato  } from "next/font/google";
 import ClientLayout from './clientLayout';
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
 
 const spectral = DM_Serif_Text({
   subsets: ['latin'],
@@ -28,9 +27,7 @@ export default function RootLayout({ children }) {
         className={`${spectral.variable} ${lato.variable}`}
       >
         <ClientLayout>
-        <Navbar />
         {children}
-        <Footer />
         </ClientLayout>
       </body>
     </html>

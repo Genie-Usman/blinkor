@@ -19,7 +19,7 @@ export const FilterProvider = ({ children }) => {
       colors: [],
       category: [],
     });
-  }, [pathname]); // Runs every time the route changes
+  }, [pathname]);
 
 
   const useFilterLogic = (products) => {

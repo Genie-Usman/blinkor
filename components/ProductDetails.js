@@ -186,22 +186,23 @@ const ProductDetails = ({ product }) => {
                 <p className="leading-relaxed">{product.description || "No description available."}</p>
 
                 <div className="flex justify-between mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-                    <div className="flex">
+                    <div className="flex items-center">
                         <span className="mr-3">Color</span>
-                        {uniqueColors.map((color, index) => (
-                            <motion.button
-                                key={index}
-                                onClick={() => setSelectedColor(color)}
-                                className={`border-2 rounded-full w-7 h-7 mx-1 transition ${selectedColor === color ? "border-black" : "border-gray-300"
-                                    }`}
-                                style={{ backgroundColor: color }}
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                transition={{ type: "spring", stiffness: 300, damping: 10 }}
-                            ></motion.button>
-                        ))}
+                        {uniqueColors.map((color, index) => {
+                            const formattedColor = color.trim().replace(/\s+/g, "").toLowerCase();
+                            return (
+                                <motion.button
+                                    key={index}
+                                    onClick={() => setSelectedColor(color)}
+                                    className="w-6 h-6 rounded-full border-2 border-gray-200 hover:border-gray-400 transition-colors duration-200 shadow-sm"
+                                    style={{ backgroundColor: formattedColor }}
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    transition={{ type: "spring", stiffness: 300, damping: 10 }}
+                                />
+                            );
+                        })}
                     </div>
-
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -216,7 +217,7 @@ const ProductDetails = ({ product }) => {
                             className="relative"
                         >
                             <select
-                                className="appearance-none rounded-lg border border-gray-300 bg-[#f6f2f0] py-2 pl-3 pr-8 text-sm text-gray-800 focus:border-gray-800 focus:outline-none focus:ring-1 focus:ring-gray-800 focus:ring-opacity-50 transition-all shadow-sm hover:shadow-md"
+                                className="appearance-none cursor-pointer rounded-lg border border-gray-300 bg-[#f6f2f0] py-2 pl-3 pr-8 text-sm text-gray-800 focus:border-gray-800 focus:outline-none focus:ring-1 focus:ring-gray-800 focus:ring-opacity-50 transition-all shadow-sm hover:shadow-md"
                                 value={selectedSize}
                                 onChange={(e) => setSelectedSize(e.target.value)}
                                 disabled={availableSizes.length === 0}
@@ -308,20 +309,20 @@ const ProductDetails = ({ product }) => {
                     <span className="text-sm">Enter Zip-code to check Service</span>
                     <div className=" absolute mt-20 ml-28 md:static md:mt-0 md:ml-0 flex items-center">
 
-                    <input
-                        className="ml-2 h-8 w-24 rounded-lg border-2 border-gray-300 bg-[#f6f2f0] px-3 py-1 text-sm text-gray-800 placeholder-gray-400 focus:border-gray-700 focus:outline-none focus:ring-0 focus:ring-gray-800 focus:ring-opacity-50 transition-all shadow-sm hover:shadow-md"
-                        type="text"
-                        value={zipcode}
-                        onChange={handleZipcodeButton}
-                        placeholder="44000"
-                    />
-                    <button
-                        disabled={disable} onChange={handleZipcodeButton} className="ml-2 flex text-xs bg-black disabled:bg-gray-500 hover:bg-gray-800 text-white py-2 px-6 rounded"
-                        onClick={handleCheckZipcode}
-                    >
-                        Check
-                    </button>
-                    
+                        <input
+                            className="ml-2 h-8 w-24 rounded-lg border-2 border-gray-300 bg-[#f6f2f0] px-3 py-1 text-sm text-gray-800 placeholder-gray-400 focus:border-gray-700 focus:outline-none focus:ring-0 focus:ring-gray-800 focus:ring-opacity-50 transition-all shadow-sm hover:shadow-md"
+                            type="text"
+                            value={zipcode}
+                            onChange={handleZipcodeButton}
+                            placeholder="44000"
+                        />
+                        <button
+                            disabled={disable} onChange={handleZipcodeButton} className="ml-2 flex text-xs bg-black disabled:bg-gray-500 hover:bg-gray-800 text-white py-2 px-6 rounded"
+                            onClick={handleCheckZipcode}
+                        >
+                            Check
+                        </button>
+
                     </div>
                 </div>
             </div>

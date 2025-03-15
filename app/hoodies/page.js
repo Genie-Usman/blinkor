@@ -2,11 +2,13 @@ import { connectDB } from "../lib/mongodb";
 import Products from "../../models/Products";
 import ClientHoodies from "./ClientHoodies";
 
+export const dynamic = "force-dynamic";
+
 const Hoodies = async () => {
   await connectDB();
   const hoodies = await Products.find({
     category: { $in: ["coding hoodies", "stylish hoodies"] }
-  }).lean();
+  }).lean().exec();
   hoodies.sort(() => Math.random() - 0.5);
 
   const processHoodies = (products) => {

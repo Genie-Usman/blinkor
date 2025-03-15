@@ -9,6 +9,7 @@ import { useCart } from "../context/CartContext";
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 
+export const dynamic = "force-dynamic";
 
 const Login = () => {
   const { login } = useCart();
@@ -21,7 +22,7 @@ const Login = () => {
     if (token) {
       router.push('/')
     }
-  }, []);
+  }, [router]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -53,6 +54,7 @@ const Login = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        cache: "no-store"
       });
 
       const data = await res.json();

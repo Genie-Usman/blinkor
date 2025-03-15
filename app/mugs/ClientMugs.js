@@ -14,44 +14,44 @@ const FilteredMugs = ({ mugs = [] }) => {
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
-          opacity: 1,
-          transition: {
-            staggerChildren: 0.2,
-            delayChildren: 0.3,
-          },
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.2,
+                delayChildren: 0.3,
+            },
         },
-      };
-      
-      const childVariants = {
+    };
+
+    const childVariants = {
         hidden: { opacity: 0, y: 30, scale: 0.95 },
         visible: {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          transition: { type: "spring", damping: 12, stiffness: 100, duration: 0.6 },
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: { type: "spring", damping: 12, stiffness: 100, duration: 0.6 },
         },
-      };
-      
-      const accentVariants = {
+    };
+
+    const accentVariants = {
         hidden: { opacity: 0, scale: 0.8 },
         visible: {
-          opacity: 1,
-          scale: 1,
-          transition: { type: "spring", damping: 10, stiffness: 150, duration: 0.8 },
+            opacity: 1,
+            scale: 1,
+            transition: { type: "spring", damping: 10, stiffness: 150, duration: 0.8 },
         },
         hover: {
-          scale: 1.1,
-          color: "#E74C3C",
-          textShadow: "0 0 10px rgba(232, 76, 60, 0.7)",
-          transition: { type: "spring", stiffness: 300 },
+            scale: 1.1,
+            color: "#E74C3C",
+            textShadow: "0 0 10px rgba(232, 76, 60, 0.7)",
+            transition: { type: "spring", stiffness: 300 },
         },
         tap: { scale: 0.9 },
-      };
+    };
 
     return (
         <section className="text-gray-600 body-font">
             <div className="container px-9 py-20 mx-auto">
-            <motion.h2
+                <motion.h2
                     className="text-2xl mt-10 md:mt-8 md:text-5xl font-bold text-gray-900 text-center tracking-tight uppercase leading-tight"
                     variants={containerVariants}
                     initial="hidden"
@@ -96,23 +96,24 @@ const FilteredMugs = ({ mugs = [] }) => {
                         priceRange: { min: 0, max: 100 },
                         colors: [
                             "Black",
+                            "White",
                             "Red",
                             "Navy",
-                            "RoyalBlue",
-                            "SkyBlue",
+                            "Royal Blue",
+                            "Sky Blue",
                             "Gray",
                             "Yellow",
                             "Pink",
-                            "HotPink",
+                            "Hot Pink",
                             "Silver",
                             "Gainsboro",
                             "Green",
                             "Purple",
-                            "ForestGreen",
+                            "Forest Green",
                             "Orange",
                             "Brown",
                         ],
-                        categories: ["comic sips","toon sips", "screen sips"],
+                        categories: ["comic sips", "toon sips", "screen sips"],
                     }}
                 />
                 <div className="flex flex-wrap -m-4 mt-5">
@@ -135,7 +136,7 @@ const FilteredMugs = ({ mugs = [] }) => {
                                     </div>
                                     <div className="mt-4 text-center md:text-left">
                                         <h2 className="text-gray-500 text-xs tracking-widest capitalize title-font mb-1">
-                                        Mugs
+                                            Mugs
                                         </h2>
                                         <h3 className="text-gray-900 text-base h-12 font-semibold line-clamp-2 w-full">
                                             {item.title}
@@ -154,13 +155,16 @@ const FilteredMugs = ({ mugs = [] }) => {
                                         )}
                                         {item.colors.length > 0 && (
                                             <div className="flex justify-center md:justify-start gap-2 mt-1 flex-wrap">
-                                                {item.colors.map((color, index) => (
-                                                    <span
-                                                        key={index}
-                                                        className="w-4 h-4 rounded-full border-2 border-gray-200 hover:border-gray-400 transition-colors duration-200 shadow-sm"
-                                                        style={{ backgroundColor: color.toLowerCase() }}
-                                                    ></span>
-                                                ))}
+                                                {item.colors.map((color, index) => {
+                                                    const formattedColor = color.trim().replace(/\s+/g, "").toLowerCase();
+                                                    return (
+                                                        <span
+                                                            key={index}
+                                                            className="w-4 h-4 rounded-full border-2 border-gray-200 hover:border-gray-400 transition-colors duration-200 shadow-sm"
+                                                            style={{ backgroundColor: formattedColor }}
+                                                        ></span>
+                                                    );
+                                                })}
                                             </div>
                                         )}
                                         {item.discount > 0 ? (

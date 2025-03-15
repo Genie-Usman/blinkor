@@ -5,7 +5,7 @@ import Products from "../../models/Products";
 
 const Minioncollection = async () => {
   await connectDB();
-  const products = await Products.find({ category: "minions tshirts" }).lean();
+  const products = await Products.find({ category: "minions tshirts" }).lean().exec();
 
   const minions = {};
 

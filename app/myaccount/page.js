@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
+export const dynamic = "force-dynamic";
+
 export default function MyAccount() {
   const router = useRouter();
   const [user, setUser] = useState({ name: "", email: "", phone: "", address: "", zipcode: "" });
@@ -76,6 +78,7 @@ export default function MyAccount() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...user, password, confirmPassword, token }),
+        cache: "no-store"
       });
 
       const data = await res.json();

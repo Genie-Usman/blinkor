@@ -1,4 +1,4 @@
-// http://localhost:3000/api/pincode
+// http://localhost:3000/api/zincodes
 
 export async function GET() {
   console.log('API is being called');

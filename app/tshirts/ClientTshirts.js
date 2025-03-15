@@ -95,19 +95,20 @@ const FilteredTshirts = ({ tshirts = [] }) => {
                         priceRange: { min: 0, max: 100 },
                         colors: [
                             "Black",
+                            "White",
                             "Red",
                             "Navy",
-                            "RoyalBlue",
-                            "SkyBlue",
+                            "Royal Blue",
+                            "Sky Blue",
                             "Gray",
                             "Yellow",
                             "Pink",
-                            "HotPink",
+                            "Hot Pink",
                             "Silver",
                             "Gainsboro",
                             "Green",
                             "Purple",
-                            "ForestGreen",
+                            "Forest Green",
                             "Orange",
                             "Brown",
                         ],
@@ -153,13 +154,16 @@ const FilteredTshirts = ({ tshirts = [] }) => {
                                         )}
                                         {item.colors.length > 0 && (
                                             <div className="flex justify-center md:justify-start gap-2 mt-1 flex-wrap">
-                                                {item.colors.map((color, index) => (
-                                                    <span
-                                                        key={index}
-                                                        className="w-4 h-4 rounded-full border-2 border-gray-200 hover:border-gray-400 transition-colors duration-200 shadow-sm"
-                                                        style={{ backgroundColor: color.toLowerCase() }}
-                                                    ></span>
-                                                ))}
+                                                {item.colors.map((color, index) => {
+                                                    const formattedColor = color.trim().replace(/\s+/g, "").toLowerCase();
+                                                    return (
+                                                        <span
+                                                            key={index}
+                                                            className="w-4 h-4 rounded-full border-2 border-gray-200 hover:border-gray-400 transition-colors duration-200 shadow-sm"
+                                                            style={{ backgroundColor: formattedColor }}
+                                                        ></span>
+                                                    );
+                                                })}
                                             </div>
                                         )}
                                         {item.discount > 0 ? (

@@ -10,6 +10,8 @@ import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
+export const dynamic = "force-dynamic";
+
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 const Checkout = () => {
@@ -60,6 +62,7 @@ const Checkout = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token }),
+        cache: "no-store"
       });
 
       if (!res.ok) {

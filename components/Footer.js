@@ -20,7 +20,7 @@ const Footer = () => {
               />
             </CustomLink>
             <div className="mt-2 text-xs md:space-x-10 flex flex-row font-bold text-gray-600">
-              <p className="my-2 ml-2">CODE YOUR FUTURE</p>
+              <p className="my-2 ml-2">ELEVATE YOUR DRIP</p>
               <p className="my-2 ml-2">BLINK INTO FASHION</p>
               <p className="my-2 ml-2">STYLE REDEFINED</p>
             </div>

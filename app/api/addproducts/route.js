@@ -1,11 +1,20 @@
 import { connectDB } from "../../lib/mongodb";
-import Products from "@/models/Products";
+import Products from "../../../models/Products";
 import { NextResponse } from "next/server";
+
+const sizeOrder = ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "One Size", "Generic"];
+
+const sortVariantsBySize = (variants) => {
+    return variants.sort((a, b) => {
+        const sizeIndexA = sizeOrder.indexOf(a.size);
+        const sizeIndexB = sizeOrder.indexOf(b.size);
+        return sizeIndexA - sizeIndexB;
+    });
+}
 
 export async function POST(request) {
     try {
         await connectDB();
-
         const body = await request.json();
 
         if (!Array.isArray(body) || body.length === 0) {
@@ -31,6 +40,8 @@ export async function POST(request) {
                     }
                 });
 
+                existingProduct.variants = sortVariantsBySize(existingProduct.variants);
+
                 existingProduct.discount = item.discount || existingProduct.discount;
                 existingProduct.price = item.price || existingProduct.price;
                 await existingProduct.save();
@@ -43,7 +54,7 @@ export async function POST(request) {
                     category: item.category,
                     price: item.price,
                     discount: item.discount || 0,
-                    variants: item.variants,
+                    variants: sortVariantsBySize(item.variants),
                 });
 
                 await newProduct.save();

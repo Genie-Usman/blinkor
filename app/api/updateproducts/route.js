@@ -1,6 +1,16 @@
 import { connectDB } from "../../lib/mongodb";
-import Products from "@/models/Products";
+import Products from "../../../models/Products";
 import { NextResponse } from "next/server";
+
+const sizeOrder = ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "One Size", "Generic"];
+
+const sortVariantsBySize=(variants)=> {
+    return variants.sort((a, b) => {
+        const sizeIndexA = sizeOrder.indexOf(a.size);
+        const sizeIndexB = sizeOrder.indexOf(b.size);
+        return sizeIndexA - sizeIndexB;
+    });
+}
 
 export async function PUT(request) {
     try {
@@ -17,6 +27,10 @@ export async function PUT(request) {
         const results = await Promise.allSettled(
             body.map(async (product) => {
                 if (!product._id) throw new Error("Missing product ID");
+
+                if (Array.isArray(product.variants)) {
+                    product.variants = sortVariantsBySize(product.variants);
+                }
 
                 return Products.findByIdAndUpdate(product._id, product, {
                     new: true,

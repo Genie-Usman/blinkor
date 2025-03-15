@@ -1,64 +1,62 @@
 "use client";
 
-import { useEffect } from "react";
-import { CartProvider } from './context/CartContext';
-import { FilterProvider } from './context/FilterContext';
-import { Toaster } from 'react-hot-toast';
+import { useEffect, useMemo } from "react";
+import { CartProvider } from "./context/CartContext";
+import { FilterProvider } from "./context/FilterContext";
+import { Toaster } from "react-hot-toast";
 import { usePathname } from "next/navigation";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import Head from "next/head";
 
 export default function ClientLayout({ children }) {
   const pathname = usePathname();
+  const isAdminDashboard = pathname.startsWith("/adminDashboard")
 
-  const getTitle = (path) => {
-    switch (path) {
-      case "/login":
-        return "Blinkor - Login";
-      case "/signup":
-        return "Blinkor - Sign up";
-      case "/forgot-password":
-        return "Blinkor - Forgot Password";
-      case "/reset-password":
-        return "Blinkor - Reset Password";
-      case "/checkout":
-        return "Blinkor - Checkout";
-      case "/order":
-        return "Blinkor - Your Order is Confirmed";
-      case "/myorders":
-        return "Blinkor - My Orders";
-      case "/myaccount":
-        return "Blinkor - My Account";
-      case "/minionscollection":
-        return "Blinkor - Minions Collection";
-      case "/allproducts":
-        return "Blinkor - Hot Deals: You Can't Miss";
-      case "/tshirts":
-        return "Blinkor - T-Shirts";
-      case "/hoodies":
-        return "Blinkor - Hoodies";
-      case "/caps":
-        return "Blinkor - Caps";
-      case "/mugs":
-        return "Blinkor - Mugs";
-      default:
-        return "Blinkor - Drip.Blink.Style";
-    }
-  };
-
-  useEffect(() => {
-    document.title = getTitle(pathname);
+  const title = useMemo(() => {
+    const titles = {
+      "/login": "Blinkor - Login",
+      "/signup": "Blinkor - Sign up",
+      "/forgot-password": "Blinkor - Forgot Password",
+      "/reset-password": "Blinkor - Reset Password",
+      "/checkout": "Blinkor - Checkout",
+      "/order": "Blinkor - Your Order is Confirmed",
+      "/myorders": "Blinkor - My Orders",
+      "/myaccount": "Blinkor - My Account",
+      "/minionscollection": "Blinkor - Minions Collection",
+      "/allproducts": "Blinkor - Hot Deals: You Can't Miss",
+      "/tshirts": "Blinkor - T-Shirts",
+      "/hoodies": "Blinkor - Hoodies",
+      "/caps": "Blinkor - Caps",
+      "/mugs": "Blinkor - Mugs",
+      "/adminDashboard": "Blinkor - Admin",
+      "/adminDashboard/add-products": "Blinkor - Add Products",
+      "/adminDashboard/update-products": "Blinkor - Update Products",
+      "/adminDashboard/view-products": "Blinkor - Product Inventory",
+      "/adminDashboard/all-orders": "Blinkor - All Orders",
+      "/adminDashboard": "Blinkor - Admin",
+      "/admin-login": "Blinkor - Login as an Admin",
+      "/admin-registration": "Blinkor - Register as an Admin",
+    };
+    return titles[pathname] || "Blinkor - Drip. Blink. Style";
   }, [pathname]);
 
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
 
   return (
     <>
       <Head>
-        <title>{getTitle(pathname)}</title>
+        <title>{title}</title>
       </Head>
+
       <CartProvider>
         <FilterProvider>
-          <Toaster position="top-right" reverseOrder={false}/>
+          {!isAdminDashboard && <Navbar />}
+          <Toaster position="top-right" reverseOrder={false} />
           {children}
+          {!isAdminDashboard && <Footer />}
         </FilterProvider>
       </CartProvider>
     </>

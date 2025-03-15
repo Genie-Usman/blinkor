@@ -32,7 +32,6 @@ export async function POST(req) {
     for (const key in items) {
       const item = items[key];
 
-      // Fetching product from database
       const product = await Product.findOne({ title: item.name });
 
       if (!product) {
@@ -42,7 +41,6 @@ export async function POST(req) {
         );
       }
 
-      // Finding the correct variant
       const variant = product.variants.find(
         (v) => v.size === item.size && v.color === item.color
       );
@@ -54,7 +52,6 @@ export async function POST(req) {
         );
       }
 
-      // Checking stock availability
       if (variant.availableQuantity < item.quantity) {
         return new Response(
           JSON.stringify({ error: `Not enough stock for "${item.name}"` }),
@@ -62,7 +59,6 @@ export async function POST(req) {
         );
       }
 
-      // Validating price considering discount
       const discountedPrice = parseFloat(
         (product.price * (1 - product.discount / 100)).toFixed(2)
       );
@@ -81,7 +77,6 @@ export async function POST(req) {
 
       sumTotal += discountedPrice * item.quantity;
 
-      // Formatting items for Stripe
       formattedItems.push({
         price_data: {
           currency: "usd",
@@ -92,7 +87,6 @@ export async function POST(req) {
       });
     }
 
-    // Fixing floating-point precision issues before validation
     sumTotal = parseFloat(sumTotal.toFixed(2));
 
     if (Math.abs(sumTotal - subTotal) > 0.01) {

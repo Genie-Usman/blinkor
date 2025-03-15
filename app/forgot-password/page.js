@@ -6,6 +6,8 @@ import toast from 'react-hot-toast';
 import { Loader2 } from "lucide-react";
 import CustomLink from "../../components/CustomLink";
 
+export const dynamic = "force-dynamic";
+
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,6 +21,7 @@ const ForgotPassword = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
+        cache: "no-store"
       });
 
       const data = await res.json();

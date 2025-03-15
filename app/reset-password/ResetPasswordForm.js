@@ -57,6 +57,7 @@ const ResetPasswordForm = () => {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ token, email, password, confirmPassword }),
+                cache: "no-store"
             });
 
             const data = await res.json();

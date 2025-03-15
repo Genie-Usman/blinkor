@@ -9,7 +9,7 @@ const ProductPage = async ({ params }) => {
   }
 
   await connectDB();
-  const product = await Products.findOne({ slug: decodeURIComponent(slug) }).lean();
+  const product = await Products.findOne({ slug: decodeURIComponent(slug) }).lean().exec();
 
   if (!product) {
     return <div className="text-center text-red-500">Product not found</div>;

@@ -8,6 +8,8 @@ import CustomLink from "../../components/CustomLink";
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 
+export const dynamic = "force-dynamic";
+
 const Signup = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -42,6 +44,7 @@ const Signup = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        cache: "no-store"
       });
 
       const data = await res.json();

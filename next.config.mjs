@@ -22,7 +22,10 @@ const nextConfig = {
         hostname: "redwolf.in",
       },
     ],
-  }
+  },
+  api: {
+    bodyParser: false,
+  },
 };
 
 export default nextConfig;

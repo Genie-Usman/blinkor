@@ -3,7 +3,6 @@ import { Readable } from "stream";
 import { connectDB } from "../../../lib/mongodb";
 import Order from "../../../../models/Order";
 import Product from "../../../../models/Products";
-import { ReadableStream } from "web-streams-polyfill/ponyfill";
 
 export const runtime = "nodejs"; // Ensure Node.js runtime in Vercel
 
@@ -30,7 +29,7 @@ function webStreamToNodeStream(webStream) {
       if (done) {
         this.push(null); // End the stream
       } else {
-        this.push(value); // Push the chunk
+        this.push(Buffer.from(value)); // Push the chunk as a Buffer
       }
     },
   });

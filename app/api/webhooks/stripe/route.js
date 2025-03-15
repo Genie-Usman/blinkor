@@ -10,6 +10,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export const config = {
   api: {
     bodyParser: false, // Required for raw body handling
+    externalResolver: true,
   },
 };
 

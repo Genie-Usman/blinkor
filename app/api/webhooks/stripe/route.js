@@ -3,12 +3,13 @@ import { NextResponse } from "next/server";
 import { connectDB } from "../../../lib/mongodb";
 import Order from "../../../../models/Order";
 import Product from "../../../../models/Products";
+import { buffer } from "stream/consumers";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const config = {
   api: {
-    bodyParser: false,
+    bodyParser: false, // Required for raw body handling
   },
 };
 
@@ -23,15 +24,11 @@ export async function POST(req) {
     });
   }
 
-  let rawBody;
   try {
     // Read raw request body as a buffer
-    const chunks = [];
-    for await (const chunk of req.body) {
-      chunks.push(chunk);
-    }
-    rawBody = Buffer.concat(chunks);
+    const rawBody = await buffer(req.body);
 
+    // Verify Stripe Webhook Signature
     const event = stripe.webhooks.constructEvent(
       rawBody,
       sig,
@@ -57,11 +54,12 @@ export async function POST(req) {
       order.status = "paid";
       await order.save();
 
+      // Update product stock
       for (const item of order.items) {
         const product = await Product.findOne({ title: item.name });
 
         if (!product) {
-          console.warn(`Product not found: ${item.name}`);
+          console.warn(`⚠️ Product not found: ${item.name}`);
           continue;
         }
 
@@ -73,7 +71,7 @@ export async function POST(req) {
               variant.totalSold += item.quantity;
               variantUpdated = true;
             } else {
-              console.warn(`Not enough stock for ${product.title} - ${variant.size}/${variant.color}`);
+              console.warn(`⚠️ Not enough stock for ${product.title} - ${variant.size}/${variant.color}`);
             }
           }
         }
@@ -89,7 +87,7 @@ export async function POST(req) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (err) {
-    console.error("Webhook error:", err.message);
+    console.error("❌ Webhook error:", err.message);
     return new Response(JSON.stringify({ error: "Webhook error" }), {
       status: 400,
       headers: { "Content-Type": "application/json" },

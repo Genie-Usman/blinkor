@@ -13,7 +13,6 @@ export async function connectDB() {
 
   if (!cached.promise) {
     cached.promise = mongoose.connect(MONGO_URI).then((mongoose) => {
-      console.log(`MongoDB Connected: ${mongoose.connection.host}`);
       return mongoose;
     });
   }

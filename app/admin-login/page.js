@@ -6,18 +6,18 @@ import toast from "react-hot-toast";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAuth } from "../context/AuthContext";
 
 const AdminLogin = () => {
   const router = useRouter();
+  const { adminLogin, admin } = useAuth()
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-      const adminToken = localStorage.getItem('adminToken')
-      if (adminToken) {
-        router.push('adminDashboard')
-      }
-    }, [router]);
-  
+    if (admin?.value) {
+      router.push("/adminDashboard");
+    }
+  }, [admin, router]);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -48,7 +48,7 @@ const AdminLogin = () => {
       const data = await res.json();
 
       if (res.ok) {
-        localStorage.setItem("adminToken", data.adminToken);
+        adminLogin(data.adminToken)
 
         toast.success("Login successful!", {
           duration: 2000,
@@ -99,8 +99,8 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg md:mt-16">
+    <div className="flex min-h-screen items-center justify-center bg-[#f6f2f0]">
+      <div className="w-full max-w-md bg-white/50 p-8 shadow-lg md:mt-16">
         <motion.div
           className="flex justify-center"
           initial={{ opacity: 0, scale: 0.9 }}
@@ -125,7 +125,7 @@ const AdminLogin = () => {
               value={formData.username}
               onChange={handleChange}
               type="text"
-              className="w-full px-4 py-2 mt-2 border rounded-md focus:ring-1 focus:outline-none focus:ring-black"
+              className="w-full px-4 py-3 border-b border-gray-300 focus:border-gray-600 outline-none bg-transparent transition-all"
               placeholder="Admin Username"
               required
             />
@@ -136,14 +136,14 @@ const AdminLogin = () => {
               value={formData.password}
               onChange={handleChange}
               type="password"
-              className="w-full px-4 py-2 mt-2 border rounded-md focus:ring-1 focus:outline-none focus:ring-black"
+              className="w-full px-4 py-3 border-b border-gray-300 focus:border-gray-600 outline-none bg-transparent transition-all"
               placeholder="Admin Password"
               required
             />
           </div>
           <button
             type="submit"
-            className={`w-full mt-4 flex items-center justify-center gap-2 bg-gray-900 text-white py-2 rounded-md transition-all duration-300 ${
+            className={`w-full mt-4 flex items-center justify-center gap-2 bg-gray-900 text-white py-2 transition-all duration-300 ${
               loading ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-700"
             }`}
             disabled={loading}

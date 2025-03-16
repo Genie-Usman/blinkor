@@ -6,30 +6,32 @@ import CustomLink from "./CustomLink";
 import { CiShoppingCart, CiUser, CiLogin } from "react-icons/ci";
 import SideCart from "./SideCart";
 import { useCart } from "../app/context/CartContext";
+import { useAuth } from "../app/context/AuthContext";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
-
 const Navbar = () => {
-    const { user, logout, itemCount } = useCart();
-    const dropdownRef = useRef(null)
-    const pathname = usePathname()
-    const [cartOpen, setCartOpen] = useState(false)
-    const [dropdown, setDropdown] = useState(false)
+    const { itemCount } = useCart();
+    const { user, logout } = useAuth();
+    const dropdownRef = useRef(null);
+    const pathname = usePathname();
+    const [cartOpen, setCartOpen] = useState(false);
+    const [dropdown, setDropdown] = useState(false);
+
+    const isActiveLink = (href) => pathname === href;
 
     useEffect(() => {
         setDropdown(false);
     }, [pathname]);
-    
-    
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setDropdown(false);
             }
         };
-        document.addEventListener("mousedown", handleClickOutside)
-        return () => document.removeEventListener("mousedown", handleClickOutside)
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
     const toggleCart = () => {
@@ -56,37 +58,34 @@ const Navbar = () => {
                     </CustomLink>
                 </div>
                 <nav className="sm:ml-7 md:mr-auto mt-10 md:mt-0 flex flex-wrap items-center text-base justify-center space-x-5">
-                    <CustomLink
-                        href="/tshirts"
-                        className="relative text-sm md:text-lg font-bold text-gray-700 hover:text-devstyle transition-all duration-300 ease-in-out group"
-                    >
-                        Tshirts
-                        <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-devstyle transition-all duration-300 ease-in-out group-hover:w-full"></span>
-                    </CustomLink>
-                    <CustomLink
-                        href="/hoodies"
-                        className="relative text-sm md:text-lg font-bold text-gray-700 hover:text-devstyle transition-all duration-300 ease-in-out group"
-                    >
-                        Hoodies
-                        <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-devstyle transition-all duration-300 ease-in-out group-hover:w-full"></span>
-                    </CustomLink>
-                    <CustomLink
-                        href="/caps"
-                        className="relative text-sm md:text-lg font-bold text-gray-700 hover:text-devstyle transition-all duration-300 ease-in-out group"
-                    >
-                        Caps
-                        <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-devstyle transition-all duration-300 ease-in-out group-hover:w-full"></span>
-                    </CustomLink>
-                    <CustomLink
-                        href="/mugs"
-                        className="relative text-sm md:text-lg font-bold text-gray-700 hover:text-devstyle transition-all duration-300 ease-in-out group"
-                    >
-                        Mugs
-                        <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-devstyle transition-all duration-300 ease-in-out group-hover:w-full"></span>
-                    </CustomLink>
+                    {[
+                        { name: "Tshirts", href: "/tshirts" },
+                        { name: "Hoodies", href: "/hoodies" },
+                        { name: "Caps", href: "/caps" },
+                        { name: "Mugs", href: "/mugs" },
+                    ].map((link) => (
+                        <CustomLink
+                            key={link.href}
+                            href={link.href}
+                            className={`relative text-sm md:text-lg font-bold transition-all duration-300 ease-in-out group ${
+                                isActiveLink(link.href)
+                                    ? "text-devstyle"
+                                    : "text-gray-700 hover:text-devstyle"
+                            }`}
+                        >
+                            {link.name}
+                            <span
+                                className={`absolute left-0 bottom-0 h-0.5 ${
+                                    isActiveLink(link.href)
+                                        ? "w-full bg-devstyle"
+                                        : "w-0 bg-devstyle"
+                                } transition-all duration-300 ease-in-out group-hover:w-full`}
+                            ></span>
+                        </CustomLink>
+                    ))}
                 </nav>
                 <div className="flex absolute right-3 md:right-5 mt-2 md:0 flex-end items-center space-x-2 md:space-x-5">
-                    {user.value ? (
+                    {user?.value ? (
                         <div ref={dropdownRef}>
                             <motion.div
                                 whileHover={{ scale: 1.1, rotate: 5 }}
@@ -124,7 +123,6 @@ const Navbar = () => {
                             >
                                 <CiLogin className="text-xl text-gray-700 hover:text-devstyle md:text-2xl" />
                             </motion.div>
-
                         </CustomLink>
                     )}
                     <motion.div
@@ -144,7 +142,6 @@ const Navbar = () => {
                                 {itemCount}
                             </motion.span>
                         )}
-
                     </motion.div>
                 </div>
                 <SideCart cartOpen={cartOpen} toggleCart={toggleCart} />

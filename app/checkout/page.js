@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { CiCirclePlus, CiCircleMinus, CiTrash } from "react-icons/ci";
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { loadStripe } from '@stripe/stripe-js';
 import { jwtDecode } from "jwt-decode";
 import { Loader2 } from 'lucide-react';
@@ -15,7 +16,8 @@ export const dynamic = "force-dynamic";
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 const Checkout = () => {
-  const { cart, subTotal, addToCart, removeFromCart, clearCart, user } = useCart();
+  const { cart, subTotal, addToCart, removeFromCart, clearCart } = useCart();
+  const { user } = useAuth()
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [disablePay, setDisablePay] = useState(true);
@@ -39,7 +41,7 @@ const Checkout = () => {
         customerEmail: decoded.email,
       }));
     }
-    else{
+    else {
       router.push("/login");
     }
   }, [router]);
@@ -88,55 +90,55 @@ const Checkout = () => {
 
   const handleCheckZipcode = async (zipcode) => {
     try {
-        const response = await fetch(`/api/zipcodes`);
-        if (!response.ok) {
-            throw new Error(`Failed to fetch zipcodes: ${response.statusText}`);
-        }
+      const response = await fetch(`/api/zipcodes`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch zipcodes: ${response.statusText}`);
+      }
 
-        const data = await response.json();
-        if (!data?.zipcodes || !Array.isArray(data.zipcodes)) {
-            throw new Error("Invalid zipcodes data format.");
-        }
+      const data = await response.json();
+      if (!data?.zipcodes || !Array.isArray(data.zipcodes)) {
+        throw new Error("Invalid zipcodes data format.");
+      }
 
-        const matchedEntry = data.zipcodes.find(zip => zip.postal_code.toString() === zipcode.toString());
+      const matchedEntry = data.zipcodes.find(zip => zip.postal_code.toString() === zipcode.toString());
 
-        if (matchedEntry) {
-            setFormData(prev => ({
-                ...prev,
-                customerCity: matchedEntry.city,
-                customerDistrict: matchedEntry.district,
-            }));
+      if (matchedEntry) {
+        setFormData(prev => ({
+          ...prev,
+          customerCity: matchedEntry.city,
+          customerDistrict: matchedEntry.district,
+        }));
 
-            toast.success(`Service available in ${matchedEntry.city}, ${matchedEntry.district}!`, {
-                duration: 2000,
-                position: 'top-right',
-                style: {
-                    background: '#000',
-                    color: '#fff',
-                    fontSize: '13px',
-                    fontWeight: 'bold',
-                    borderRadius: '8px',
-                    padding: '12px 20px',
-                },
-            });
-        } else {
-            toast.error("Sorry, service is not available for this zipcode!", {
-                duration: 2000,
-                position: 'top-right',
-                style: {
-                    background: '#000',
-                    color: '#fff',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    borderRadius: '8px',
-                    padding: '12px 20px',
-                },
-            });
-        }
+        toast.success(`Service available in ${matchedEntry.city}, ${matchedEntry.district}!`, {
+          duration: 2000,
+          position: 'top-right',
+          style: {
+            background: '#000',
+            color: '#fff',
+            fontSize: '13px',
+            fontWeight: 'bold',
+            borderRadius: '8px',
+            padding: '12px 20px',
+          },
+        });
+      } else {
+        toast.error("Sorry, service is not available for this zipcode!", {
+          duration: 2000,
+          position: 'top-right',
+          style: {
+            background: '#000',
+            color: '#fff',
+            fontSize: '14px',
+            fontWeight: 'bold',
+            borderRadius: '8px',
+            padding: '12px 20px',
+          },
+        });
+      }
     } catch (error) {
-        console.error("Error checking zipcode:", error);
+      console.error("Error checking zipcode:", error);
     }
-};
+  };
 
 
   const handleChange = async (e) => {

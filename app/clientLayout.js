@@ -3,6 +3,7 @@
 import { useEffect, useMemo } from "react";
 import { CartProvider } from "./context/CartContext";
 import { FilterProvider } from "./context/FilterContext";
+import { AuthProvider } from "./context/AuthContext";
 import { Toaster } from "react-hot-toast";
 import { usePathname } from "next/navigation";
 import Navbar from "../components/Navbar";
@@ -50,7 +51,7 @@ export default function ClientLayout({ children }) {
       <Head>
         <title>{title}</title>
       </Head>
-
+      <AuthProvider>
       <CartProvider>
         <FilterProvider>
           {!isAdminDashboard && <Navbar />}
@@ -59,6 +60,7 @@ export default function ClientLayout({ children }) {
           {!isAdminDashboard && <Footer />}
         </FilterProvider>
       </CartProvider>
+      </AuthProvider>
     </>
   );
 }

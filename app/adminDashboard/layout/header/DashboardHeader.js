@@ -3,8 +3,10 @@ import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { ChevronDown, CreditCard, Shield, Mail, Menu, Bell, Search } from "lucide-react";
 import Link from "next/link";
+import { useAuth } from "../../../context/AuthContext";
 
 const Header = ({ toggleMobileSidebar }) => {
+  const {adminLogout} = useAuth()
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [notifications, setNotifications] = useState([
@@ -195,7 +197,7 @@ const Header = ({ toggleMobileSidebar }) => {
                 </ul>
 
                 <div className="border-t border-gray-100 p-2">
-                  <button className="w-full py-2 text-center text-red-600 rounded-md hover:bg-red-100 transition">
+                  <button onClick={()=> adminLogout()} className="w-full py-2 text-center text-red-600 rounded-md hover:bg-red-100 transition">
                     Logout
                   </button>
                 </div>

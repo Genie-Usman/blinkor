@@ -17,11 +17,13 @@ const Navbar = () => {
     const pathname = usePathname();
     const [cartOpen, setCartOpen] = useState(false);
     const [dropdown, setDropdown] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const isActiveLink = (href) => pathname === href;
 
     useEffect(() => {
         setDropdown(false);
+        setMobileMenuOpen(false);
     }, [pathname]);
 
     useEffect(() => {
@@ -34,17 +36,15 @@ const Navbar = () => {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const toggleCart = () => {
-        setCartOpen((prev) => !prev);
-    };
-    const toggleDropdown = () => {
-        setDropdown((prev) => !prev);
-    };
+    const toggleCart = () => setCartOpen((prev) => !prev);
+    const toggleDropdown = () => setDropdown((prev) => !prev);
+    const toggleMobileMenu = () => setMobileMenuOpen((prev) => !prev);
 
     return (
-        <header className="text-gray-600 body-font">
-            <div className="container mx-auto flex flex-wrap py-3 md:py-1 md:flex-row flex-col items-center shadow-md fixed top-0 left-0 w-full z-50 bg-[#eeeae6]">
-                <div className="left-0 absolute mt-1 md:static md:ml-5">
+        <header className="text-gray-600 body-font bg-[#eeeae6] fixed top-0 left-0 w-full z-50 shadow-md">
+            <div className="max-w-7xl mx-auto flex items-center justify-between py-3 px-4 md:px-8">
+                {/* Logo Section */}
+                <div className="flex-shrink-0">
                     <CustomLink href="/">
                         <Image
                             className="w-32 md:w-48"
@@ -57,7 +57,9 @@ const Navbar = () => {
                         />
                     </CustomLink>
                 </div>
-                <nav className="sm:ml-7 md:mr-auto mt-10 md:mt-0 flex flex-wrap items-center text-base justify-center space-x-5">
+
+                {/* Navigation Links - Desktop */}
+                <nav className="hidden md:flex space-x-6 text-lg font-bold">
                     {[
                         { name: "Tshirts", href: "/tshirts" },
                         { name: "Hoodies", href: "/hoodies" },
@@ -67,7 +69,7 @@ const Navbar = () => {
                         <CustomLink
                             key={link.href}
                             href={link.href}
-                            className={`relative text-sm md:text-lg font-bold transition-all duration-300 ease-in-out group ${
+                            className={`relative transition-all duration-300 ease-in-out group ${
                                 isActiveLink(link.href)
                                     ? "text-devstyle"
                                     : "text-gray-700 hover:text-devstyle"
@@ -84,9 +86,12 @@ const Navbar = () => {
                         </CustomLink>
                     ))}
                 </nav>
-                <div className="flex absolute right-3 md:right-5 mt-2 md:0 flex-end items-center space-x-2 md:space-x-5">
+
+                {/* User & Cart Section */}
+                <div className="flex items-center space-x-5">
+                    {/* User Icon */}
                     {user?.value ? (
-                        <div ref={dropdownRef}>
+                        <div ref={dropdownRef} className="relative">
                             <motion.div
                                 whileHover={{ scale: 1.1, rotate: 5 }}
                                 whileTap={{ rotate: 10, scale: 0.9 }}
@@ -94,11 +99,11 @@ const Navbar = () => {
                             >
                                 <CiUser
                                     onClick={toggleDropdown}
-                                    className="text-xl text-gray-700 hover:text-devstyle md:text-2xl cursor-pointer transition-colors duration-300"
+                                    className="text-2xl text-gray-700 hover:text-devstyle cursor-pointer transition-colors duration-300"
                                 />
                             </motion.div>
                             {dropdown && (
-                                <div className="absolute right-4 md:right-8 font-bold top-4 md:top-8 py-4 px-3 bg-[#BCB8B1] text-sm rounded shadow-lg w-32">
+                                <div className="absolute right-0 mt-3 py-4 px-3 bg-[#BCB8B1] text-sm rounded shadow-lg w-40">
                                     <ul className="flex flex-col text-left">
                                         <li className="p-2 hover:text-gray-800 cursor-pointer">
                                             <CustomLink href="/myaccount">My Account</CustomLink>
@@ -106,7 +111,7 @@ const Navbar = () => {
                                         <li className="p-2 hover:text-gray-800 cursor-pointer">
                                             <CustomLink href="/myorders">Orders</CustomLink>
                                         </li>
-                                        <li className="p-2 hover:text-red-900 cursor-pointer text-red-600" onClick={logout}>
+                                        <li className="p-2 text-red-600 hover:text-red-900 cursor-pointer" onClick={logout}>
                                             Logout
                                         </li>
                                     </ul>
@@ -121,31 +126,65 @@ const Navbar = () => {
                                 transition={{ type: "spring", stiffness: 400, damping: 15 }}
                                 className="cursor-pointer"
                             >
-                                <CiLogin className="text-xl text-gray-700 hover:text-devstyle md:text-2xl" />
+                                <CiLogin className="text-2xl text-gray-700 hover:text-devstyle" />
                             </motion.div>
                         </CustomLink>
                     )}
+
+                    {/* Cart Icon */}
                     <motion.div
                         whileHover={{ scale: 1.1, rotate: 5 }}
                         whileTap={{ scale: 0.9 }}
                         className="relative cursor-pointer"
                         onClick={toggleCart}
                     >
-                        <CiShoppingCart className="text-gray-700 text-xl hover:text-devstyle md:text-3xl transition-all duration-200" />
+                        <CiShoppingCart className="text-gray-700 text-2xl hover:text-devstyle transition-all duration-200" />
                         {Number(itemCount) > 0 && (
                             <motion.span
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1.1 }}
                                 transition={{ type: "spring", stiffness: 500, damping: 20, mass: 1 }}
-                                className="absolute top-0 md:-top-1.5 -right-1 bg-gray-800 text-white md:text-[10px] font-bold md:px-1.5 md:py-0.5 rounded-full  text-[6px] px-1 py-0.145"
+                                className="absolute top-0 right-0 bg-gray-800 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full"
                             >
                                 {itemCount}
                             </motion.span>
                         )}
                     </motion.div>
+
+                    {/* Mobile Menu Button */}
+                    <div className="md:hidden">
+                        <button onClick={toggleMobileMenu} className="text-2xl text-gray-700">
+                            ☰
+                        </button>
+                    </div>
                 </div>
-                <SideCart cartOpen={cartOpen} toggleCart={toggleCart} />
             </div>
+
+            {/* Mobile Navigation Menu */}
+            {mobileMenuOpen && (
+                <div className="md:hidden absolute top-16 left-0 w-full bg-[#eeeae6] shadow-md py-3">
+                    <nav className="flex flex-col items-center space-y-3 text-lg font-bold">
+                        {[
+                            { name: "Tshirts", href: "/tshirts" },
+                            { name: "Hoodies", href: "/hoodies" },
+                            { name: "Caps", href: "/caps" },
+                            { name: "Mugs", href: "/mugs" },
+                        ].map((link) => (
+                            <CustomLink
+                                key={link.href}
+                                href={link.href}
+                                className="text-gray-700 hover:text-devstyle transition-all duration-300"
+                                onClick={toggleMobileMenu}
+                            >
+                                {link.name}
+                            </CustomLink>
+                        ))}
+                    </nav>
+                </div>
+            )}
+
+            {/* SideCart */}
+            <SideCart cartOpen={cartOpen} toggleCart={toggleCart} />
         </header>
     );
 };

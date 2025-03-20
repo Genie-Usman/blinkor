@@ -138,16 +138,17 @@ const Navbar = () => {
                         className="relative cursor-pointer"
                         onClick={toggleCart}
                     >
-                        <CiShoppingCart className="text-gray-700 text-2xl hover:text-devstyle transition-all duration-200" />
+                        <CiShoppingCart className="text-gray-700 text-3xl hover:text-devstyle transition-all duration-200" />
                         {Number(itemCount) > 0 && (
-                            <motion.span
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1.1 }}
-                                transition={{ type: "spring", stiffness: 500, damping: 20, mass: 1 }}
-                                className="absolute top-0 right-0 bg-gray-800 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full"
-                            >
-                                {itemCount}
-                            </motion.span>
+                           <motion.span
+                           initial={{ scale: 0 }}
+                           animate={{ scale: 1.1 }}
+                           transition={{ type: "spring", stiffness: 500, damping: 20, mass: 1 }}
+                           className="absolute top-[-6px] right-[-7px] transform translate-x-1/2 -translate-y-1/2 bg-gray-800 text-white text-[8px] md:text-[10px] font-bold px-1 md:px-1.5 py-0.5 rounded-full"
+                       >
+                           {itemCount}
+                       </motion.span>
+                       
                         )}
                     </motion.div>
 

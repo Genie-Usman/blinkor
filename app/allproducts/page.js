@@ -1,5 +1,5 @@
-import { connectDB } from "../lib/mongodb";
-import Products from "../../models/Products";
+import { connectDB } from "../../lib/database/mongodb";
+import Products from "../../lib/database/models/Products";
 import ClientAllProducts from "./ClientAllProducts";
 
 const AllProducts = async () => {

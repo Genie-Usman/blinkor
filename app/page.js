@@ -1,7 +1,7 @@
 import HomePageClient from "./HomePageClient";
 import ClientRecommendedProducts from "../components/ClientRecommendedProducts";
-import { connectDB } from "../app/lib/mongodb";
-import Products from "../models/Products";
+import { connectDB } from "../lib/database/mongodb";
+import Products from "../lib/database/models/Products";
 
 export default async function Home() {
   await connectDB();

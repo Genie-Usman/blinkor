@@ -1,7 +1,7 @@
 import CustomLink from '../../components/CustomLink';
 import React from 'react';
-import { connectDB } from '../lib/mongodb';
-import Order from '../../models/Order';
+import { connectDB } from '../../lib/database/mongodb';
+import Order from '../../lib/database/models/Order';
 import ClientOrderPage from './ClientOrderPage';
 import { Suspense } from 'react';
 import { Loader2 } from 'lucide-react';

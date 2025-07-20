@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import User from "../../../models/User";
+import User from "../../../lib/database/models/User";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { connectDB } from "../../lib/mongodb";
+import { connectDB } from "../../../lib/database/mongodb";
 
 export async function PUT(request) {
     await connectDB()

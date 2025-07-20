@@ -1,7 +1,7 @@
 import Stripe from "stripe";
-import { connectDB } from "../../../lib/mongodb";
-import Order from "../../../../models/Order";
-import Product from "../../../../models/Products";
+import { connectDB } from "../../../../lib/database/mongodb";
+import Order from "../../../../lib/database/models/Order";
+import Product from "../../../../lib/database/models/Products";
 
 export const runtime = "nodejs"
 

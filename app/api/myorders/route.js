@@ -1,7 +1,7 @@
-import { connectDB } from "../../lib/mongodb";
+import { connectDB } from "../../../lib/database/mongodb";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import Order from "../../../models/Order";
+import Order from "../../../lib/database/models/Order";
 
 export async function POST(request) {
     try {

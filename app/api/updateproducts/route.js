@@ -1,5 +1,5 @@
-import { connectDB } from "../../lib/mongodb";
-import Products from "../../../models/Products";
+import { connectDB } from "../../../lib/database/mongodb";
+import Products from "../../../lib/database/models/Products";
 import { NextResponse } from "next/server";
 
 const sizeOrder = ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "One Size", "Generic"];

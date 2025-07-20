@@ -1,7 +1,7 @@
 import Image from "next/image";
 import CustomLink from "../../components/CustomLink";
-import { connectDB } from "../lib/mongodb";
-import Products from "../../models/Products";
+import { connectDB } from "../../lib/database/mongodb";
+import Products from "../../lib/database/models/Products";
 
 const Minioncollection = async () => {
   await connectDB();

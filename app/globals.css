@@ -2,41 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
-h1,h2, nav {
+h1,
+h2,
+nav {
   font-family: var(--font-spectral), serif;
 }
 
-p,h3, body {
+p,
+h3,
+body {
   font-family: var(--font-lato), sans-serif;
 }
 
-body{
-    overflow-x: hidden;
-    background: #f6f2f0;
+body {
+  overflow-x: hidden;
+  background: #f6f2f0;
 }
 
 /* Custom Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
-    width: 6px; 
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: #f3f3f3;
-    border-radius: 10px;
-    margin-top: 2px;
-    margin-bottom: 2px;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #E0AFA0;
-    border-radius: 10px;
-    transition: background 0.3s;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #E0AFA0;
-    /* color: ; */
-  }
+  width: 6px;
+}
 
-  
-  
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f3f3f3;
+  border-radius: 10px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #E0AFA0;
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #E0AFA0;
+  /* color: ; */
+}
+
+/* Custom Button */
+.text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-wrapper,
+.text,
+.icon {
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  color: #fff;
+}
+
+.text {
+  top: 0
+}
+
+.text,
+.icon {
+  transition: top 0.5s;
+}
+
+.icon {
+  color: #fff;
+  top: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button:hover .text {
+  top: -100%;
+}
+
+.button:hover .icon {
+  top: 0;
+}
+
+.button:hover:before,
+.button:hover:after {
+  opacity: 1;
+  visibility: visible;
+}

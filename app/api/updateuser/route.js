@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import User from "../../../models/User";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import { connectDB } from "../../lib/mongodb";
 
 export async function PUT(request) {

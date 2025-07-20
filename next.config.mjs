@@ -23,10 +23,6 @@ const nextConfig = {
       },
     ],
   },
-  api: {
-    bodyParser: false,
-    externalResolver: true,
-  },
 };
 
 export default nextConfig;

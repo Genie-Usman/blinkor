@@ -3,6 +3,7 @@ import Products from "../../../models/Products";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
+  console.log("📥 API called:", req.method);
   try {
     await connectDB();
 

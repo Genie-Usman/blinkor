@@ -7,6 +7,7 @@ import { useCart } from "../app/context/CartContext";
 import toast from 'react-hot-toast';
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { CiCreditCard1, CiShoppingCart } from "react-icons/ci";
 
 const ProductDetails = ({ product }) => {
     const { addToCart, buyNow } = useCart();
@@ -269,30 +270,42 @@ const ProductDetails = ({ product }) => {
                             </span>
                         )}
                     </motion.div>
-                    <div className="flex absolute md:static ml-32 md:ml-auto md:mt-0 mt-20 space-x-2">
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            transition={{ type: "spring", stiffness: 300, damping: 10 }}
-                            className="flex md:ml-2 text-xs md:text-sm bg-black hover:bg-gray-800 text-white py-3 px-4 rounded transition-all disabled:bg-gray-400 disabled:cursor-not-allowed"
-                            disabled={!selectedSize || loading}
-                            onClick={handleBuyNow}
-                        >
-                            {loading ? (
-                                <>
-                                    <Loader2 className="animate-spin w-5 h-5" />
-                                </>
-                            ) : (
-                                "Buy Now"
-                            )}
-                        </motion.button>
-                        <button
-                            className="flex md:ml-auto text-xs md:text-sm bg-black hover:bg-gray-800 text-white py-3 px-4 rounded"
-                            onClick={handleAddToCart}
-                            disabled={!selectedSize}
-                        >
-                            Add to Cart
-                        </button>
+
+                    <div className="flex absolute md:static ml-24 md:ml-auto md:mt-0 mt-20 space-x-2">
+                        {/* Buy Now Button */}
+                        <div
+                            className={`button w-[100px] h-[45px] bg-black hover:bg-gray-800 text-white rounded relative text-center transition-colors duration-300 cursor-pointer flex items-center justify-center gap-2 ${!selectedSize || loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                            onClick={handleBuyNow}>
+                            <div className="button-wrapper">
+                                {loading ? (
+                                    <>
+                                        <span className="flex items-center justify-center w-[100px] h-[45px]">
+
+                                            <Loader2 className="animate-spin w-5 h-5 " />
+                                        </span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="text">Buy Now</div>
+                                        <span className="icon">
+                                            <CiCreditCard1 className={`${loading ? "hidden" : "w-7 h-7"}`} />
+                                        </span>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Add To Cart Button */}
+                        <div
+                            className={`button w-[110px] h-[45px] bg-black hover:bg-gray-800 text-white rounded relative text-center transition-colors duration-300 cursor-pointer flex items-center justify-center gap-2 ${!selectedSize ? "opacity-50 cursor-not-allowed" : ""}`}
+                            onClick={handleAddToCart}>
+                            <div className="button-wrapper">
+                                <div className="text">Add to Cart</div>
+                                <span className="icon">
+                                    <CiShoppingCart className="w-8 h-8" />
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

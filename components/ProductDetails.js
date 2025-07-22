@@ -271,7 +271,7 @@ const ProductDetails = ({ product }) => {
                         )}
                     </motion.div>
 
-                    <div className="flex absolute md:static ml-24 md:ml-auto md:mt-0 mt-20 space-x-2">
+                    <div className="flex absolute md:static ml-28 md:ml-auto md:mt-0 mt-20 space-x-2">
                         {/* Buy Now Button */}
                         <div
                             className={`button w-[100px] h-[45px] bg-black hover:bg-gray-800 text-white rounded relative text-center transition-colors duration-300 cursor-pointer flex items-center justify-center gap-2 ${!selectedSize || loading ? "opacity-50 cursor-not-allowed" : ""}`}
@@ -320,7 +320,7 @@ const ProductDetails = ({ product }) => {
 
                 <div className="flex mt-20 md:mt-5 items-center">
                     <span className="text-sm">Enter Zip-code to check Service</span>
-                    <div className=" absolute mt-20 ml-28 md:static md:mt-0 md:ml-0 flex items-center">
+                    <div className=" absolute mt-20 ml-32 md:static md:mt-0 md:ml-0 flex items-center">
 
                         <input
                             className="ml-2 h-8 w-24 rounded-lg border-2 border-gray-300 bg-[#f6f2f0] px-3 py-1 text-sm text-gray-800 placeholder-gray-400 focus:border-gray-700 focus:outline-none focus:ring-0 focus:ring-gray-800 focus:ring-opacity-50 transition-all shadow-sm hover:shadow-md"

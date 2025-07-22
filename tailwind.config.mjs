@@ -12,6 +12,9 @@ export default {
         foreground: "var(--foreground)",
         devstyle: "#E0AFA0", 
       },
+      screens: {
+      '3xl': '1800px',
+    },
     },
   },
   plugins: [],

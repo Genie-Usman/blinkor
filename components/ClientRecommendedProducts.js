@@ -44,7 +44,7 @@ const accentVariants = {
 const ClientRecommendedProducts = ({ recommendedProducts = [] }) => {
     return (
         <section className="text-gray-600 body-font">
-            <div className="container px-9 py-20 mx-auto">
+            <div className="container px-9 py-8 md:py-20 mx-auto">
                 <motion.h2
                     className="text-xl justify-center items-center mt-10 md:mt-8 md:text-5xl font-bold text-gray-900 text-center tracking-tight uppercase leading-tight whitespace-nowrap"
                     variants={containerVariants}

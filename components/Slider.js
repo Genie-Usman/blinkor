@@ -51,7 +51,7 @@ const Slider = () => {
     setLoadingStates((prev) => ({ ...prev, [slideId]: true }));
     setTimeout(() => {
       window.location.href = link;
-    }, 1000);
+    }, 3000);
   };
 
   return (

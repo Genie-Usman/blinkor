@@ -339,7 +339,7 @@ const Checkout = () => {
           >
             {loading ? (
               <>
-                Paying...
+                Wait...
                 <Loader2 className="animate-spin w-4 h-4" />
               </>
             ) : (

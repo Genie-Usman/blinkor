@@ -52,7 +52,7 @@ const FilteredMugs = ({ mugs = [] }) => {
         <section className="text-gray-600 body-font">
             <div className="container px-9 py-20 mx-auto">
                 <motion.h2
-                    className="text-2xl mt-10 md:mt-8 md:text-5xl font-bold text-gray-900 text-center tracking-tight uppercase leading-tight"
+                    className="text-2xl mt-4 md:mt-8 mb-8 md:text-5xl font-bold text-gray-900 text-center tracking-tight uppercase leading-tight"
                     variants={containerVariants}
                     initial="hidden"
                     whileInView="visible"

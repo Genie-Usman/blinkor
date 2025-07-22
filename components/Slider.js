@@ -43,7 +43,7 @@ const Slider = () => {
   const prevSlide = () => setIndex(prev => (prev - 1 + slides.length) % slides.length);
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 3000);
+    const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -51,7 +51,7 @@ const Slider = () => {
     setLoadingStates((prev) => ({ ...prev, [slideId]: true }));
     setTimeout(() => {
       window.location.href = link;
-    }, 3000);
+    }, 1000);
   };
 
   return (
@@ -68,7 +68,7 @@ const Slider = () => {
           {/* Slide Content */}
           {i === index && (
             <div
-              className={`absolute z-10 ${positionClasses[slide.position] || 'bottom-left'} transition-all duration-500 flex flex-col`}
+              className={`absolute z-10 ${positionClasses[slide.position] || 'bottom-left'} transition-all duration-500 md:flex flex-col hidden`}
             >
               <div className="inline-block px-4 py-2 bg-black/30 backdrop-blur-sm shadow-md max-w-full border-white border">
                 <h2 className="text-shadow text-white font-extrabold tracking-wide text-base md:text-3xl lg:text-4xl leading-tight">

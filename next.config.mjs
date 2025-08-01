@@ -21,6 +21,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "redwolf.in",
       },
+      {
+        protocol: "https",
+        hostname: "i.ibb.co",
+      },
     ],
   },
 };

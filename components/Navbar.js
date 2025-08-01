@@ -62,7 +62,7 @@ const Navbar = () => {
         document.removeEventListener("mousedown", handleClickOutside);
         document.removeEventListener("touchstart", handleClickOutside);
     };
-}, [mobileMenuOpen, dropdownRef]); // Add dependencies
+}, [mobileMenuOpen, dropdownRef]);
 
 
     const toggleCart = () => setCartOpen((prev) => !prev);
